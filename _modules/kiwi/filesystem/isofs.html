@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.filesystem.isofs &mdash; KIWI NG 9.24.32 documentation</title>
+  <title>kiwi.filesystem.isofs &mdash; KIWI NG 9.24.33 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -682,7 +682,6 @@
 
 <span class="c1"># project</span>
 <span class="kn">from</span> <span class="nn">kiwi.filesystem.base</span> <span class="kn">import</span> <span class="n">FileSystemBase</span>
-<span class="kn">from</span> <span class="nn">kiwi.iso_tools.iso</span> <span class="kn">import</span> <span class="n">Iso</span>
 <span class="kn">from</span> <span class="nn">kiwi.iso_tools</span> <span class="kn">import</span> <span class="n">IsoTools</span>
 
 <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;kiwi&#39;</span><span class="p">)</span>
@@ -707,14 +706,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
         <span class="n">meta_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom_args</span><span class="p">[</span><span class="s1">&#39;meta_data&#39;</span><span class="p">]</span>
-        <span class="n">efi_mode</span> <span class="o">=</span> <span class="n">meta_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;efi_mode&#39;</span><span class="p">)</span>
-        <span class="n">ofw_mode</span> <span class="o">=</span> <span class="n">meta_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ofw_mode&#39;</span><span class="p">)</span>
         <span class="n">efi_loader</span> <span class="o">=</span> <span class="n">meta_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;efi_loader&#39;</span><span class="p">)</span>
         <span class="n">iso_tool</span> <span class="o">=</span> <span class="n">IsoTools</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span><span class="p">)</span>
-
-        <span class="n">iso</span> <span class="o">=</span> <span class="n">Iso</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">efi_mode</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">ofw_mode</span><span class="p">:</span>
-            <span class="n">iso</span><span class="o">.</span><span class="n">setup_isolinux_boot_path</span><span class="p">()</span>
 
         <span class="n">iso_tool</span><span class="o">.</span><span class="n">init_iso_creation_parameters</span><span class="p">(</span><span class="n">meta_data</span><span class="p">)</span>
 

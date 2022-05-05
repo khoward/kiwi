@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.storage.setup &mdash; KIWI NG 9.24.32 documentation</title>
+  <title>kiwi.storage.setup &mdash; KIWI NG 9.24.33 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -731,9 +731,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span> <span class="o">=</span> <span class="n">root_dir</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">xml_state</span> <span class="o">=</span> <span class="n">xml_state</span>
 
-<div class="viewcode-block" id="DiskSetup.get_disksize_mbytes"><a class="viewcode-back" href="../../../api/kiwi.storage.html#kiwi.storage.setup.DiskSetup.get_disksize_mbytes">[docs]</a>    <span class="k">def</span> <span class="nf">get_disksize_mbytes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="DiskSetup.get_disksize_mbytes"><a class="viewcode-back" href="../../../api/kiwi.storage.html#kiwi.storage.setup.DiskSetup.get_disksize_mbytes">[docs]</a>    <span class="k">def</span> <span class="nf">get_disksize_mbytes</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">root_clone</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">boot_clone</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Precalculate disk size requirements in mbytes</span>
+
+<span class="sd">        :param int root_clone:</span>
+<span class="sd">            root partition gets cloned, N+1 times the size is needed</span>
+<span class="sd">        :param int boot_clone:</span>
+<span class="sd">            boot partition gets cloned, N+1 times the size is needed</span>
 
 <span class="sd">        :return: disk size mbytes</span>
 
@@ -744,6 +751,14 @@
         <span class="n">root_filesystem_mbytes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rootsize</span><span class="o">.</span><span class="n">customize</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">rootsize</span><span class="o">.</span><span class="n">accumulate_mbyte_file_sizes</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">filesystem</span>
         <span class="p">)</span>
+        <span class="k">if</span> <span class="n">root_clone</span><span class="p">:</span>
+            <span class="n">root_clone</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="s1">&#39;--&gt; root partition is clone: </span><span class="si">{0}</span><span class="s1">*</span><span class="si">{1}</span><span class="s1"> MB&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">root_clone</span><span class="p">,</span> <span class="n">root_filesystem_mbytes</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">root_filesystem_mbytes</span> <span class="o">*=</span> <span class="n">root_clone</span>
         <span class="n">calculated_disk_mbytes</span> <span class="o">+=</span> <span class="n">root_filesystem_mbytes</span>
         <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
             <span class="s1">&#39;--&gt; system data with filesystem overhead needs </span><span class="si">%s</span><span class="s1"> MB&#39;</span><span class="p">,</span>
@@ -786,6 +801,14 @@
 
         <span class="n">boot_mbytes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">boot_partition_size</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">boot_mbytes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">boot_clone</span><span class="p">:</span>
+                <span class="n">boot_clone</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="s1">&#39;--&gt; boot partition is clone: </span><span class="si">{0}</span><span class="s1">*</span><span class="si">{1}</span><span class="s1"> MB&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">boot_clone</span><span class="p">,</span> <span class="n">boot_mbytes</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">boot_mbytes</span> <span class="o">*=</span> <span class="n">boot_clone</span>
             <span class="n">calculated_disk_mbytes</span> <span class="o">+=</span> <span class="n">boot_mbytes</span>
             <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
                 <span class="s1">&#39;--&gt; boot partition adding </span><span class="si">%s</span><span class="s1"> MB&#39;</span><span class="p">,</span> <span class="n">boot_mbytes</span>
@@ -948,11 +971,20 @@
         <span class="n">data_partition_mbytes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_partition_mbytes</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">map_name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_partitions</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
             <span class="n">partition_mount_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom_partitions</span><span class="p">[</span><span class="n">map_name</span><span class="p">]</span><span class="o">.</span><span class="n">mountpoint</span>
+            <span class="n">partition_clone</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom_partitions</span><span class="p">[</span><span class="n">map_name</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span>
             <span class="k">if</span> <span class="n">partition_mount_path</span><span class="p">:</span>
                 <span class="n">partition_mbsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom_partitions</span><span class="p">[</span><span class="n">map_name</span><span class="p">]</span><span class="o">.</span><span class="n">mbsize</span>
                 <span class="n">disk_add_mbytes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">partition_mbsize</span><span class="p">)</span> <span class="o">-</span> \
                     <span class="n">data_partition_mbytes</span><span class="o">.</span><span class="n">partition</span><span class="p">[</span><span class="n">partition_mount_path</span><span class="p">]</span>
                 <span class="k">if</span> <span class="n">disk_add_mbytes</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">partition_clone</span><span class="p">:</span>
+                        <span class="n">partition_clone</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                            <span class="s1">&#39;--&gt; </span><span class="si">{0}</span><span class="s1"> partition is clone: </span><span class="si">{1}</span><span class="s1">*</span><span class="si">{2}</span><span class="s1"> MB&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                <span class="n">map_name</span><span class="p">,</span> <span class="n">partition_clone</span><span class="p">,</span> <span class="n">disk_add_mbytes</span>
+                            <span class="p">)</span>
+                        <span class="p">)</span>
+                        <span class="n">disk_add_mbytes</span> <span class="o">*=</span> <span class="n">partition_clone</span>
                     <span class="n">disk_partition_mbytes</span> <span class="o">+=</span> <span class="n">disk_add_mbytes</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">message</span> <span class="o">=</span> <span class="n">dedent</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span><span class="se">\n</span><span class="s1"></span>

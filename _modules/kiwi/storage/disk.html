@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.storage.disk &mdash; KIWI NG 9.24.32 documentation</title>
+  <title>kiwi.storage.disk &mdash; KIWI NG 9.24.33 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -680,7 +680,7 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">Dict</span><span class="p">,</span> <span class="n">NamedTuple</span>
+    <span class="n">Dict</span><span class="p">,</span> <span class="n">NamedTuple</span><span class="p">,</span> <span class="n">Tuple</span>
 <span class="p">)</span>
 
 <span class="c1"># project</span>
@@ -694,6 +694,7 @@
 <span class="n">ptable_entry_type</span> <span class="o">=</span> <span class="n">NamedTuple</span><span class="p">(</span>
     <span class="s1">&#39;ptable_entry_type&#39;</span><span class="p">,</span> <span class="p">[</span>
         <span class="p">(</span><span class="s1">&#39;mbsize&#39;</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;clone&#39;</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span>
         <span class="p">(</span><span class="s1">&#39;partition_name&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span>
         <span class="p">(</span><span class="s1">&#39;partition_type&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span>
         <span class="p">(</span><span class="s1">&#39;mountpoint&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span>
@@ -806,23 +807,32 @@
                 <span class="k">raise</span> <span class="n">KiwiCustomPartitionConflictError</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s1">&#39;Cannot use reserved table entry name: </span><span class="si">{</span><span class="n">map_name</span><span class="si">!r}</span><span class="s1">&#39;</span>
                 <span class="p">)</span>
-            <span class="n">id_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;kiwi_</span><span class="si">{</span><span class="n">map_name</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="si">}</span><span class="s1">Part&#39;</span>
             <span class="n">entry</span> <span class="o">=</span> <span class="n">table_entries</span><span class="p">[</span><span class="n">map_name</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">entry</span><span class="o">.</span><span class="n">clone</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_create_clones</span><span class="p">(</span>
+                    <span class="n">map_name</span><span class="p">,</span> <span class="n">entry</span><span class="o">.</span><span class="n">clone</span><span class="p">,</span> <span class="n">entry</span><span class="o">.</span><span class="n">partition_type</span><span class="p">,</span>
+                    <span class="nb">format</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">mbsize</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="n">id_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;kiwi_</span><span class="si">{</span><span class="n">map_name</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="si">}</span><span class="s1">Part&#39;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">partitioner</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
                 <span class="n">entry</span><span class="o">.</span><span class="n">partition_name</span><span class="p">,</span> <span class="n">entry</span><span class="o">.</span><span class="n">mbsize</span><span class="p">,</span> <span class="n">entry</span><span class="o">.</span><span class="n">partition_type</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_map</span><span class="p">(</span><span class="n">map_name</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_public_id_map</span><span class="p">(</span><span class="n">id_name</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Disk.create_root_partition"><a class="viewcode-back" href="../../../api/kiwi.storage.html#kiwi.storage.disk.Disk.create_root_partition">[docs]</a>    <span class="k">def</span> <span class="nf">create_root_partition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mbsize</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<div class="viewcode-block" id="Disk.create_root_partition"><a class="viewcode-back" href="../../../api/kiwi.storage.html#kiwi.storage.disk.Disk.create_root_partition">[docs]</a>    <span class="k">def</span> <span class="nf">create_root_partition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mbsize</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">clone</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create root partition</span>
 
 <span class="sd">        Populates kiwi_RootPart(id) and kiwi_BootPart(id) if no extra</span>
 <span class="sd">        boot partition is requested</span>
 
-<span class="sd">        :param str mbsize: partition size NumberString or &#39;all_free&#39;</span>
+<span class="sd">        :param str mbsize: partition size string</span>
+<span class="sd">        :param int clone: create [clone] cop(y/ies) of the root partition</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="p">(</span><span class="n">mbsize</span><span class="p">,</span> <span class="n">mbsize_clone</span><span class="p">)</span> <span class="o">=</span> <span class="n">Disk</span><span class="o">.</span><span class="n">_parse_size</span><span class="p">(</span><span class="n">mbsize</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">clone</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_create_clones</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">,</span> <span class="n">clone</span><span class="p">,</span> <span class="s1">&#39;t.linux&#39;</span><span class="p">,</span> <span class="n">mbsize_clone</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">partitioner</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;p.lxroot&#39;</span><span class="p">,</span> <span class="n">mbsize</span><span class="p">,</span> <span class="s1">&#39;t.linux&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_map</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_public_id_map</span><span class="p">(</span><span class="s1">&#39;kiwi_RootPart&#39;</span><span class="p">)</span>
@@ -831,19 +841,23 @@
         <span class="k">if</span> <span class="s1">&#39;kiwi_BootPart&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">public_partition_id_map</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_public_id_map</span><span class="p">(</span><span class="s1">&#39;kiwi_BootPart&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Disk.create_root_lvm_partition"><a class="viewcode-back" href="../../../api/kiwi.storage.html#kiwi.storage.disk.Disk.create_root_lvm_partition">[docs]</a>    <span class="k">def</span> <span class="nf">create_root_lvm_partition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mbsize</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<div class="viewcode-block" id="Disk.create_root_lvm_partition"><a class="viewcode-back" href="../../../api/kiwi.storage.html#kiwi.storage.disk.Disk.create_root_lvm_partition">[docs]</a>    <span class="k">def</span> <span class="nf">create_root_lvm_partition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mbsize</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">clone</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create root partition for use with LVM</span>
 
 <span class="sd">        Populates kiwi_RootPart(id)</span>
 
-<span class="sd">        :param str mbsize: partition size NumberString or &#39;all_free&#39;</span>
+<span class="sd">        :param str mbsize: partition size string</span>
+<span class="sd">        :param int clone: create [clone] cop(y/ies) of the lvm roo partition</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="p">(</span><span class="n">mbsize</span><span class="p">,</span> <span class="n">mbsize_clone</span><span class="p">)</span> <span class="o">=</span> <span class="n">Disk</span><span class="o">.</span><span class="n">_parse_size</span><span class="p">(</span><span class="n">mbsize</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">clone</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_create_clones</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">,</span> <span class="n">clone</span><span class="p">,</span> <span class="s1">&#39;t.lvm&#39;</span><span class="p">,</span> <span class="n">mbsize_clone</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">partitioner</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;p.lxlvm&#39;</span><span class="p">,</span> <span class="n">mbsize</span><span class="p">,</span> <span class="s1">&#39;t.lvm&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_map</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_public_id_map</span><span class="p">(</span><span class="s1">&#39;kiwi_RootPart&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Disk.create_root_raid_partition"><a class="viewcode-back" href="../../../api/kiwi.storage.html#kiwi.storage.disk.Disk.create_root_raid_partition">[docs]</a>    <span class="k">def</span> <span class="nf">create_root_raid_partition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mbsize</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<div class="viewcode-block" id="Disk.create_root_raid_partition"><a class="viewcode-back" href="../../../api/kiwi.storage.html#kiwi.storage.disk.Disk.create_root_raid_partition">[docs]</a>    <span class="k">def</span> <span class="nf">create_root_raid_partition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mbsize</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">clone</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create root partition for use with MD Raid</span>
 
@@ -851,14 +865,18 @@
 <span class="sd">        as the default raid device node at boot time which is</span>
 <span class="sd">        configured to be kiwi_RaidDev(/dev/mdX)</span>
 
-<span class="sd">        :param str mbsize: partition size NumberString or &#39;all_free&#39;</span>
+<span class="sd">        :param str mbsize: partition size string</span>
+<span class="sd">        :param int clone: create [clone] cop(y/ies) of the raid root partition</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="p">(</span><span class="n">mbsize</span><span class="p">,</span> <span class="n">mbsize_clone</span><span class="p">)</span> <span class="o">=</span> <span class="n">Disk</span><span class="o">.</span><span class="n">_parse_size</span><span class="p">(</span><span class="n">mbsize</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">clone</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_create_clones</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">,</span> <span class="n">clone</span><span class="p">,</span> <span class="s1">&#39;t.raid&#39;</span><span class="p">,</span> <span class="n">mbsize_clone</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">partitioner</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;p.lxraid&#39;</span><span class="p">,</span> <span class="n">mbsize</span><span class="p">,</span> <span class="s1">&#39;t.raid&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_map</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_public_id_map</span><span class="p">(</span><span class="s1">&#39;kiwi_RootPart&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_public_id_map</span><span class="p">(</span><span class="s1">&#39;kiwi_RaidPart&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Disk.create_root_readonly_partition"><a class="viewcode-back" href="../../../api/kiwi.storage.html#kiwi.storage.disk.Disk.create_root_readonly_partition">[docs]</a>    <span class="k">def</span> <span class="nf">create_root_readonly_partition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mbsize</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<div class="viewcode-block" id="Disk.create_root_readonly_partition"><a class="viewcode-back" href="../../../api/kiwi.storage.html#kiwi.storage.disk.Disk.create_root_readonly_partition">[docs]</a>    <span class="k">def</span> <span class="nf">create_root_readonly_partition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mbsize</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">clone</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create root readonly partition for use with overlayfs</span>
 
@@ -867,20 +885,28 @@
 <span class="sd">        should be the size of the squashfs filesystem in order to</span>
 <span class="sd">        avoid wasting disk space</span>
 
-<span class="sd">        :param str mbsize: partition size NumberString or &#39;all_free&#39;</span>
+<span class="sd">        :param str mbsize: partition size string</span>
+<span class="sd">        :param int clone: create [clone] cop(y/ies) of the ro root partition</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="p">(</span><span class="n">mbsize</span><span class="p">,</span> <span class="n">mbsize_clone</span><span class="p">)</span> <span class="o">=</span> <span class="n">Disk</span><span class="o">.</span><span class="n">_parse_size</span><span class="p">(</span><span class="n">mbsize</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">clone</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_create_clones</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">,</span> <span class="n">clone</span><span class="p">,</span> <span class="s1">&#39;t.linux&#39;</span><span class="p">,</span> <span class="n">mbsize_clone</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">partitioner</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;p.lxreadonly&#39;</span><span class="p">,</span> <span class="n">mbsize</span><span class="p">,</span> <span class="s1">&#39;t.linux&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_map</span><span class="p">(</span><span class="s1">&#39;readonly&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_public_id_map</span><span class="p">(</span><span class="s1">&#39;kiwi_ROPart&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Disk.create_boot_partition"><a class="viewcode-back" href="../../../api/kiwi.storage.html#kiwi.storage.disk.Disk.create_boot_partition">[docs]</a>    <span class="k">def</span> <span class="nf">create_boot_partition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mbsize</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<div class="viewcode-block" id="Disk.create_boot_partition"><a class="viewcode-back" href="../../../api/kiwi.storage.html#kiwi.storage.disk.Disk.create_boot_partition">[docs]</a>    <span class="k">def</span> <span class="nf">create_boot_partition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mbsize</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">clone</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create boot partition</span>
 
-<span class="sd">        Populates kiwi_BootPart(id)</span>
+<span class="sd">        Populates kiwi_BootPart(id) and optional kiwi_BootPartClone(id)</span>
 
-<span class="sd">        :param str mbsize: partition size NumberString or &#39;all_free&#39;</span>
+<span class="sd">        :param str mbsize: partition size string</span>
+<span class="sd">        :param int clone: create [clone] cop(y/ies) of the boot partition</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="p">(</span><span class="n">mbsize</span><span class="p">,</span> <span class="n">mbsize_clone</span><span class="p">)</span> <span class="o">=</span> <span class="n">Disk</span><span class="o">.</span><span class="n">_parse_size</span><span class="p">(</span><span class="n">mbsize</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">clone</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_create_clones</span><span class="p">(</span><span class="s1">&#39;boot&#39;</span><span class="p">,</span> <span class="n">clone</span><span class="p">,</span> <span class="s1">&#39;t.linux&#39;</span><span class="p">,</span> <span class="n">mbsize_clone</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">partitioner</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;p.lxboot&#39;</span><span class="p">,</span> <span class="n">mbsize</span><span class="p">,</span> <span class="s1">&#39;t.linux&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_map</span><span class="p">(</span><span class="s1">&#39;boot&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_public_id_map</span><span class="p">(</span><span class="s1">&#39;kiwi_BootPart&#39;</span><span class="p">)</span></div>
@@ -891,8 +917,9 @@
 
 <span class="sd">        Populates kiwi_PrepPart(id)</span>
 
-<span class="sd">        :param str mbsize: partition size NumberString or &#39;all_free&#39;</span>
+<span class="sd">        :param str mbsize: partition size string</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="p">(</span><span class="n">mbsize</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">Disk</span><span class="o">.</span><span class="n">_parse_size</span><span class="p">(</span><span class="n">mbsize</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">partitioner</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;p.prep&#39;</span><span class="p">,</span> <span class="n">mbsize</span><span class="p">,</span> <span class="s1">&#39;t.prep&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_map</span><span class="p">(</span><span class="s1">&#39;prep&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_public_id_map</span><span class="p">(</span><span class="s1">&#39;kiwi_PrepPart&#39;</span><span class="p">)</span></div>
@@ -903,8 +930,9 @@
 
 <span class="sd">        Populates kiwi_SparePart(id)</span>
 
-<span class="sd">        :param str mbsize: partition size NumberString or &#39;all_free&#39;</span>
+<span class="sd">        :param str mbsize: partition size string</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="p">(</span><span class="n">mbsize</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">Disk</span><span class="o">.</span><span class="n">_parse_size</span><span class="p">(</span><span class="n">mbsize</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">partitioner</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;p.spare&#39;</span><span class="p">,</span> <span class="n">mbsize</span><span class="p">,</span> <span class="s1">&#39;t.linux&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_map</span><span class="p">(</span><span class="s1">&#39;spare&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_public_id_map</span><span class="p">(</span><span class="s1">&#39;kiwi_SparePart&#39;</span><span class="p">)</span></div>
@@ -915,8 +943,9 @@
 
 <span class="sd">        Populates kiwi_SwapPart(id)</span>
 
-<span class="sd">        :param str mbsize: partition size NumberString or &#39;all_free&#39;</span>
+<span class="sd">        :param str mbsize: partition size string</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="p">(</span><span class="n">mbsize</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">Disk</span><span class="o">.</span><span class="n">_parse_size</span><span class="p">(</span><span class="n">mbsize</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">partitioner</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;p.swap&#39;</span><span class="p">,</span> <span class="n">mbsize</span><span class="p">,</span> <span class="s1">&#39;t.swap&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_map</span><span class="p">(</span><span class="s1">&#39;swap&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_public_id_map</span><span class="p">(</span><span class="s1">&#39;kiwi_SwapPart&#39;</span><span class="p">)</span></div>
@@ -927,8 +956,9 @@
 
 <span class="sd">        Populates kiwi_BiosGrub(id)</span>
 
-<span class="sd">        :param str mbsize: partition size NumberString or &#39;all_free&#39;</span>
+<span class="sd">        :param str mbsize: partition size string</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="p">(</span><span class="n">mbsize</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">Disk</span><span class="o">.</span><span class="n">_parse_size</span><span class="p">(</span><span class="n">mbsize</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">partitioner</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;p.legacy&#39;</span><span class="p">,</span> <span class="n">mbsize</span><span class="p">,</span> <span class="s1">&#39;t.csm&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_map</span><span class="p">(</span><span class="s1">&#39;efi_csm&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_public_id_map</span><span class="p">(</span><span class="s1">&#39;kiwi_BiosGrub&#39;</span><span class="p">)</span></div>
@@ -939,8 +969,9 @@
 
 <span class="sd">        Populates kiwi_EfiPart(id)</span>
 
-<span class="sd">        :param str mbsize: partition size NumberString or &#39;all_free&#39;</span>
+<span class="sd">        :param str mbsize: partition size string</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="p">(</span><span class="n">mbsize</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">Disk</span><span class="o">.</span><span class="n">_parse_size</span><span class="p">(</span><span class="n">mbsize</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">partitioner</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;p.UEFI&#39;</span><span class="p">,</span> <span class="n">mbsize</span><span class="p">,</span> <span class="s1">&#39;t.efi&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_map</span><span class="p">(</span><span class="s1">&#39;efi&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_public_id_map</span><span class="p">(</span><span class="s1">&#39;kiwi_EfiPart&#39;</span><span class="p">)</span></div>
@@ -1037,6 +1068,61 @@
         <span class="k">return</span> <span class="n">OrderedDict</span><span class="p">(</span>
             <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">public_partition_id_map</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
         <span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_create_clones</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">clone</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">type_flag</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mbsize</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create [clone] cop(y/ies) of the given partition name</span>
+
+<span class="sd">        The name of a clone partition uses the following name policy:</span>
+
+<span class="sd">        * {name}clone{id} for the partition name</span>
+<span class="sd">        * kiwi_{name}PartClone{id} for the kiwi map name</span>
+
+<span class="sd">        :param str name: basename to use for clone partition names</span>
+<span class="sd">        :param int clone: number of clones, &gt;= 1</span>
+<span class="sd">        :param str type_flag: partition type name</span>
+<span class="sd">        :param str mbsize: partition size string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">clone_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">clone</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">partitioner</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;p.lx</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">clone</span><span class="si">{</span><span class="n">clone_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">mbsize</span><span class="p">,</span> <span class="n">type_flag</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_map</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">clone</span><span class="si">{</span><span class="n">clone_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_public_id_map</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;kiwi_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">PartClone</span><span class="si">{</span><span class="n">clone_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_parse_size</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        parse size value. This can be one of the following</span>
+
+<span class="sd">        * A number_string</span>
+<span class="sd">        * The string named: &#39;all_free&#39;</span>
+<span class="sd">        * The string formatted as:</span>
+<span class="sd">              clone:{number_string_origin}:{number_string_clone}</span>
+
+<span class="sd">        The method returns a tuple for size and optional clone size</span>
+<span class="sd">        If no clone size exists both tuple values are the same</span>
+
+<span class="sd">        The given number_string for the size of the partition is</span>
+<span class="sd">        passed along to the actually used partitioner object and</span>
+<span class="sd">        expected to be valid there. In case invalid size information</span>
+<span class="sd">        is passed to the partitioner an exception will be raised</span>
+<span class="sd">        in the scope of the partitioner interface and the selected</span>
+<span class="sd">        partitioner class</span>
+
+<span class="sd">        :param str value: size value</span>
+
+<span class="sd">        :return: Tuple of strings</span>
+
+<span class="sd">        :rtype: tuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">format</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;clone:&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">size_list</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">size_list</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">size_list</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">_add_to_public_id_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">value</span><span class="p">:</span>

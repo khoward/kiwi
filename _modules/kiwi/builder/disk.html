@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.builder.disk &mdash; KIWI NG 9.24.32 documentation</title>
+  <title>kiwi.builder.disk &mdash; KIWI NG 9.24.33 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -702,7 +702,10 @@
 <span class="kn">from</span> <span class="nn">kiwi.storage.disk</span> <span class="kn">import</span> <span class="n">Disk</span>
 <span class="kn">from</span> <span class="nn">kiwi.storage.raid_device</span> <span class="kn">import</span> <span class="n">RaidDevice</span>
 <span class="kn">from</span> <span class="nn">kiwi.storage.luks_device</span> <span class="kn">import</span> <span class="n">LuksDevice</span>
-<span class="kn">from</span> <span class="nn">kiwi.storage.integrity_device</span> <span class="kn">import</span> <span class="n">IntegrityDevice</span>
+<span class="kn">from</span> <span class="nn">kiwi.storage.integrity_device</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">IntegrityDevice</span><span class="p">,</span>
+    <span class="n">integrity_credentials_type</span>
+<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">kiwi.storage.device_provider</span> <span class="kn">import</span> <span class="n">DeviceProvider</span>
 <span class="kn">from</span> <span class="nn">kiwi.filesystem</span> <span class="kn">import</span> <span class="n">FileSystem</span>
 <span class="kn">from</span> <span class="nn">kiwi.filesystem.squashfs</span> <span class="kn">import</span> <span class="n">FileSystemSquashFs</span>
@@ -781,6 +784,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">force_mbr</span> <span class="o">=</span> <span class="n">xml_state</span><span class="o">.</span><span class="n">build_type</span><span class="o">.</span><span class="n">get_force_mbr</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">luks</span> <span class="o">=</span> <span class="n">xml_state</span><span class="o">.</span><span class="n">get_luks_credentials</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">integrity_root</span> <span class="o">=</span> <span class="n">xml_state</span><span class="o">.</span><span class="n">build_type</span><span class="o">.</span><span class="n">get_standalone_integrity</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">integrity_keyfile</span> <span class="o">=</span> <span class="n">xml_state</span><span class="o">.</span><span class="n">build_type</span><span class="o">.</span><span class="n">get_integrity_keyfile</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">integrity_key_description</span> <span class="o">=</span> \
+            <span class="n">xml_state</span><span class="o">.</span><span class="n">build_type</span><span class="o">.</span><span class="n">get_integrity_metadata_key_description</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root_filesystem_embed_integrity_metadata</span> <span class="o">=</span> \
             <span class="n">xml_state</span><span class="o">.</span><span class="n">build_type</span><span class="o">.</span><span class="n">get_embed_integrity_metadata</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">luks_format_options</span> <span class="o">=</span> <span class="n">xml_state</span><span class="o">.</span><span class="n">get_luks_format_options</span><span class="p">()</span>
@@ -967,7 +973,14 @@
 
         <span class="c1"># create integrity on current root device if requested</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">integrity_root</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">integrity_root</span> <span class="o">=</span> <span class="n">IntegrityDevice</span><span class="p">(</span><span class="n">device_map</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">integrity_root</span> <span class="o">=</span> <span class="n">IntegrityDevice</span><span class="p">(</span>
+                <span class="n">device_map</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">],</span> <span class="n">defaults</span><span class="o">.</span><span class="n">INTEGRITY_ALGORITHM</span><span class="p">,</span>
+                <span class="n">integrity_credentials_type</span><span class="p">(</span>
+                    <span class="n">keydescription</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">integrity_key_description</span><span class="p">,</span>
+                    <span class="n">keyfile</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">integrity_keyfile</span><span class="p">,</span>
+                    <span class="n">keyfile_algorithm</span><span class="o">=</span><span class="n">defaults</span><span class="o">.</span><span class="n">INTEGRITY_KEY_ALGORITHM</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">integrity_root</span><span class="o">.</span><span class="n">create_dm_integrity</span><span class="p">()</span>
             <span class="n">device_map</span><span class="p">[</span><span class="s1">&#39;integrity_root&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_map</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">]</span>
             <span class="n">device_map</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">integrity_root</span><span class="o">.</span><span class="n">get_device</span><span class="p">()</span>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.xml_state &mdash; KIWI NG 9.24.32 documentation</title>
+  <title>kiwi.xml_state &mdash; KIWI NG 9.24.33 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
@@ -2079,6 +2079,7 @@
 <span class="sd">                {</span>
 <span class="sd">                    &#39;NAME&#39;: ptable_entry_type(</span>
 <span class="sd">                        mbsize=int,</span>
+<span class="sd">                        clone=int,</span>
 <span class="sd">                        partition_name=str,</span>
 <span class="sd">                        partition_type=str,</span>
 <span class="sd">                        mountpoint=str,</span>
@@ -2097,6 +2098,11 @@
             <span class="n">partition_name</span> <span class="o">=</span> <span class="n">partition</span><span class="o">.</span><span class="n">get_partition_name</span><span class="p">()</span> <span class="ow">or</span> <span class="sa">f</span><span class="s1">&#39;p.lx</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span>
             <span class="n">partitions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">ptable_entry_type</span><span class="p">(</span>
                 <span class="n">mbsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_to_mega_byte</span><span class="p">(</span><span class="n">partition</span><span class="o">.</span><span class="n">get_size</span><span class="p">()),</span>
+                <span class="c1"># There is currently no clone attribute in the &lt;partition&gt;</span>
+                <span class="c1"># element. This will be added on completion of the partition</span>
+                <span class="c1"># clone feature. The internal API structure however, already</span>
+                <span class="c1"># knows about the capability</span>
+                <span class="n">clone</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
                 <span class="n">partition_name</span><span class="o">=</span><span class="n">partition_name</span><span class="p">,</span>
                 <span class="n">partition_type</span><span class="o">=</span><span class="n">partition</span><span class="o">.</span><span class="n">get_partition_type</span><span class="p">()</span> <span class="ow">or</span> <span class="s1">&#39;t.linux&#39;</span><span class="p">,</span>
                 <span class="n">mountpoint</span><span class="o">=</span><span class="n">partition</span><span class="o">.</span><span class="n">get_mountpoint</span><span class="p">(),</span>

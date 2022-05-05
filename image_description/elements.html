@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Image Description Elements &mdash; KIWI NG 9.24.32 documentation</title>
+  <title>Image Description Elements &mdash; KIWI NG 9.24.33 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
@@ -667,7 +667,7 @@
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This document provides a reference for the elements
-and attributes of the KIWI NG XML document in version 9.24.32</p>
+and attributes of the KIWI NG XML document in version 9.24.33</p>
 </div>
 <section id="image">
 <span id="sec-image"></span><h2>&lt;image&gt;<a class="headerlink" href="#image" title="Permalink to this headline">¶</a></h2>
@@ -1104,11 +1104,12 @@ this key file is actually being used. By default any
 distribution will just open an interactive dialog asking
 for the credentials at boot time !</p>
 </dd>
-<dt>luks_version=”luks|luks2”:</dt><dd><p>Specify which <code class="xref py py-obj docutils literal notranslate"><span class="pre">LUKS</span></code> version should be used. If not set and by
-default <code class="xref py py-obj docutils literal notranslate"><span class="pre">luks</span></code> is used. The specification of the <code class="xref py py-obj docutils literal notranslate"><span class="pre">LUKS</span></code> version
-allows using a different set of <code class="xref py py-obj docutils literal notranslate"><span class="pre">luksformat</span></code> options. To
-investigate the differences between the two please consult the
-<code class="xref py py-obj docutils literal notranslate"><span class="pre">cryptsetup</span></code> manual page.</p>
+<dt>luks_version=”luks|luks1|luks2”:</dt><dd><p>Specify which <code class="xref py py-obj docutils literal notranslate"><span class="pre">LUKS</span></code> version should be used. If not set and by
+default <code class="xref py py-obj docutils literal notranslate"><span class="pre">luks</span></code> is used. The interpretation of the default depends
+on the distribution and could result in either ‘luks1’ or ‘luks2’.
+The specification of the <code class="xref py py-obj docutils literal notranslate"><span class="pre">LUKS</span></code> version allows using a different
+set of <code class="xref py py-obj docutils literal notranslate"><span class="pre">luksformat</span></code> options. To investigate the differences between
+the two please consult the <code class="xref py py-obj docutils literal notranslate"><span class="pre">cryptsetup</span></code> manual page.</p>
 </dd>
 <dt>target_blocksize=”number”:</dt><dd><p>Specifies the image blocksize in bytes which has to
 match the logical blocksize of the target storage device. By default 512
@@ -1163,10 +1164,24 @@ is used</p>
 </dd>
 <dt>squashfscompression=”uncompressed|gzip|lzo|lz4|xz|zstd”:</dt><dd><p>Specifies the compression type for mksquashfs</p>
 </dd>
-<dt>standalone_integrity=”true|false”</dt><dd><p>For the <code class="xref py py-obj docutils literal notranslate"><span class="pre">oem</span></code> type only, specifies to create a standalone
+<dt>standalone_integrity=”true|false”:</dt><dd><p>For the <code class="xref py py-obj docutils literal notranslate"><span class="pre">oem</span></code> type only, specifies to create a standalone
 <code class="xref py py-obj docutils literal notranslate"><span class="pre">dm_integrity</span></code> layer on top of the root filesystem</p>
 </dd>
-<dt>embed_integrity_metadata=”true|false”</dt><dd><p>For the <code class="xref py py-obj docutils literal notranslate"><span class="pre">oem</span></code> type only, and in combination with the
+<dt>integrity_keyfile=”filepath”:</dt><dd><p>For the <code class="xref py py-obj docutils literal notranslate"><span class="pre">oem</span></code> type only and in combination with the <code class="xref py py-obj docutils literal notranslate"><span class="pre">standalone_integrity</span></code>
+attribute, protects access to the integrity map using the given keyfile.</p>
+</dd>
+<dt>integrity_metadata_key_description=”string”:</dt><dd><p>For the <code class="xref py py-obj docutils literal notranslate"><span class="pre">oem</span></code> type only and in combination with
+the <code class="xref py py-obj docutils literal notranslate"><span class="pre">embed_integrity_metadata</span></code> attribute, specifies a custom
+description of an integrity key as it is expected to be present
+in the kernel keyring. The information is placed in the integrity
+metadata block. If not specified kiwi creates a key argument
+string instead which is based on the given <code class="xref py py-obj docutils literal notranslate"><span class="pre">integrity_keyfile</span></code>
+filename. The format of this key argument is:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>:BASENAME_OF_integrity_keyfile_WITHOUT_FILE_EXTENSION
+</pre></div>
+</div>
+</dd>
+<dt>embed_integrity_metadata=”true|false”:</dt><dd><p>For the <code class="xref py py-obj docutils literal notranslate"><span class="pre">oem</span></code> type only, and in combination with the
 <code class="xref py py-obj docutils literal notranslate"><span class="pre">standalone_integrity</span></code> attribute, specifies to write a binary
 block at the end of the partition serving the root filesystem,
 containing information to create the <code class="xref py py-obj docutils literal notranslate"><span class="pre">dm_integrity</span></code> device map
@@ -1208,7 +1223,7 @@ web for possible flag values.</p>
 </dd>
 </dl>
 </dd>
-<dt>verity_blocks=”number|all”</dt><dd><p>For the <code class="xref py py-obj docutils literal notranslate"><span class="pre">oem</span></code> type only, specifies to create a dm verity hash
+<dt>verity_blocks=”number|all”:</dt><dd><p>For the <code class="xref py py-obj docutils literal notranslate"><span class="pre">oem</span></code> type only, specifies to create a dm verity hash
 from the number of given blocks (or all) placed at the end of the
 root filesystem For later verification of the device,
 the credentials information produced by <code class="xref py py-obj docutils literal notranslate"><span class="pre">veritysetup</span></code> from the
@@ -1217,7 +1232,7 @@ as debugging information to the build log file. A concept to
 persistently store the verification metadata as part of the
 partition(s) will be a next step.</p>
 </dd>
-<dt>embed_verity_metadata=”true|false”</dt><dd><p>For the <code class="xref py py-obj docutils literal notranslate"><span class="pre">oem</span></code> type only, and in combination with the <code class="xref py py-obj docutils literal notranslate"><span class="pre">verity_blocks</span></code>
+<dt>embed_verity_metadata=”true|false”:</dt><dd><p>For the <code class="xref py py-obj docutils literal notranslate"><span class="pre">oem</span></code> type only, and in combination with the <code class="xref py py-obj docutils literal notranslate"><span class="pre">verity_blocks</span></code>
 attribute, specifies to write a binary block at the end of the
 partition serving the root filesystem, containing information
 for <code class="xref py py-obj docutils literal notranslate"><span class="pre">dm_verity</span></code> verification in the following format:</p>
@@ -1248,7 +1263,7 @@ hash start block as required by the kernel to construct the device map</p></li>
 </dd>
 </dl>
 </dd>
-<dt>overlayroot=”true|false”</dt><dd><p>For the <code class="xref py py-obj docutils literal notranslate"><span class="pre">oem</span></code> type only, specifies to use an <code class="xref py py-obj docutils literal notranslate"><span class="pre">overlayfs</span></code> based root
+<dt>overlayroot=”true|false”:</dt><dd><p>For the <code class="xref py py-obj docutils literal notranslate"><span class="pre">oem</span></code> type only, specifies to use an <code class="xref py py-obj docutils literal notranslate"><span class="pre">overlayfs</span></code> based root
 filesystem consisting out of a squashfs compressed read-only root
 filesystem combined with a write-partition or tmpfs.
 The optional kernel boot parameter <code class="xref py py-obj docutils literal notranslate"><span class="pre">rd.root.overlay.readonly</span></code> can
@@ -1274,7 +1289,7 @@ element is set to <code class="xref py py-obj docutils literal notranslate"><spa
 will not have any effect because the write partition will be
 resized on first boot to the available disk space.</p>
 </dd>
-<dt>overlayroot_write_partition=”true|false”</dt><dd><p>For the <code class="xref py py-obj docutils literal notranslate"><span class="pre">oem</span></code> type only, allows to specify if the extra read-write
+<dt>overlayroot_write_partition=”true|false”:</dt><dd><p>For the <code class="xref py py-obj docutils literal notranslate"><span class="pre">oem</span></code> type only, allows to specify if the extra read-write
 partition in an <code class="xref py py-obj docutils literal notranslate"><span class="pre">overlayroot</span></code> setup should be created or not.
 By default the partition is created and the kiwi-overlay dracut
 module also expect it to be present. However, the overlayroot
@@ -1282,7 +1297,7 @@ feature can also be used without dracut (<code class="xref py py-obj docutils li
 and under certain circumstances it is handy to configure if the
 partition table should contain the read-write partition or not.</p>
 </dd>
-<dt>overlayroot_readonly_partsize=”mbsize”</dt><dd><p>Specifies the size in MB of the partition which stores the
+<dt>overlayroot_readonly_partsize=”mbsize”:</dt><dd><p>Specifies the size in MB of the partition which stores the
 squashfs compressed read-only root filesystem in an
 overlayroot setup. If not specified kiwi calculates
 the needed size by a preliminary creation of the
@@ -1300,7 +1315,7 @@ specify which filesystem should be used for it. The
 type of the selected bootloader might overwrite this
 setting if there is no alternative possible though.</p>
 </dd>
-<dt>flags=”overlay|dmsquash”</dt><dd><p>For the iso image type specifies the live iso technology and
+<dt>flags=”overlay|dmsquash”:</dt><dd><p>For the iso image type specifies the live iso technology and
 dracut module to use. If set to overlay the kiwi-live dracut
 module will be used to support a live iso system based on
 squashfs+overlayfs. If set to dmsquash the dracut standard

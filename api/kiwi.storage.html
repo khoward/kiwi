@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.storage Package &mdash; KIWI NG 9.24.32 documentation</title>
+  <title>kiwi.storage Package &mdash; KIWI NG 9.24.33 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
@@ -751,12 +751,15 @@ in the the specialized device provider class</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kiwi.storage.disk.Disk.create_boot_partition">
-<span class="sig-name descname"><span class="pre">create_boot_partition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mbsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kiwi/storage/disk.html#Disk.create_boot_partition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kiwi.storage.disk.Disk.create_boot_partition" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">create_boot_partition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mbsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kiwi/storage/disk.html#Disk.create_boot_partition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kiwi.storage.disk.Disk.create_boot_partition" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create boot partition</p>
-<p>Populates kiwi_BootPart(id)</p>
+<p>Populates kiwi_BootPart(id) and optional kiwi_BootPartClone(id)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>mbsize</strong> (<em>str</em>) – partition size NumberString or ‘all_free’</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mbsize</strong> (<em>str</em>) – partition size string</p></li>
+<li><p><strong>clone</strong> (<em>int</em>) – create [clone] cop(y/ies) of the boot partition</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -784,7 +787,7 @@ in the the specialized device provider class</p>
 <p>Populates kiwi_BiosGrub(id)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>mbsize</strong> (<em>str</em>) – partition size NumberString or ‘all_free’</p>
+<dd class="field-odd"><p><strong>mbsize</strong> (<em>str</em>) – partition size string</p>
 </dd>
 </dl>
 </dd></dl>
@@ -796,7 +799,7 @@ in the the specialized device provider class</p>
 <p>Populates kiwi_EfiPart(id)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>mbsize</strong> (<em>str</em>) – partition size NumberString or ‘all_free’</p>
+<dd class="field-odd"><p><strong>mbsize</strong> (<em>str</em>) – partition size string</p>
 </dd>
 </dl>
 </dd></dl>
@@ -822,53 +825,62 @@ in the the specialized device provider class</p>
 <p>Populates kiwi_PrepPart(id)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>mbsize</strong> (<em>str</em>) – partition size NumberString or ‘all_free’</p>
+<dd class="field-odd"><p><strong>mbsize</strong> (<em>str</em>) – partition size string</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kiwi.storage.disk.Disk.create_root_lvm_partition">
-<span class="sig-name descname"><span class="pre">create_root_lvm_partition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mbsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kiwi/storage/disk.html#Disk.create_root_lvm_partition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kiwi.storage.disk.Disk.create_root_lvm_partition" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">create_root_lvm_partition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mbsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kiwi/storage/disk.html#Disk.create_root_lvm_partition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kiwi.storage.disk.Disk.create_root_lvm_partition" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create root partition for use with LVM</p>
 <p>Populates kiwi_RootPart(id)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>mbsize</strong> (<em>str</em>) – partition size NumberString or ‘all_free’</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mbsize</strong> (<em>str</em>) – partition size string</p></li>
+<li><p><strong>clone</strong> (<em>int</em>) – create [clone] cop(y/ies) of the lvm roo partition</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kiwi.storage.disk.Disk.create_root_partition">
-<span class="sig-name descname"><span class="pre">create_root_partition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mbsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kiwi/storage/disk.html#Disk.create_root_partition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kiwi.storage.disk.Disk.create_root_partition" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">create_root_partition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mbsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kiwi/storage/disk.html#Disk.create_root_partition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kiwi.storage.disk.Disk.create_root_partition" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create root partition</p>
 <p>Populates kiwi_RootPart(id) and kiwi_BootPart(id) if no extra
 boot partition is requested</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>mbsize</strong> (<em>str</em>) – partition size NumberString or ‘all_free’</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mbsize</strong> (<em>str</em>) – partition size string</p></li>
+<li><p><strong>clone</strong> (<em>int</em>) – create [clone] cop(y/ies) of the root partition</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kiwi.storage.disk.Disk.create_root_raid_partition">
-<span class="sig-name descname"><span class="pre">create_root_raid_partition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mbsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kiwi/storage/disk.html#Disk.create_root_raid_partition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kiwi.storage.disk.Disk.create_root_raid_partition" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">create_root_raid_partition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mbsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kiwi/storage/disk.html#Disk.create_root_raid_partition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kiwi.storage.disk.Disk.create_root_raid_partition" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create root partition for use with MD Raid</p>
 <p>Populates kiwi_RootPart(id) and kiwi_RaidPart(id) as well
 as the default raid device node at boot time which is
 configured to be kiwi_RaidDev(/dev/mdX)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>mbsize</strong> (<em>str</em>) – partition size NumberString or ‘all_free’</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mbsize</strong> (<em>str</em>) – partition size string</p></li>
+<li><p><strong>clone</strong> (<em>int</em>) – create [clone] cop(y/ies) of the raid root partition</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kiwi.storage.disk.Disk.create_root_readonly_partition">
-<span class="sig-name descname"><span class="pre">create_root_readonly_partition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mbsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kiwi/storage/disk.html#Disk.create_root_readonly_partition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kiwi.storage.disk.Disk.create_root_readonly_partition" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">create_root_readonly_partition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mbsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kiwi/storage/disk.html#Disk.create_root_readonly_partition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kiwi.storage.disk.Disk.create_root_readonly_partition" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create root readonly partition for use with overlayfs</p>
 <p>Populates kiwi_ReadOnlyPart(id), the partition is meant to
 contain a squashfs readonly filesystem. The partition size
@@ -876,7 +888,10 @@ should be the size of the squashfs filesystem in order to
 avoid wasting disk space</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>mbsize</strong> (<em>str</em>) – partition size NumberString or ‘all_free’</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mbsize</strong> (<em>str</em>) – partition size string</p></li>
+<li><p><strong>clone</strong> (<em>int</em>) – create [clone] cop(y/ies) of the ro root partition</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -888,7 +903,7 @@ avoid wasting disk space</p>
 <p>Populates kiwi_SparePart(id)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>mbsize</strong> (<em>str</em>) – partition size NumberString or ‘all_free’</p>
+<dd class="field-odd"><p><strong>mbsize</strong> (<em>str</em>) – partition size string</p>
 </dd>
 </dl>
 </dd></dl>
@@ -900,7 +915,7 @@ avoid wasting disk space</p>
 <p>Populates kiwi_SwapPart(id)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>mbsize</strong> (<em>str</em>) – partition size NumberString or ‘all_free’</p>
+<dd class="field-odd"><p><strong>mbsize</strong> (<em>str</em>) – partition size string</p>
 </dd>
 </dl>
 </dd></dl>
@@ -961,12 +976,18 @@ For DASD disks create a new VTOC table</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="kiwi.storage.disk.ptable_entry_type">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kiwi.storage.disk.</span></span><span class="sig-name descname"><span class="pre">ptable_entry_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mbsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partition_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partition_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mountpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filesystem</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kiwi.storage.disk.ptable_entry_type" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kiwi.storage.disk.</span></span><span class="sig-name descname"><span class="pre">ptable_entry_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mbsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clone</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partition_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partition_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mountpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filesystem</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kiwi.storage.disk.ptable_entry_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="kiwi.storage.disk.ptable_entry_type.clone">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">clone</span></span><a class="headerlink" href="#kiwi.storage.disk.ptable_entry_type.clone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="kiwi.storage.disk.ptable_entry_type.filesystem">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filesystem</span></span><a class="headerlink" href="#kiwi.storage.disk.ptable_entry_type.filesystem" title="Permalink to this definition">¶</a></dt>
-<dd><p>Alias for field number 4</p>
+<dd><p>Alias for field number 5</p>
 </dd></dl>
 
 <dl class="py property">
@@ -978,19 +999,19 @@ For DASD disks create a new VTOC table</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="kiwi.storage.disk.ptable_entry_type.mountpoint">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mountpoint</span></span><a class="headerlink" href="#kiwi.storage.disk.ptable_entry_type.mountpoint" title="Permalink to this definition">¶</a></dt>
-<dd><p>Alias for field number 3</p>
+<dd><p>Alias for field number 4</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="kiwi.storage.disk.ptable_entry_type.partition_name">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">partition_name</span></span><a class="headerlink" href="#kiwi.storage.disk.ptable_entry_type.partition_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Alias for field number 1</p>
+<dd><p>Alias for field number 2</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="kiwi.storage.disk.ptable_entry_type.partition_type">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">partition_type</span></span><a class="headerlink" href="#kiwi.storage.disk.ptable_entry_type.partition_type" title="Permalink to this definition">¶</a></dt>
-<dd><p>Alias for field number 2</p>
+<dd><p>Alias for field number 3</p>
 </dd></dl>
 
 </dd></dl>
@@ -1325,14 +1346,20 @@ before building a disk image</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kiwi.storage.setup.DiskSetup.get_disksize_mbytes">
-<span class="sig-name descname"><span class="pre">get_disksize_mbytes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/kiwi/storage/setup.html#DiskSetup.get_disksize_mbytes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kiwi.storage.setup.DiskSetup.get_disksize_mbytes" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_disksize_mbytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_clone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boot_clone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/kiwi/storage/setup.html#DiskSetup.get_disksize_mbytes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kiwi.storage.setup.DiskSetup.get_disksize_mbytes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Precalculate disk size requirements in mbytes</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>disk size mbytes</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root_clone</strong> (<em>int</em>) – root partition gets cloned, N+1 times the size is needed</p></li>
+<li><p><strong>boot_clone</strong> (<em>int</em>) – boot partition gets cloned, N+1 times the size is needed</p></li>
+</ul>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>int</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>disk size mbytes</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>

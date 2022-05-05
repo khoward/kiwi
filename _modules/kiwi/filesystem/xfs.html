@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.filesystem.xfs &mdash; KIWI NG 9.24.32 documentation</title>
+  <title>kiwi.filesystem.xfs &mdash; KIWI NG 9.24.33 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -730,6 +730,9 @@
 <span class="sd">        Create new random filesystem UUID</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">device</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_provider</span><span class="o">.</span><span class="n">get_device</span><span class="p">()</span>
+        <span class="n">Command</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+            <span class="p">[</span><span class="s1">&#39;xfs_repair&#39;</span><span class="p">,</span> <span class="s1">&#39;-L&#39;</span><span class="p">,</span> <span class="n">device</span><span class="p">]</span>
+        <span class="p">)</span>
         <span class="n">Command</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
             <span class="p">[</span><span class="s1">&#39;xfs_admin&#39;</span><span class="p">,</span> <span class="s1">&#39;-U&#39;</span><span class="p">,</span> <span class="s1">&#39;generate&#39;</span><span class="p">,</span> <span class="n">device</span><span class="p">]</span>
         <span class="p">)</span></div></div>
