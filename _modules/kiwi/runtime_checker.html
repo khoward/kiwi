@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.runtime_checker &mdash; KIWI NG 9.24.33 documentation</title>
+  <title>kiwi.runtime_checker &mdash; KIWI NG 9.24.34 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
@@ -1547,8 +1547,10 @@
 
 <span class="s1">            &lt;package name=&quot;</span><span class="si">{0}</span><span class="s1">&quot;/&gt;</span>
 <span class="s1">        &#39;&#39;&#39;</span><span class="p">)</span>
+        <span class="n">initrd_system</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_state</span><span class="o">.</span><span class="n">get_initrd_system</span><span class="p">()</span>
         <span class="n">required_dracut_package</span> <span class="o">=</span> <span class="s1">&#39;dracut-kiwi-overlay&#39;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_state</span><span class="o">.</span><span class="n">build_type</span><span class="o">.</span><span class="n">get_overlayroot</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">initrd_system</span> <span class="o">==</span> <span class="s1">&#39;dracut&#39;</span> <span class="ow">and</span> \
+           <span class="bp">self</span><span class="o">.</span><span class="n">xml_state</span><span class="o">.</span><span class="n">build_type</span><span class="o">.</span><span class="n">get_overlayroot</span><span class="p">():</span>
             <span class="n">package_names</span> <span class="o">=</span> \
                 <span class="bp">self</span><span class="o">.</span><span class="n">xml_state</span><span class="o">.</span><span class="n">get_bootstrap_packages</span><span class="p">()</span> <span class="o">+</span> \
                 <span class="bp">self</span><span class="o">.</span><span class="n">xml_state</span><span class="o">.</span><span class="n">get_system_packages</span><span class="p">()</span>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.builder.install &mdash; KIWI NG 9.24.33 documentation</title>
+  <title>kiwi.builder.install &mdash; KIWI NG 9.24.34 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -894,7 +894,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">boot_image_task</span><span class="o">.</span><span class="n">boot_root_directory</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">media_dir</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
             <span class="n">bootloader_config</span><span class="o">.</span><span class="n">get_boot_theme</span><span class="p">()</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">firmware</span><span class="o">.</span><span class="n">efi_mode</span><span class="p">():</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">firmware</span><span class="o">.</span><span class="n">bios_mode</span><span class="p">():</span>
             <span class="n">Iso</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">media_dir</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">setup_isolinux_boot_path</span><span class="p">()</span>
         <span class="n">bootloader_config</span><span class="o">.</span><span class="n">write_meta_data</span><span class="p">()</span>
         <span class="n">bootloader_config</span><span class="o">.</span><span class="n">setup_install_image_config</span><span class="p">(</span>
