@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.builder.disk &mdash; KIWI NG 9.24.34 documentation</title>
+  <title>kiwi.builder.disk &mdash; KIWI NG 9.24.35 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -301,6 +301,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../working_with_images/disk_ramdisk_deployment.html">Deploy and Run System in a RamDisk</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../working_with_images/custom_partitions.html">Custom Disk Partitions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../working_with_images/custom_volumes.html">Custom Disk Volumes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../working_with_images/clone_partitions.html">Partition Clones</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../working_with_images/clone_partitions.html#use-case">Use Case</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../../working_with_images/setup_network_bootserver.html">Setting Up a Network Boot Server</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../working_with_images/setup_network_bootserver.html#installing-and-configuring-dhcp-and-tftp-with-dnsmasq">Installing and Configuring DHCP and TFTP with dnsmasq</a></li>
 </ul>
@@ -698,6 +702,7 @@
 <span class="kn">from</span> <span class="nn">kiwi.boot.image</span> <span class="kn">import</span> <span class="n">BootImage</span>
 <span class="kn">from</span> <span class="nn">kiwi.storage.setup</span> <span class="kn">import</span> <span class="n">DiskSetup</span>
 <span class="kn">from</span> <span class="nn">kiwi.storage.loop_device</span> <span class="kn">import</span> <span class="n">LoopDevice</span>
+<span class="kn">from</span> <span class="nn">kiwi.storage.clone_device</span> <span class="kn">import</span> <span class="n">CloneDevice</span>
 <span class="kn">from</span> <span class="nn">kiwi.firmware</span> <span class="kn">import</span> <span class="n">FirmWare</span>
 <span class="kn">from</span> <span class="nn">kiwi.storage.disk</span> <span class="kn">import</span> <span class="n">Disk</span>
 <span class="kn">from</span> <span class="nn">kiwi.storage.raid_device</span> <span class="kn">import</span> <span class="n">RaidDevice</span>
@@ -767,6 +772,10 @@
             <span class="n">xml_state</span><span class="o">.</span><span class="n">build_type</span><span class="o">.</span><span class="n">get_embed_verity_metadata</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dosparttable_extended_layout</span> <span class="o">=</span> \
             <span class="n">xml_state</span><span class="o">.</span><span class="n">build_type</span><span class="o">.</span><span class="n">get_dosparttable_extended_layout</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">boot_clone_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">xml_state</span><span class="o">.</span><span class="n">build_type</span><span class="o">.</span><span class="n">get_boot_clone</span><span class="p">())</span> \
+            <span class="k">if</span> <span class="n">xml_state</span><span class="o">.</span><span class="n">build_type</span><span class="o">.</span><span class="n">get_boot_clone</span><span class="p">()</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root_clone_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">xml_state</span><span class="o">.</span><span class="n">build_type</span><span class="o">.</span><span class="n">get_root_clone</span><span class="p">())</span> \
+            <span class="k">if</span> <span class="n">xml_state</span><span class="o">.</span><span class="n">build_type</span><span class="o">.</span><span class="n">get_root_clone</span><span class="p">()</span> <span class="k">else</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">custom_root_mount_args</span> <span class="o">=</span> <span class="n">xml_state</span><span class="o">.</span><span class="n">get_fs_mount_option_list</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">custom_root_creation_args</span> <span class="o">=</span> <span class="n">xml_state</span><span class="o">.</span><span class="n">get_fs_create_option_list</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">build_type_name</span> <span class="o">=</span> <span class="n">xml_state</span><span class="o">.</span><span class="n">get_build_type_name</span><span class="p">()</span>
@@ -897,7 +906,7 @@
 
         <span class="c1"># a list of instances with the sync_data capability</span>
         <span class="c1"># representing the custom partitions area of the disk</span>
-        <span class="n">system_custom_parts</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">FileSystemBase</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">system_custom_parts</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">FileSystemBase</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">install_media</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_type_name</span> <span class="o">!=</span> <span class="s1">&#39;oem&#39;</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">KiwiInstallMediaError</span><span class="p">(</span>
@@ -920,7 +929,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">boot_image</span><span class="o">.</span><span class="n">prepare</span><span class="p">()</span>
 
         <span class="c1"># precalculate needed disk size</span>
-        <span class="n">disksize_mbytes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">disk_setup</span><span class="o">.</span><span class="n">get_disksize_mbytes</span><span class="p">()</span>
+        <span class="n">disksize_mbytes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">disk_setup</span><span class="o">.</span><span class="n">get_disksize_mbytes</span><span class="p">(</span>
+            <span class="n">root_clone</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root_clone_count</span><span class="p">,</span> <span class="n">boot_clone</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">boot_clone_count</span>
+        <span class="p">)</span>
 
         <span class="c1"># create the disk</span>
         <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Creating raw disk image </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">diskname</span><span class="p">)</span>
@@ -1398,8 +1409,8 @@
     <span class="k">def</span> <span class="nf">_build_custom_parts_filesystem</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">device_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span>
         <span class="n">custom_partitions</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="s1">&#39;str&#39;</span><span class="p">,</span> <span class="n">ptable_entry_type</span><span class="p">]</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">FileSystemBase</span><span class="p">]:</span>
-        <span class="n">filesystem_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">FileSystemBase</span><span class="p">]:</span>
+        <span class="n">filesystem_dict</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">if</span> <span class="n">custom_partitions</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">map_name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">custom_partitions</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
                 <span class="k">if</span> <span class="n">map_name</span> <span class="ow">in</span> <span class="n">device_map</span><span class="p">:</span>
@@ -1413,8 +1424,8 @@
                         <span class="n">filesystem</span><span class="o">.</span><span class="n">create_on_device</span><span class="p">(</span>
                             <span class="n">label</span><span class="o">=</span><span class="n">map_name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
                         <span class="p">)</span>
-                        <span class="n">filesystem_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">filesystem</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">filesystem_list</span>
+                        <span class="n">filesystem_dict</span><span class="p">[</span><span class="n">map_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">filesystem</span>
+        <span class="k">return</span> <span class="n">filesystem_dict</span>
 
     <span class="k">def</span> <span class="nf">_build_spare_filesystem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">FileSystemBase</span><span class="p">]:</span>
         <span class="k">if</span> <span class="s1">&#39;spare&#39;</span> <span class="ow">in</span> <span class="n">device_map</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">spare_part_fs</span><span class="p">:</span>
@@ -1507,12 +1518,18 @@
             <span class="n">disksize_used_mbytes</span> <span class="o">+=</span> <span class="n">partition_mbsize</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">disk_setup</span><span class="o">.</span><span class="n">need_boot_partition</span><span class="p">():</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;--&gt; creating boot partition&#39;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="s1">&#39;--&gt; creating boot partition [with </span><span class="si">{0}</span><span class="s1"> clone(s)]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">boot_clone_count</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
             <span class="n">partition_mbsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">disk_setup</span><span class="o">.</span><span class="n">boot_partition_size</span><span class="p">()</span>
             <span class="n">disk</span><span class="o">.</span><span class="n">create_boot_partition</span><span class="p">(</span>
-                <span class="n">partition_mbsize</span>
+                <span class="n">partition_mbsize</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">boot_clone_count</span>
             <span class="p">)</span>
-            <span class="n">disksize_used_mbytes</span> <span class="o">+=</span> <span class="n">partition_mbsize</span>
+            <span class="n">disksize_used_mbytes</span> <span class="o">+=</span> \
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">boot_clone_count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">partition_mbsize</span> <span class="k">if</span> \
+                <span class="bp">self</span><span class="o">.</span><span class="n">boot_clone_count</span> <span class="k">else</span> <span class="n">partition_mbsize</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">swap_mbytes</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume_manager_name</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume_manager_name</span> <span class="o">!=</span> <span class="s1">&#39;lvm&#39;</span><span class="p">:</span>
@@ -1556,9 +1573,11 @@
                     <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">squashed_root_file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1048576</span>
                 <span class="p">)</span> <span class="o">+</span> <span class="n">Defaults</span><span class="o">.</span><span class="n">get_min_partition_mbytes</span><span class="p">()</span>
             <span class="n">disk</span><span class="o">.</span><span class="n">create_root_readonly_partition</span><span class="p">(</span>
-                <span class="n">squashed_rootfs_mbsize</span>
+                <span class="n">squashed_rootfs_mbsize</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_clone_count</span>
             <span class="p">)</span>
-            <span class="n">disksize_used_mbytes</span> <span class="o">+=</span> <span class="n">squashed_rootfs_mbsize</span>
+            <span class="n">disksize_used_mbytes</span> <span class="o">+=</span> \
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_clone_count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">squashed_rootfs_mbsize</span> <span class="k">if</span> \
+                <span class="bp">self</span><span class="o">.</span><span class="n">root_clone_count</span> <span class="k">else</span> <span class="n">squashed_rootfs_mbsize</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">spare_part_mbsize</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">spare_part_is_last</span><span class="p">:</span>
             <span class="n">rootfs_mbsize</span> <span class="o">=</span> <span class="n">disksize_mbytes</span> <span class="o">-</span> <span class="n">disksize_used_mbytes</span> <span class="o">-</span> \
@@ -1572,15 +1591,39 @@
                 <span class="s1">&#39;--&gt; overlayroot explicitly requested no write partition&#39;</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
+            <span class="n">root_clone_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_clone_count</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_filesystem_is_overlay</span><span class="p">:</span>
+                <span class="c1"># in overlay mode an eventual root clone is created from</span>
+                <span class="c1"># the root readonly partition and not from the root (rw)</span>
+                <span class="c1"># partition. Thus no further action needed here in this</span>
+                <span class="c1"># case</span>
+                <span class="n">root_clone_count</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="n">root_clone_count</span><span class="p">:</span>
+                <span class="n">clone_rootfs_mbsize</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">disksize_mbytes</span> <span class="o">-</span> <span class="n">disksize_used_mbytes</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">root_clone_count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="p">)</span> <span class="o">+</span> <span class="n">Defaults</span><span class="o">.</span><span class="n">get_min_partition_mbytes</span><span class="p">()</span>
+                <span class="n">rootfs_mbsize</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;clone:all_free:</span><span class="si">{</span><span class="n">clone_rootfs_mbsize</span><span class="si">}</span><span class="s1">&#39;</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume_manager_name</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume_manager_name</span> <span class="o">==</span> <span class="s1">&#39;lvm&#39;</span><span class="p">:</span>
-                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;--&gt; creating LVM root partition&#39;</span><span class="p">)</span>
-                <span class="n">disk</span><span class="o">.</span><span class="n">create_root_lvm_partition</span><span class="p">(</span><span class="n">rootfs_mbsize</span><span class="p">)</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="s1">&#39;--&gt; creating </span><span class="si">{0}</span><span class="s1"> partition [with </span><span class="si">{1}</span><span class="s1"> clone(s)]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="s1">&#39;root(LVM)&#39;</span><span class="p">,</span> <span class="n">root_clone_count</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">disk</span><span class="o">.</span><span class="n">create_root_lvm_partition</span><span class="p">(</span><span class="n">rootfs_mbsize</span><span class="p">,</span> <span class="n">root_clone_count</span><span class="p">)</span>
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdraid</span><span class="p">:</span>
-                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;--&gt; creating mdraid root partition&#39;</span><span class="p">)</span>
-                <span class="n">disk</span><span class="o">.</span><span class="n">create_root_raid_partition</span><span class="p">(</span><span class="n">rootfs_mbsize</span><span class="p">)</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="s1">&#39;--&gt; creating </span><span class="si">{0}</span><span class="s1"> partition [with </span><span class="si">{1}</span><span class="s1"> clone(s)]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s1">&#39;root(mdraid=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mdraid</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="n">root_clone_count</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">disk</span><span class="o">.</span><span class="n">create_root_raid_partition</span><span class="p">(</span><span class="n">rootfs_mbsize</span><span class="p">,</span> <span class="n">root_clone_count</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;--&gt; creating root partition&#39;</span><span class="p">)</span>
-                <span class="n">disk</span><span class="o">.</span><span class="n">create_root_partition</span><span class="p">(</span><span class="n">rootfs_mbsize</span><span class="p">)</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="s1">&#39;--&gt; creating root partition [with </span><span class="si">{0}</span><span class="s1"> clone(s)]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">root_clone_count</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">disk</span><span class="o">.</span><span class="n">create_root_partition</span><span class="p">(</span><span class="n">rootfs_mbsize</span><span class="p">,</span> <span class="n">root_clone_count</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">spare_part_mbsize</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">spare_part_is_last</span><span class="p">:</span>
             <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;--&gt; creating spare partition&#39;</span><span class="p">)</span>
@@ -1606,7 +1649,11 @@
 
         <span class="n">disk</span><span class="o">.</span><span class="n">map_partitions</span><span class="p">()</span>
 
-        <span class="k">return</span> <span class="n">disk</span><span class="o">.</span><span class="n">get_device</span><span class="p">()</span>
+        <span class="n">device_map</span> <span class="o">=</span> <span class="n">disk</span><span class="o">.</span><span class="n">get_device</span><span class="p">()</span>
+        <span class="n">device_map</span><span class="p">[</span><span class="s1">&#39;origin_root&#39;</span><span class="p">]</span> <span class="o">=</span> \
+            <span class="n">device_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;readonly&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">device_map</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">device_map</span>
 
     <span class="k">def</span> <span class="nf">_write_partition_id_config_to_boot_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">disk</span><span class="p">:</span> <span class="n">Disk</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Creating config.partids in boot system&#39;</span><span class="p">)</span>
@@ -1862,16 +1909,27 @@
         <span class="n">system_boot</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">FileSystemBase</span><span class="p">],</span>
         <span class="n">system_efi</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">FileSystemBase</span><span class="p">],</span>
         <span class="n">system_spare</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">FileSystemBase</span><span class="p">],</span>
-        <span class="n">system_custom_parts</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">FileSystemBase</span><span class="p">]</span>
+        <span class="n">system_custom_parts</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">FileSystemBase</span><span class="p">]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Syncing system to image&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">system_spare</span><span class="p">:</span>
             <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;--&gt; Syncing spare partition data&#39;</span><span class="p">)</span>
             <span class="n">system_spare</span><span class="o">.</span><span class="n">sync_data</span><span class="p">()</span>
 
-        <span class="k">for</span> <span class="n">system_custom_part</span> <span class="ow">in</span> <span class="n">system_custom_parts</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">map_name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">system_custom_parts</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="n">system_custom_part</span> <span class="o">=</span> <span class="n">system_custom_parts</span><span class="p">[</span><span class="n">map_name</span><span class="p">]</span>
             <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;--&gt; Syncing custom partition(s) data&#39;</span><span class="p">)</span>
             <span class="n">system_custom_part</span><span class="o">.</span><span class="n">sync_data</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">device_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">map_name</span><span class="si">}</span><span class="s1">clone1&#39;</span><span class="p">):</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s1">&#39;--&gt; Dumping </span><span class="si">{</span><span class="n">map_name</span><span class="si">}</span><span class="s1"> clone data at extra partition&#39;</span>
+                <span class="p">)</span>
+                <span class="n">system_custom_part_clone</span> <span class="o">=</span> <span class="n">CloneDevice</span><span class="p">(</span>
+                    <span class="n">system_custom_part</span><span class="o">.</span><span class="n">device_provider</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span>
+                <span class="p">)</span>
+                <span class="n">system_custom_part_clone</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_get_clone_devices</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">map_name</span><span class="si">}</span><span class="s1">clone&#39;</span><span class="p">,</span> <span class="n">device_map</span><span class="p">)</span>
+                <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">system_efi</span><span class="p">:</span>
             <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;--&gt; Syncing EFI boot data to EFI partition&#39;</span><span class="p">)</span>
@@ -1882,6 +1940,13 @@
             <span class="n">system_boot</span><span class="o">.</span><span class="n">sync_data</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_get_exclude_list_for_boot_data_sync</span><span class="p">()</span>
             <span class="p">)</span>
+            <span class="k">if</span> <span class="n">device_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;bootclone1&#39;</span><span class="p">):</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="s1">&#39;--&gt; Dumping boot clone data at extra partition&#39;</span>
+                <span class="p">)</span>
+                <span class="n">CloneDevice</span><span class="p">(</span><span class="n">system_boot</span><span class="o">.</span><span class="n">device_provider</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span><span class="p">)</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_get_clone_devices</span><span class="p">(</span><span class="s1">&#39;bootclone&#39;</span><span class="p">,</span> <span class="n">device_map</span><span class="p">)</span>
+                <span class="p">)</span>
 
         <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;--&gt; Syncing root filesystem data&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_filesystem_is_overlay</span><span class="p">:</span>
@@ -1931,6 +1996,13 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_filesystem_embed_verity_metadata</span><span class="p">:</span>
                 <span class="n">squashed_root</span><span class="o">.</span><span class="n">create_verification_metadata</span><span class="p">(</span>
                     <span class="n">readonly_target</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="n">device_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rootclone1&#39;</span><span class="p">):</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="s1">&#39;--&gt; Dumping readonly root clone data at extra partition&#39;</span>
+                <span class="p">)</span>
+                <span class="n">CloneDevice</span><span class="p">(</span><span class="n">device_map</span><span class="p">[</span><span class="s1">&#39;origin_root&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span><span class="p">)</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_get_clone_devices</span><span class="p">(</span><span class="s1">&#39;rootclone&#39;</span><span class="p">,</span> <span class="n">device_map</span><span class="p">)</span>
                 <span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_filesystem_verity_blocks</span><span class="p">:</span>
             <span class="n">root_target</span> <span class="o">=</span> <span class="n">device_map</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get_device</span><span class="p">()</span>
@@ -1990,10 +2062,24 @@
                 <span class="n">filesystem</span><span class="o">.</span><span class="n">create_verification_metadata</span><span class="p">(</span>
                     <span class="n">root_target</span>
                 <span class="p">)</span>
+            <span class="k">if</span> <span class="n">device_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rootclone1&#39;</span><span class="p">):</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="s1">&#39;--&gt; Dumping root clone data at extra partition&#39;</span>
+                <span class="p">)</span>
+                <span class="n">CloneDevice</span><span class="p">(</span><span class="n">device_map</span><span class="p">[</span><span class="s1">&#39;origin_root&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span><span class="p">)</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_get_clone_devices</span><span class="p">(</span><span class="s1">&#39;rootclone&#39;</span><span class="p">,</span> <span class="n">device_map</span><span class="p">)</span>
+                <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">system</span><span class="o">.</span><span class="n">sync_data</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_get_exclude_list_for_root_data_sync</span><span class="p">(</span><span class="n">device_map</span><span class="p">)</span>
             <span class="p">)</span>
+            <span class="k">if</span> <span class="n">device_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rootclone1&#39;</span><span class="p">):</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="s1">&#39;--&gt; Dumping root clone data at extra partition&#39;</span>
+                <span class="p">)</span>
+                <span class="n">CloneDevice</span><span class="p">(</span><span class="n">device_map</span><span class="p">[</span><span class="s1">&#39;origin_root&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span><span class="p">)</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_get_clone_devices</span><span class="p">(</span><span class="s1">&#39;rootclone&#39;</span><span class="p">,</span> <span class="n">device_map</span><span class="p">)</span>
+                <span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">integrity_root</span> <span class="ow">and</span> \
            <span class="bp">self</span><span class="o">.</span><span class="n">root_filesystem_embed_integrity_metadata</span><span class="p">:</span>
@@ -2111,7 +2197,16 @@
                     <span class="s1">&#39;mv&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">boot_image</span><span class="o">.</span><span class="n">initrd_filename</span><span class="p">,</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span> <span class="o">+</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;/boot/&#39;</span><span class="p">,</span> <span class="n">boot_names</span><span class="o">.</span><span class="n">initrd_name</span><span class="p">])</span>
                 <span class="p">]</span>
-            <span class="p">)</span></div>
+            <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_clone_devices</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">match</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">device_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DeviceProvider</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">DeviceProvider</span><span class="p">]:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">map_name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">device_map</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">map_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">match</span><span class="p">):</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">device_map</span><span class="p">[</span><span class="n">map_name</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">result</span></div>
 </pre></div>
 
            </div>

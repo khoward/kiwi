@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Setting up Repositories &mdash; KIWI NG 9.24.35 documentation</title>
+  <title>Partition Clones &mdash; KIWI NG 9.24.35 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Adding and Removing Packages" href="packages.html" />
-    <link rel="prev" title="Host Requirements To Build Images" href="systemdeps.html" /> 
+    <link rel="next" title="Setting Up a Network Boot Server" href="setup_network_bootserver.html" />
+    <link rel="prev" title="Custom Disk Volumes" href="custom_volumes.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -147,39 +147,39 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="reference internal" href="../concept_and_workflow.html">Concept and Workflow</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="systemdeps.html">Host Requirements To Build Images</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Setting up Repositories</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#adding-repositories">Adding repositories</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#supported-repository-paths">Supported repository paths</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concept_and_workflow.html">Concept and Workflow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../concept_and_workflow/systemdeps.html">Host Requirements To Build Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concept_and_workflow/repository_setup.html">Setting up Repositories</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../concept_and_workflow/repository_setup.html#adding-repositories">Adding repositories</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../concept_and_workflow/repository_setup.html#supported-repository-paths">Supported repository paths</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="packages.html">Adding and Removing Packages</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="packages.html#the-package-element">The <code class="xref py py-obj docutils literal notranslate"><span class="pre">package</span></code> element</a></li>
-<li class="toctree-l3"><a class="reference internal" href="packages.html#the-archive-element">The <code class="xref py py-obj docutils literal notranslate"><span class="pre">archive</span></code> element</a></li>
-<li class="toctree-l3"><a class="reference internal" href="packages.html#uninstall-system-packages">Uninstall System Packages</a></li>
-<li class="toctree-l3"><a class="reference internal" href="packages.html#the-product-and-namedcollection-element">The <code class="xref py py-obj docutils literal notranslate"><span class="pre">product</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">namedCollection</span></code> element</a></li>
-<li class="toctree-l3"><a class="reference internal" href="packages.html#the-ignore-element">The <code class="xref py py-obj docutils literal notranslate"><span class="pre">ignore</span></code> element</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concept_and_workflow/packages.html">Adding and Removing Packages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../concept_and_workflow/packages.html#the-package-element">The <code class="xref py py-obj docutils literal notranslate"><span class="pre">package</span></code> element</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../concept_and_workflow/packages.html#the-archive-element">The <code class="xref py py-obj docutils literal notranslate"><span class="pre">archive</span></code> element</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../concept_and_workflow/packages.html#uninstall-system-packages">Uninstall System Packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../concept_and_workflow/packages.html#the-product-and-namedcollection-element">The <code class="xref py py-obj docutils literal notranslate"><span class="pre">product</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">namedCollection</span></code> element</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../concept_and_workflow/packages.html#the-ignore-element">The <code class="xref py py-obj docutils literal notranslate"><span class="pre">ignore</span></code> element</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="profiles.html">Image Profiles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="users.html">Adding Users</a></li>
-<li class="toctree-l2"><a class="reference internal" href="shell_scripts.html">User Defined Scripts</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="shell_scripts.html#developing-debugging-scripts">Developing/Debugging Scripts</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="shell_scripts.html#script-template-for-config-sh-images-sh">Script Template for config.sh / images.sh</a></li>
-<li class="toctree-l4"><a class="reference internal" href="shell_scripts.html#functions-and-variables-provided-by-kiwi-ng">Functions and Variables Provided by KIWI NG</a></li>
-<li class="toctree-l4"><a class="reference internal" href="shell_scripts.html#configuration-tips">Configuration Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concept_and_workflow/profiles.html">Image Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concept_and_workflow/users.html">Adding Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concept_and_workflow/shell_scripts.html">User Defined Scripts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../concept_and_workflow/shell_scripts.html#developing-debugging-scripts">Developing/Debugging Scripts</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../concept_and_workflow/shell_scripts.html#script-template-for-config-sh-images-sh">Script Template for config.sh / images.sh</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../concept_and_workflow/shell_scripts.html#functions-and-variables-provided-by-kiwi-ng">Functions and Variables Provided by KIWI NG</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../concept_and_workflow/shell_scripts.html#configuration-tips">Configuration Tips</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="runtime_configuration.html">The Runtime Configuration File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="customize_the_boot_process.html">Customizing the Boot Process</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="customize_the_boot_process.html#boot-image-hook-scripts">Boot Image Hook-Scripts</a></li>
-<li class="toctree-l3"><a class="reference internal" href="customize_the_boot_process.html#boot-image-parameters">Boot Image Parameters</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="customize_the_boot_process.html#boot-debugging">Boot Debugging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concept_and_workflow/runtime_configuration.html">The Runtime Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concept_and_workflow/customize_the_boot_process.html">Customizing the Boot Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../concept_and_workflow/customize_the_boot_process.html#boot-image-hook-scripts">Boot Image Hook-Scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../concept_and_workflow/customize_the_boot_process.html#boot-image-parameters">Boot Image Parameters</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../concept_and_workflow/customize_the_boot_process.html#boot-debugging">Boot Debugging</a></li>
 </ul>
 </li>
 </ul>
@@ -289,66 +289,66 @@
 <li class="toctree-l2"><a class="reference internal" href="../building_images/build_kis.html">Build KIS Image (Kernel, Initrd, System)</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../working_with_images.html">Working with Images</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../working_with_images/iso_to_usb_stick_deployment.html">Deploy ISO Image on an USB Stick</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../working_with_images/iso_to_usb_stick_file_based_deployment.html">Deploy ISO Image as File on a FAT32 Formated USB Stick</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../working_with_images/iso_to_usb_stick_grub2_boot_from_iso.html">Booting a Live ISO Images from Grub2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../working_with_images/disk_setup_for_ec2.html">Image Description for Amazon EC2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../working_with_images/disk_setup_for_azure.html">Image Description for Microsoft Azure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../working_with_images/disk_setup_for_google.html">Image Description for Google Compute Engine</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../working_with_images/disk_setup_for_vagrant.html">Image Description for Vagrant</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../working_with_images/disk_setup_for_vagrant.html#customizing-the-embedded-vagrantfile">Customizing the embedded Vagrantfile</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../working_with_images.html">Working with Images</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="iso_to_usb_stick_deployment.html">Deploy ISO Image on an USB Stick</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iso_to_usb_stick_file_based_deployment.html">Deploy ISO Image as File on a FAT32 Formated USB Stick</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iso_to_usb_stick_grub2_boot_from_iso.html">Booting a Live ISO Images from Grub2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="disk_setup_for_ec2.html">Image Description for Amazon EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="disk_setup_for_azure.html">Image Description for Microsoft Azure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="disk_setup_for_google.html">Image Description for Google Compute Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="disk_setup_for_vagrant.html">Image Description for Vagrant</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="disk_setup_for_vagrant.html#customizing-the-embedded-vagrantfile">Customizing the embedded Vagrantfile</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../working_with_images/disk_setup_for_luks.html">Image Description Encrypted Disk</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../working_with_images/disk_ramdisk_deployment.html">Deploy and Run System in a RamDisk</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../working_with_images/custom_partitions.html">Custom Disk Partitions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../working_with_images/custom_volumes.html">Custom Disk Volumes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../working_with_images/clone_partitions.html">Partition Clones</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../working_with_images/clone_partitions.html#use-case">Use Case</a></li>
+<li class="toctree-l2"><a class="reference internal" href="disk_setup_for_luks.html">Image Description Encrypted Disk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="disk_ramdisk_deployment.html">Deploy and Run System in a RamDisk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_partitions.html">Custom Disk Partitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_volumes.html">Custom Disk Volumes</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Partition Clones</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#use-case">Use Case</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../working_with_images/setup_network_bootserver.html">Setting Up a Network Boot Server</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../working_with_images/setup_network_bootserver.html#installing-and-configuring-dhcp-and-tftp-with-dnsmasq">Installing and Configuring DHCP and TFTP with dnsmasq</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup_network_bootserver.html">Setting Up a Network Boot Server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="setup_network_bootserver.html#installing-and-configuring-dhcp-and-tftp-with-dnsmasq">Installing and Configuring DHCP and TFTP with dnsmasq</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../working_with_images/legacy_netboot_root_filesystem.html">Build PXE Root File System Image for the legacy netboot infrastructure</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../working_with_images/legacy_netboot_root_filesystem.html#pxe-client-setup-configuration">PXE Client Setup Configuration</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../working_with_images/legacy_netboot_root_filesystem.html#setup-client-with-remote-root">Setup Client with Remote Root</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../working_with_images/legacy_netboot_root_filesystem.html#setup-client-with-system-on-local-disk">Setup Client with System on Local Disk</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../working_with_images/legacy_netboot_root_filesystem.html#setup-client-with-system-on-local-md-raid-disk">Setup Client with System on Local MD RAID Disk</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../working_with_images/legacy_netboot_root_filesystem.html#setup-loading-of-custom-configuration-file-s">Setup Loading of Custom Configuration File(s)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../working_with_images/legacy_netboot_root_filesystem.html#setup-client-to-force-reload-image">Setup Client to Force Reload Image</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../working_with_images/legacy_netboot_root_filesystem.html#setup-client-to-force-reload-configuration-files">Setup Client to Force Reload Configuration Files</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../working_with_images/legacy_netboot_root_filesystem.html#setup-client-for-reboot-after-deployment">Setup Client for Reboot After Deployment</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../working_with_images/legacy_netboot_root_filesystem.html#setup-custom-kernel-boot-options">Setup custom kernel boot options</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../working_with_images/legacy_netboot_root_filesystem.html#setup-a-custom-boot-timeout">Setup a Custom Boot Timeout</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../working_with_images/legacy_netboot_root_filesystem.html#setup-a-different-download-protocol-and-server">Setup a Different Download Protocol and Server</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../working_with_images/network_overlay_boot.html">Booting a Root Filesystem from Network</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../working_with_images/network_live_iso_boot.html">Booting a Live ISO Image from Network</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../working_with_images/setup_yast_on_first_boot.html">Setting Up YaST at First Boot</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../working_with_images/custom_fstab_extension.html">Add or Update the Fstab File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../working_with_images/build_with_profiles.html">Building Images with Profiles</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../working_with_images/build_with_profiles.html#local-builds">Local Builds</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../working_with_images/build_with_profiles.html#building-with-the-open-build-service">Building with the Open Build Service</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../working_with_images/build_in_buildservice.html">Building in the Open Build Service</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../working_with_images/build_in_buildservice.html#advantages-of-using-the-open-build-service-obs">Advantages of using the Open Build Service (OBS)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../working_with_images/build_in_buildservice.html#differences-between-building-locally-and-on-obs">Differences Between Building Locally and on OBS</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../working_with_images/build_in_buildservice.html#recommendations">Recommendations</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../working_with_images/build_in_buildservice.html#working-with-obs">Working with OBS</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../working_with_images/build_in_buildservice.html#repository-configuration">Repository Configuration</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../working_with_images/build_in_buildservice.html#project-configuration">Project Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="legacy_netboot_root_filesystem.html">Build PXE Root File System Image for the legacy netboot infrastructure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="legacy_netboot_root_filesystem.html#pxe-client-setup-configuration">PXE Client Setup Configuration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="legacy_netboot_root_filesystem.html#setup-client-with-remote-root">Setup Client with Remote Root</a></li>
+<li class="toctree-l4"><a class="reference internal" href="legacy_netboot_root_filesystem.html#setup-client-with-system-on-local-disk">Setup Client with System on Local Disk</a></li>
+<li class="toctree-l4"><a class="reference internal" href="legacy_netboot_root_filesystem.html#setup-client-with-system-on-local-md-raid-disk">Setup Client with System on Local MD RAID Disk</a></li>
+<li class="toctree-l4"><a class="reference internal" href="legacy_netboot_root_filesystem.html#setup-loading-of-custom-configuration-file-s">Setup Loading of Custom Configuration File(s)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="legacy_netboot_root_filesystem.html#setup-client-to-force-reload-image">Setup Client to Force Reload Image</a></li>
+<li class="toctree-l4"><a class="reference internal" href="legacy_netboot_root_filesystem.html#setup-client-to-force-reload-configuration-files">Setup Client to Force Reload Configuration Files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="legacy_netboot_root_filesystem.html#setup-client-for-reboot-after-deployment">Setup Client for Reboot After Deployment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="legacy_netboot_root_filesystem.html#setup-custom-kernel-boot-options">Setup custom kernel boot options</a></li>
+<li class="toctree-l4"><a class="reference internal" href="legacy_netboot_root_filesystem.html#setup-a-custom-boot-timeout">Setup a Custom Boot Timeout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="legacy_netboot_root_filesystem.html#setup-a-different-download-protocol-and-server">Setup a Different Download Protocol and Server</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../working_with_images/use_suse_media.html">Using SUSE Product ISO To Build</a></li>
+<li class="toctree-l2"><a class="reference internal" href="network_overlay_boot.html">Booting a Root Filesystem from Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="network_live_iso_boot.html">Booting a Live ISO Image from Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup_yast_on_first_boot.html">Setting Up YaST at First Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_fstab_extension.html">Add or Update the Fstab File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_with_profiles.html">Building Images with Profiles</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="build_with_profiles.html#local-builds">Local Builds</a></li>
+<li class="toctree-l3"><a class="reference internal" href="build_with_profiles.html#building-with-the-open-build-service">Building with the Open Build Service</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="build_in_buildservice.html">Building in the Open Build Service</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="build_in_buildservice.html#advantages-of-using-the-open-build-service-obs">Advantages of using the Open Build Service (OBS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="build_in_buildservice.html#differences-between-building-locally-and-on-obs">Differences Between Building Locally and on OBS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="build_in_buildservice.html#recommendations">Recommendations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="build_in_buildservice.html#working-with-obs">Working with OBS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="build_in_buildservice.html#repository-configuration">Repository Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="build_in_buildservice.html#project-configuration">Project Configuration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="use_suse_media.html">Using SUSE Product ISO To Build</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a><ul>
@@ -655,10 +655,10 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../concept_and_workflow.html">Concept and Workflow</a> &raquo;</li>
-      <li>Setting up Repositories</li>
+          <li><a href="../working_with_images.html">Working with Images</a> &raquo;</li>
+      <li>Partition Clones</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/concept_and_workflow/repository_setup.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/working_with_images/clone_partitions.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -666,113 +666,117 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="setting-up-repositories">
-<span id="repositories"></span><h1>Setting up Repositories<a class="headerlink" href="#setting-up-repositories" title="Permalink to this headline">¶</a></h1>
-<p>A crucial part of each appliance is the repository
-selection. KIWI NG allows the end user to completely customize the selection
-of repositories and packages via the <code class="xref py py-obj docutils literal notranslate"><span class="pre">repository</span></code> element.</p>
-<section id="adding-repositories">
-<h2>Adding repositories<a class="headerlink" href="#adding-repositories" title="Permalink to this headline">¶</a></h2>
-<p>KIWI NG installs packages into your appliance from the repositories defined in
-the image description. Therefore at least one repository <strong>must</strong> be
-defined, as KIWI NG will otherwise not be able to fetch any packages.</p>
-<p>A repository is added to the description via the <code class="xref py py-obj docutils literal notranslate"><span class="pre">repository</span></code> element,
-which is a child of the top-level <code class="xref py py-obj docutils literal notranslate"><span class="pre">image</span></code> element:</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;image</span> <span class="na">schemaversion=</span><span class="s">&quot;7.4&quot;</span> <span class="na">name=</span><span class="s">&quot;{exc_image_base_name}&quot;</span><span class="nt">&gt;</span>
-    <span class="cm">&lt;!-- snip --&gt;</span>
-    <span class="nt">&lt;repository</span> <span class="na">type=</span><span class="s">&quot;rpm-md&quot;</span> <span class="na">alias=</span><span class="s">&quot;kiwi&quot;</span> <span class="na">priority=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;source</span> <span class="na">path=</span><span class="s">&quot;obs://Virtualization:Appliances:Builder/openSUSE_Leap_15.3&quot;</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;/repository&gt;</span>
-    <span class="nt">&lt;repository</span> <span class="na">type=</span><span class="s">&quot;rpm-md&quot;</span> <span class="na">alias=</span><span class="s">&quot;OS&quot;</span> <span class="na">imageinclude=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;source</span> <span class="na">path=</span><span class="s">&quot;{exc_repo}&quot;</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;/repository&gt;</span>
-<span class="nt">&lt;/image&gt;</span>
+  <section id="partition-clones">
+<span id="clone-partitions"></span><h1>Partition Clones<a class="headerlink" href="#partition-clones" title="Permalink to this headline">¶</a></h1>
+<aside class="sidebar">
+<p class="sidebar-title">Abstract</p>
+<p>This page provides details about the partition clone feature
+and its use cases</p>
+</aside>
+<p>KIWI NG allows to create block level clones of certain partitions
+used in the image. Clones can be created from the <code class="xref py py-obj docutils literal notranslate"><span class="pre">root</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">boot</span></code>
+and any other partition listed in the <code class="xref py py-obj docutils literal notranslate"><span class="pre">&lt;partitions&gt;</span></code> element.</p>
+<p>A partition clone is a simple byte dump from one
+block storage device to another. However, this would cause conflicts
+during boot of the system because all unique identifiers like
+the UUID of a filesystem will no longer be unique. The clone
+feature of KIWI NG takes care of this part and re-creates the
+relevant unique identifiers per cloned partition. KIWI NG allows
+this also for complex partitions like LVM, LUKS or RAID.</p>
+<p>The partition clone(s) will always appear first in the partition table,
+followed by the origin partition. The origin partition is the one
+whose identifier will be referenced and used by the system. By default
+no cloned partition will be mounted or used by the system at boot time.</p>
+<p>Let’s take a look at the following example:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;type</span> <span class="na">image=</span><span class="s">&quot;oem&quot;</span> <span class="na">root_clone=</span><span class="s">&quot;1&quot;</span> <span class="na">boot_clone=</span><span class="s">&quot;1&quot;</span> <span class="na">firmware=</span><span class="s">&quot;uefi&quot;</span> <span class="na">filesystem=</span><span class="s">&quot;xfs&quot;</span> <span class="na">bootpartition=</span><span class="s">&quot;true&quot;</span> <span class="na">bootfilesystem=</span><span class="s">&quot;ext4&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;partitions&gt;</span>
+        <span class="nt">&lt;partition</span> <span class="na">name=</span><span class="s">&quot;home&quot;</span> <span class="na">size=</span><span class="s">&quot;10&quot;</span> <span class="na">mountpoint=</span><span class="s">&quot;/home&quot;</span> <span class="na">filesystem=</span><span class="s">&quot;ext3&quot;</span> <span class="na">clone=</span><span class="s">&quot;2&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/partitions&gt;</span>
+<span class="nt">&lt;/type&gt;</span>
 </pre></div>
 </div>
-<p>In the above snippet we defined two repositories:</p>
-<ol class="arabic simple">
-<li><p>The repository belonging to the KIWI NG project:
-<em>obs://Virtualization:Appliances:Builder/openSUSE_Leap_15.3</em> at the Open Build Service (OBS)</p></li>
-<li><p>The RPM repository belonging to the OS project:
-<em>{exc_repo}</em>, at the Open Build Service (OBS). The translated
-http URL will also be included in the final appliance.</p></li>
-</ol>
-<p>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">repository</span></code> element accepts one <code class="xref py py-obj docutils literal notranslate"><span class="pre">source</span></code> child element, which
-contains the URL to the repository in an appropriate format and the
-following optional attributes:</p>
-<ul>
-<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">imageinclude</span></code>: Specify whether this repository should be added to the
-resulting image, defaults to false.</p></li>
-<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">imageonly</span></code>: A repository with <code class="xref py py-obj docutils literal notranslate"><span class="pre">imageonly=&quot;true&quot;</span></code> will not be available
-during image build, but only in the resulting appliance. Defaults to
-false.</p></li>
-<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">priority</span></code>: An integer priority for all packages in this repository. If
-the same package is available in more than one repository, then the one
-with the highest priority is used.</p></li>
-<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">alias</span></code>: Name to be used for this repository, it will appear as the
-repository’s name in the image, which is visible via <code class="docutils literal notranslate"><span class="pre">zypper</span> <span class="pre">repos</span></code> or
-<code class="docutils literal notranslate"><span class="pre">dnf</span> <span class="pre">repolist</span></code>. KIWI NG will construct an alias from the path in the
-<code class="xref py py-obj docutils literal notranslate"><span class="pre">source</span></code> child element (replacing each <code class="xref py py-obj docutils literal notranslate"><span class="pre">/</span></code> with a <code class="xref py py-obj docutils literal notranslate"><span class="pre">_</span></code>), if no value is
-given.</p></li>
-<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">repository_gpgcheck</span></code>: Specify whether or not this specific repository is
-configured to to run repository signature validation. If not set, the
-package manager’s default is used.</p></li>
-<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">package_gpgcheck</span></code>: Boolean value that specifies whether each package’s
-GPG signature will be verified. If omitted, the package manager’s default
-will be used</p></li>
-<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">components</span></code>: Distribution components used for <code class="xref py py-obj docutils literal notranslate"><span class="pre">deb</span></code> repositories,
-defaults to <code class="xref py py-obj docutils literal notranslate"><span class="pre">main</span></code>.</p></li>
-<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">distribution</span></code>: Distribution name information, used for deb repositories.</p></li>
-<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">profiles</span></code>: List of profiles to which this repository applies.</p></li>
-<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">customize</span></code>: Script to run custom modifications to the repo file(s).
-repo files allows for several customization options which not all of them
-are supported to be set by kiwi through the current repository schema.
-As the options used do not follow any standard and are not compatible
-between package managers and distributions, the only generic way to handle
-this is through a script hook which is invoked with the repo file as
-parameter for each file created by KIWI NG.</p>
-<p>An example for a script call to add the <code class="xref py py-obj docutils literal notranslate"><span class="pre">module_hotfixes</span></code> option
-for a <code class="xref py py-obj docutils literal notranslate"><span class="pre">dnf</span></code> compatible repository configuration could look like
-this</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">repo_file</span><span class="o">=</span><span class="nv">$1</span>
-<span class="nb">echo</span> <span class="s1">&#39;module_hotfixes = 1&#39;</span> &gt;&gt; <span class="si">${</span><span class="nv">repo_file</span><span class="si">}</span>
+<p>With the above setup KIWI NG will create a disk image that
+contains the following partition table:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Number</span>  <span class="n">Start</span> <span class="p">(</span><span class="n">sector</span><span class="p">)</span>    <span class="n">End</span> <span class="p">(</span><span class="n">sector</span><span class="p">)</span>  <span class="n">Size</span>       <span class="n">Code</span>  <span class="n">Name</span>
+   <span class="mi">1</span>            <span class="mi">2048</span>            <span class="mi">6143</span>   <span class="mf">2.0</span> <span class="n">MiB</span>     <span class="n">EF02</span>  <span class="n">p</span><span class="o">.</span><span class="n">legacy</span>
+   <span class="mi">2</span>            <span class="mi">6144</span>           <span class="mi">47103</span>   <span class="mf">20.0</span> <span class="n">MiB</span>    <span class="n">EF00</span>  <span class="n">p</span><span class="o">.</span><span class="n">UEFI</span>
+   <span class="mi">3</span>           <span class="mi">47104</span>          <span class="mi">661503</span>   <span class="mf">300.0</span> <span class="n">MiB</span>   <span class="mi">8300</span>  <span class="n">p</span><span class="o">.</span><span class="n">lxbootclone1</span>
+   <span class="mi">4</span>          <span class="mi">661504</span>         <span class="mi">1275903</span>   <span class="mf">300.0</span> <span class="n">MiB</span>   <span class="mi">8300</span>  <span class="n">p</span><span class="o">.</span><span class="n">lxboot</span>
+   <span class="mi">5</span>         <span class="mi">1275904</span>         <span class="mi">1296383</span>   <span class="mf">10.0</span> <span class="n">MiB</span>    <span class="mi">8300</span>  <span class="n">p</span><span class="o">.</span><span class="n">lxhomeclone1</span>
+   <span class="mi">6</span>         <span class="mi">1296384</span>         <span class="mi">1316863</span>   <span class="mf">10.0</span> <span class="n">MiB</span>    <span class="mi">8300</span>  <span class="n">p</span><span class="o">.</span><span class="n">lxhomeclone2</span>
+   <span class="mi">7</span>         <span class="mi">1316864</span>         <span class="mi">1337343</span>   <span class="mf">10.0</span> <span class="n">MiB</span>    <span class="mi">8300</span>  <span class="n">p</span><span class="o">.</span><span class="n">lxhome</span>
+   <span class="mi">8</span>         <span class="mi">1337344</span>         <span class="mi">3864575</span>   <span class="mf">1.2</span> <span class="n">GiB</span>     <span class="mi">8300</span>  <span class="n">p</span><span class="o">.</span><span class="n">lxrootclone1</span>
+   <span class="mi">9</span>         <span class="mi">3864576</span>         <span class="mi">6287326</span>   <span class="mf">1.2</span> <span class="n">GiB</span>     <span class="mi">8300</span>  <span class="n">p</span><span class="o">.</span><span class="n">lxroot</span>
 </pre></div>
 </div>
+<p>When booting the system only the origin partitions <code class="xref py py-obj docutils literal notranslate"><span class="pre">p.lxboot</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">p.lxroot</span></code>
+and <code class="xref py py-obj docutils literal notranslate"><span class="pre">p.lxhome</span></code> will be mounted and visible in e.g. <code class="file docutils literal notranslate"><span class="pre">/etc/fstab</span></code>,
+the bootloader or the initrd. Thus partition clones are present as a data
+source but are not relevant for the operating system from a functional
+perspective.</p>
+<p>As shown in the above example there is one clone request for root and boot
+and a two clone requests for the home partition. KIWI NG does not sanity-
+check the provided number of clones (e.g. whether your partition table
+can hold that many partitions).</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>There is a limit how many partitions a partition table can hold.
+This also limits how many clones can be created.</p>
+</div>
+<section id="use-case">
+<h2>Use Case<a class="headerlink" href="#use-case" title="Permalink to this headline">¶</a></h2>
+<p>Potential use cases for which a clone of one or more partitions
+is useful include among others:</p>
+<dl class="simple">
+<dt>Factory Resets:</dt><dd><p>Creating an image with the option to rollback to the
+state of the system at deployment time can be very helpful
+for disaster recovery</p>
+</dd>
+<dt>System Updates with Rollbacks e.g A/B:</dt><dd><p>Creating an image which holds extra space allowing to rollback
+modified data can make a system more robust. For example
+in a simple A/B update concept, partition A would get updated
+but would flip to B if A is considered broken after applying the
+update.</p>
+</dd>
+</dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If the script is provided as relative path it will
-be searched in the image description directory</p>
+<p>Most probably any use case based on partition clones requires
+additional software to manage them. KIWI NG provides the
+option to create the clone layout but it does not provide
+the software to implement the actual use case for which the
+partition clones are needed.</p>
 </div>
-</li>
-</ul>
-<section id="supported-repository-paths">
-<span id="id1"></span><h3>Supported repository paths<a class="headerlink" href="#supported-repository-paths" title="Permalink to this headline">¶</a></h3>
-<p>The actual location of a repository is specified in the <code class="xref py py-obj docutils literal notranslate"><span class="pre">source</span></code> child
-element of <code class="xref py py-obj docutils literal notranslate"><span class="pre">repository</span></code> via its only attribute <code class="xref py py-obj docutils literal notranslate"><span class="pre">path</span></code>. KIWI NG supports the
-following paths types:</p>
+<p>Developers writing applications based on a clone layout created
+with KIWI NG can leverage the metadata file <code class="file docutils literal notranslate"><span class="pre">/config.partids</span></code>.
+This file is created at build time and contains the mapping between
+the partition <code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code> and the actual partition number in the partition
+table. For partition clones, the following naming convention applies:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kiwi_</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="n">PartClone</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span><span class="o">=</span><span class="s2">&quot;(partition_number)&quot;</span>
+</pre></div>
+</div>
+<p>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">(name)</span></code> is either taken from the <code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code> attribute
+of the <code class="xref py py-obj docutils literal notranslate"><span class="pre">&lt;partition&gt;</span></code> element or it is a fixed name assigned by KIWI NG.
+There are the following reserved partition names for which cloning
+is supported:</p>
 <ul class="simple">
-<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">http://URL</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">https://URL</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">ftp://URL</span></code>: a URL to the repository
-available via HTTP(s) or FTP.</p></li>
-<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">obs://$PROJECT/$REPOSITORY</span></code>: evaluates to the repository <code class="xref py py-obj docutils literal notranslate"><span class="pre">$REPOSITORY</span></code>
-of the project <code class="xref py py-obj docutils literal notranslate"><span class="pre">$PROJECT</span></code> available on the Open Build Service (OBS). By
-default KIWI NG will look for projects on <a class="reference external" href="https://build.opensuse.org">build.opensuse.org</a>, but this can be overridden using the
-runtime configuration file (see <a class="reference internal" href="runtime_configuration.html#runtime-config"><span class="std std-ref">The Runtime Configuration File</span></a>).
-Note that it is not possible to add repositories using the <code class="xref py py-obj docutils literal notranslate"><span class="pre">obs://</span></code> path
-from <strong>different</strong> OBS instances (use direct URLs to the <code class="file docutils literal notranslate"><span class="pre">.repo</span></code>
-file instead in this case).</p></li>
-<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">obsrepositories:/</span></code>: special path only available for builds using the
-Open Build Service. The repositories configured for the OBS project in
-which the KIWI NG image resides will be available inside the appliance. This
-allows you to configure the repositories of your image from OBS itself
-and not having to modify the image description.</p></li>
-<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dir:///path/to/directory</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">file:///path/to/file</span></code>: an absolute path to
-a local directory or file available on the host building the
-appliance.</p></li>
-<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">iso:///path/to/image.iso</span></code>: the specified ISO image will be mounted
-during the build of the KIWI NG image and a repository will be created
-pointing to the mounted ISO.</p></li>
+<li><p>root</p></li>
+<li><p>readonly</p></li>
+<li><p>boot</p></li>
 </ul>
-</section>
+<p>For the mentioned example this will result in the
+following <code class="file docutils literal notranslate"><span class="pre">/config.partids</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kiwi_BiosGrub</span><span class="o">=</span><span class="s2">&quot;1&quot;</span>
+<span class="n">kiwi_EfiPart</span><span class="o">=</span><span class="s2">&quot;2&quot;</span>
+<span class="n">kiwi_bootPartClone1</span><span class="o">=</span><span class="s2">&quot;3&quot;</span>
+<span class="n">kiwi_BootPart</span><span class="o">=</span><span class="s2">&quot;4&quot;</span>
+<span class="n">kiwi_homePartClone1</span><span class="o">=</span><span class="s2">&quot;5&quot;</span>
+<span class="n">kiwi_homePartClone2</span><span class="o">=</span><span class="s2">&quot;6&quot;</span>
+<span class="n">kiwi_HomePart</span><span class="o">=</span><span class="s2">&quot;7&quot;</span>
+<span class="n">kiwi_rootPartClone1</span><span class="o">=</span><span class="s2">&quot;8&quot;</span>
+<span class="n">kiwi_RootPart</span><span class="o">=</span><span class="s2">&quot;9&quot;</span>
+</pre></div>
+</div>
 </section>
 </section>
 
@@ -780,8 +784,8 @@ pointing to the mounted ISO.</p></li>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="systemdeps.html" class="btn btn-neutral float-left" title="Host Requirements To Build Images" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="packages.html" class="btn btn-neutral float-right" title="Adding and Removing Packages" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="custom_volumes.html" class="btn btn-neutral float-left" title="Custom Disk Volumes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="setup_network_bootserver.html" class="btn btn-neutral float-right" title="Setting Up a Network Boot Server" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

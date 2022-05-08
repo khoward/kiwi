@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Custom Disk Partitions &mdash; KIWI NG 9.24.34 documentation</title>
+  <title>Custom Disk Partitions &mdash; KIWI NG 9.24.35 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
@@ -304,6 +304,10 @@
 <li class="toctree-l2"><a class="reference internal" href="disk_ramdisk_deployment.html">Deploy and Run System in a RamDisk</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Custom Disk Partitions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="custom_volumes.html">Custom Disk Volumes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clone_partitions.html">Partition Clones</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="clone_partitions.html#use-case">Use Case</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="setup_network_bootserver.html">Setting Up a Network Boot Server</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="setup_network_bootserver.html#installing-and-configuring-dhcp-and-tftp-with-dnsmasq">Installing and Configuring DHCP and TFTP with dnsmasq</a></li>
 </ul>
@@ -720,6 +724,15 @@ specification mega-Byte is used.</p>
 </dd>
 <dt>filesystem=”btrfs|ext2|ext3|ext4|squashfs|xfs</dt><dd><p>Mandatory filesystem configuration to create one of the supported
 filesystems on the partition.</p>
+</dd>
+<dt>clone=”number”</dt><dd><p>Optional setting to indicate that this partition should be
+cloned <code class="xref py py-obj docutils literal notranslate"><span class="pre">number</span></code> of times. A clone partition is content wise an
+exact byte for byte copy of the origin. However, to avoid conflicts at boot
+time the UUID of any cloned partition will be made unique. In the
+sequence of partitions, the clone(s) will always be created first
+followed by the partition considered the origin. The origin
+partition is the one that will be referenced and used by the
+system</p>
 </dd>
 </dl>
 <p>Despite the customization options of the partition table shown above

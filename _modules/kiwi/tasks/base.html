@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.tasks.base &mdash; KIWI NG 9.24.34 documentation</title>
+  <title>kiwi.tasks.base &mdash; KIWI NG 9.24.35 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -301,6 +301,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../working_with_images/disk_ramdisk_deployment.html">Deploy and Run System in a RamDisk</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../working_with_images/custom_partitions.html">Custom Disk Partitions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../working_with_images/custom_volumes.html">Custom Disk Volumes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../working_with_images/clone_partitions.html">Partition Clones</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../working_with_images/clone_partitions.html#use-case">Use Case</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../../working_with_images/setup_network_bootserver.html">Setting Up a Network Boot Server</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../working_with_images/setup_network_bootserver.html#installing-and-configuring-dhcp-and-tftp-with-dnsmasq">Installing and Configuring DHCP and TFTP with dnsmasq</a></li>
 </ul>
@@ -845,7 +849,9 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">runtime_checker</span> <span class="o">=</span> <span class="n">RuntimeChecker</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xml_state</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CliTask.quadruple_token"><a class="viewcode-back" href="../../../api/kiwi.tasks.html#kiwi.tasks.base.CliTask.quadruple_token">[docs]</a>    <span class="k">def</span> <span class="nf">quadruple_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]:</span>
+<div class="viewcode-block" id="CliTask.quadruple_token"><a class="viewcode-back" href="../../../api/kiwi.tasks.html#kiwi.tasks.base.CliTask.quadruple_token">[docs]</a>    <span class="k">def</span> <span class="nf">quadruple_token</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Helper method for commandline options of the form --option a,b,c,d</span>
 
@@ -860,9 +866,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ntuple_token</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CliTask.sextuple_token"><a class="viewcode-back" href="../../../api/kiwi.tasks.html#kiwi.tasks.base.CliTask.sextuple_token">[docs]</a>    <span class="k">def</span> <span class="nf">sextuple_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]:</span>
+<div class="viewcode-block" id="CliTask.tentuple_token"><a class="viewcode-back" href="../../../api/kiwi.tasks.html#kiwi.tasks.base.CliTask.tentuple_token">[docs]</a>    <span class="k">def</span> <span class="nf">tentuple_token</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Helper method for commandline options of the form --option a,b,c,d,e,f</span>
+<span class="sd">        Helper method for commandline options of the</span>
+<span class="sd">        form --option a,b,c,d,e,f,g,h,i,j</span>
 
 <span class="sd">        Make sure to provide a common result for option values which</span>
 <span class="sd">        separates the information in a comma separated list of values</span>
@@ -873,7 +882,7 @@
 
 <span class="sd">        :rtype: list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ntuple_token</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ntuple_token</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CliTask.run_checks"><a class="viewcode-back" href="../../../api/kiwi.tasks.html#kiwi.tasks.base.CliTask.run_checks">[docs]</a>    <span class="k">def</span> <span class="nf">run_checks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checks</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -891,18 +900,20 @@
             <span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="n">attrgetter</span><span class="p">(</span><span class="n">method</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">runtime_checker</span><span class="p">)(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_pop_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokens</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">_pop_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokens</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
         <span class="n">token</span> <span class="o">=</span> <span class="n">tokens</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">token</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">token</span> <span class="o">==</span> <span class="s1">&#39;false&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">token</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">token</span>
 
     <span class="k">def</span> <span class="nf">_ntuple_token</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">tuple_count</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Helper method for commandline options of the form --option a,b,c,d,e,f</span>
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.tasks.system_prepare &mdash; KIWI NG 9.24.34 documentation</title>
+  <title>kiwi.tasks.system_prepare &mdash; KIWI NG 9.24.35 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -301,6 +301,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../working_with_images/disk_ramdisk_deployment.html">Deploy and Run System in a RamDisk</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../working_with_images/custom_partitions.html">Custom Disk Partitions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../working_with_images/custom_volumes.html">Custom Disk Volumes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../working_with_images/clone_partitions.html">Partition Clones</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../working_with_images/clone_partitions.html#use-case">Use Case</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../../working_with_images/setup_network_bootserver.html">Setting Up a Network Boot Server</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../working_with_images/setup_network_bootserver.html#installing-and-configuring-dhcp-and-tftp-with-dnsmasq">Installing and Configuring DHCP and TFTP with dnsmasq</a></li>
 </ul>
@@ -683,8 +687,8 @@
 <span class="sd">           [--clear-cache]</span>
 <span class="sd">           [--ignore-repos]</span>
 <span class="sd">           [--ignore-repos-used-for-build]</span>
-<span class="sd">           [--set-repo=&lt;source,type,alias,priority,imageinclude,package_gpgcheck&gt;]</span>
-<span class="sd">           [--add-repo=&lt;source,type,alias,priority,imageinclude,package_gpgcheck&gt;...]</span>
+<span class="sd">           [--set-repo=&lt;source,type,alias,priority,imageinclude,package_gpgcheck,{signing_keys},components,distribution,repo_gpgcheck&gt;]</span>
+<span class="sd">           [--add-repo=&lt;source,type,alias,priority,imageinclude,package_gpgcheck,{signing_keys},components,distribution,repo_gpgcheck&gt;...]</span>
 <span class="sd">           [--add-package=&lt;name&gt;...]</span>
 <span class="sd">           [--add-bootstrap-package=&lt;name&gt;...]</span>
 <span class="sd">           [--delete-package=&lt;name&gt;...]</span>
@@ -705,9 +709,13 @@
 <span class="sd">        install the given package name as part of the early bootstrap process</span>
 <span class="sd">    --add-package=&lt;name&gt;</span>
 <span class="sd">        install the given package name</span>
-<span class="sd">    --add-repo=&lt;source,type,alias,priority,imageinclude,package_gpgcheck&gt;</span>
-<span class="sd">        add repository with given source, type, alias, priority,</span>
-<span class="sd">        the imageinclude flag and the package_gpgcheck flag</span>
+<span class="sd">    --add-repo=&lt;source,type,alias,priority,imageinclude,package_gpgcheck,{signing_keys},components,distribution,repo_gpgcheck&gt;</span>
+<span class="sd">        add repository with given source, type, alias,</span>
+<span class="sd">        priority, imageinclude(true|false), package_gpgcheck(true|false),</span>
+<span class="sd">        list of signing_keys enclosed in curly brackets delimited by a colon,</span>
+<span class="sd">        component list for debian based repos as string delimited by a space,</span>
+<span class="sd">        main distribution name for debian based repos and</span>
+<span class="sd">        repo_gpgcheck(true|false)</span>
 <span class="sd">    --allow-existing-root</span>
 <span class="sd">        allow to use an existing root directory. Use with caution</span>
 <span class="sd">        this could cause an inconsistent root tree if the existing</span>
@@ -740,9 +748,13 @@
 <span class="sd">        add a container label in the container configuration metadata. It</span>
 <span class="sd">        overwrites the label with the provided key-value pair in case it was</span>
 <span class="sd">        already defined in the XML description</span>
-<span class="sd">    --set-repo=&lt;source,type,alias,priority,imageinclude,package_gpgcheck&gt;</span>
+<span class="sd">    --set-repo=&lt;source,type,alias,priority,imageinclude,package_gpgcheck,{signing_keys},components,distribution,repo_gpgcheck&gt;</span>
 <span class="sd">        overwrite the first XML listed repository source, type, alias,</span>
-<span class="sd">        priority, the imageinclude flag and the package_gpgcheck flag</span>
+<span class="sd">        priority, imageinclude(true|false), package_gpgcheck(true|false),</span>
+<span class="sd">        list of signing_keys enclosed in curly brackets delimited by a colon,</span>
+<span class="sd">        component list for debian based repos as string delimited by a space,</span>
+<span class="sd">        main distribution name for debian based repos and</span>
+<span class="sd">        repo_gpgcheck(true|false)</span>
 <span class="sd">     --signing-key=&lt;key-file&gt;</span>
 <span class="sd">        includes the key-file as a trusted key for package manager validations</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -802,13 +814,13 @@
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_args</span><span class="p">[</span><span class="s1">&#39;--set-repo&#39;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">xml_state</span><span class="o">.</span><span class="n">set_repository</span><span class="p">(</span>
-                <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">sextuple_token</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command_args</span><span class="p">[</span><span class="s1">&#39;--set-repo&#39;</span><span class="p">])</span>
+                <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_repo_parameters</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command_args</span><span class="p">[</span><span class="s1">&#39;--set-repo&#39;</span><span class="p">])</span>
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_args</span><span class="p">[</span><span class="s1">&#39;--add-repo&#39;</span><span class="p">]:</span>
             <span class="k">for</span> <span class="n">add_repo</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_args</span><span class="p">[</span><span class="s1">&#39;--add-repo&#39;</span><span class="p">]:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">xml_state</span><span class="o">.</span><span class="n">add_repository</span><span class="p">(</span>
-                    <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">sextuple_token</span><span class="p">(</span><span class="n">add_repo</span><span class="p">)</span>
+                    <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_repo_parameters</span><span class="p">(</span><span class="n">add_repo</span><span class="p">)</span>
                 <span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_args</span><span class="p">[</span><span class="s1">&#39;--set-container-tag&#39;</span><span class="p">]:</span>
@@ -937,7 +949,15 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">manual</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;kiwi::system::prepare&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">manual</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">manual</span>
+
+    <span class="k">def</span> <span class="nf">_get_repo_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokens</span><span class="p">):</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tentuple_token</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+        <span class="n">signing_keys_index</span> <span class="o">=</span> <span class="mi">6</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="n">signing_keys_index</span><span class="p">]:</span>
+            <span class="c1"># make sure to pass empty list for signing_keys param</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="n">signing_keys_index</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">return</span> <span class="n">parameters</span></div>
 </pre></div>
 
            </div>

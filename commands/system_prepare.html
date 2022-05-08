@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi-ng system prepare &mdash; KIWI NG 9.24.34 documentation</title>
+  <title>kiwi-ng system prepare &mdash; KIWI NG 9.24.35 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
@@ -304,6 +304,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../working_with_images/disk_ramdisk_deployment.html">Deploy and Run System in a RamDisk</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../working_with_images/custom_partitions.html">Custom Disk Partitions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../working_with_images/custom_volumes.html">Custom Disk Volumes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../working_with_images/clone_partitions.html">Partition Clones</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../working_with_images/clone_partitions.html#use-case">Use Case</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../working_with_images/setup_network_bootserver.html">Setting Up a Network Boot Server</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../working_with_images/setup_network_bootserver.html#installing-and-configuring-dhcp-and-tftp-with-dnsmasq">Installing and Configuring DHCP and TFTP with dnsmasq</a></li>
 </ul>
@@ -674,8 +678,8 @@ kiwi-ng system prepare --description<span class="o">=</span>&lt;directory&gt; --
     <span class="o">[</span>--clear-cache<span class="o">]</span>
     <span class="o">[</span>--ignore-repos<span class="o">]</span>
     <span class="o">[</span>--ignore-repos-used-for-build<span class="o">]</span>
-    <span class="o">[</span>--set-repo<span class="o">=</span>&lt;source,type,alias,priority,imageinclude,package_gpgcheck&gt;<span class="o">]</span>
-    <span class="o">[</span>--add-repo<span class="o">=</span>&lt;source,type,alias,priority,imageinclude,package_gpgcheck&gt;...<span class="o">]</span>
+    <span class="o">[</span>--set-repo<span class="o">=</span>&lt;source,type,alias,priority,imageinclude,package_gpgcheck,<span class="o">{</span>signing_keys<span class="o">}</span>,components,distribution,repo_gpgcheck&gt;<span class="o">]</span>
+    <span class="o">[</span>--add-repo<span class="o">=</span>&lt;source,type,alias,priority,imageinclude,package_gpgcheck,<span class="o">{</span>signing_keys<span class="o">}</span>,components,distribution,repo_gpgcheck&gt;...<span class="o">]</span>
     <span class="o">[</span>--add-package<span class="o">=</span>&lt;name&gt;...<span class="o">]</span>
     <span class="o">[</span>--add-bootstrap-package<span class="o">=</span>&lt;name&gt;...<span class="o">]</span>
     <span class="o">[</span>--delete-package<span class="o">=</span>&lt;name&gt;...<span class="o">]</span>
@@ -713,7 +717,7 @@ already defined in the XML description</p>
 <dd><p>specify package to add(install). The option can be specified
 multiple times</p>
 </dd>
-<dt><kbd><span class="option">--add-repo=<var>&lt;source,type,alias,priority,imageinclude,package_gpgcheck&gt;</var></span></kbd></dt>
+<dt><kbd><span class="option">--add-repo=<var>&lt;source,type,alias,priority,imageinclude,package_gpgcheck,{signing_keys},components,distribution,repo_gpgcheck&gt;</var></span></kbd></dt>
 <dd><p>Add a new repository to the existing repository setup in the XML
 description. This option can be specified multiple times.
 For details about the provided option values see the <strong>–set-repo</strong>
@@ -754,7 +758,7 @@ will not be ignored.</p>
 <dt><kbd><span class="option">--root=<var>&lt;directory&gt;</var></span></kbd></dt>
 <dd><p>Path to create the new root system.</p>
 </dd>
-<dt><kbd><span class="option">--set-repo=<var>&lt;source,type,alias,priority,imageinclude,package_gpgcheck&gt;</var></span></kbd></dt>
+<dt><kbd><span class="option">--set-repo=<var>&lt;source,type,alias,priority,imageinclude,package_gpgcheck,{signing_keys},components,distribution,repo_gpgcheck&gt;</var></span></kbd></dt>
 <dd><p>Overwrite the first repository entry in the XML description with the
 provided information:</p>
 <ul>
@@ -785,6 +789,20 @@ should be part of the system image repository setup or not.</p>
 <li><p><strong>package_gpgcheck</strong></p>
 <p>Set to either <strong>true</strong> or <strong>false</strong> to specify if this repository
 should validate the package signatures.</p>
+<ul class="simple">
+<li><p><strong>{signing_keys}</strong></p></li>
+</ul>
+<p>List of signing_keys enclosed in curly brackets and delimited by a colon</p>
+</li>
+<li><p><strong>components</strong></p>
+<p>Component list for debian based repos as string delimited by a space</p>
+</li>
+<li><p><strong>distribution</strong></p>
+<p>Main distribution name for debian based repos</p>
+</li>
+<li><p><strong>repo_gpgcheck</strong></p>
+<p>Set to either <strong>true</strong> or <strong>false</strong> to specify if this repository
+should validate the repository signature.</p>
 </li>
 </ul>
 </dd>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.xml_state &mdash; KIWI NG 9.24.34 documentation</title>
+  <title>kiwi.xml_state &mdash; KIWI NG 9.24.35 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
@@ -301,6 +301,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../working_with_images/disk_ramdisk_deployment.html">Deploy and Run System in a RamDisk</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../working_with_images/custom_partitions.html">Custom Disk Partitions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../working_with_images/custom_volumes.html">Custom Disk Volumes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../working_with_images/clone_partitions.html">Partition Clones</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../working_with_images/clone_partitions.html#use-case">Use Case</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../working_with_images/setup_network_bootserver.html">Setting Up a Network Boot Server</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../working_with_images/setup_network_bootserver.html#installing-and-configuring-dhcp-and-tftp-with-dnsmasq">Installing and Configuring DHCP and TFTP with dnsmasq</a></li>
 </ul>
@@ -2098,11 +2102,7 @@
             <span class="n">partition_name</span> <span class="o">=</span> <span class="n">partition</span><span class="o">.</span><span class="n">get_partition_name</span><span class="p">()</span> <span class="ow">or</span> <span class="sa">f</span><span class="s1">&#39;p.lx</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span>
             <span class="n">partitions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">ptable_entry_type</span><span class="p">(</span>
                 <span class="n">mbsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_to_mega_byte</span><span class="p">(</span><span class="n">partition</span><span class="o">.</span><span class="n">get_size</span><span class="p">()),</span>
-                <span class="c1"># There is currently no clone attribute in the &lt;partition&gt;</span>
-                <span class="c1"># element. This will be added on completion of the partition</span>
-                <span class="c1"># clone feature. The internal API structure however, already</span>
-                <span class="c1"># knows about the capability</span>
-                <span class="n">clone</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                <span class="n">clone</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">partition</span><span class="o">.</span><span class="n">get_clone</span><span class="p">())</span> <span class="k">if</span> <span class="n">partition</span><span class="o">.</span><span class="n">get_clone</span><span class="p">()</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
                 <span class="n">partition_name</span><span class="o">=</span><span class="n">partition_name</span><span class="p">,</span>
                 <span class="n">partition_type</span><span class="o">=</span><span class="n">partition</span><span class="o">.</span><span class="n">get_partition_type</span><span class="p">()</span> <span class="ow">or</span> <span class="s1">&#39;t.linux&#39;</span><span class="p">,</span>
                 <span class="n">mountpoint</span><span class="o">=</span><span class="n">partition</span><span class="o">.</span><span class="n">get_mountpoint</span><span class="p">(),</span>
@@ -2457,7 +2457,9 @@
 <div class="viewcode-block" id="XMLState.set_repository"><a class="viewcode-back" href="../../api/kiwi.html#kiwi.xml_state.XMLState.set_repository">[docs]</a>    <span class="k">def</span> <span class="nf">set_repository</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">repo_source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">repo_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">repo_alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">repo_prio</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">repo_imageinclude</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">repo_package_gpgcheck</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">repo_package_gpgcheck</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">repo_signing_keys</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">components</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">distribution</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">repo_gpgcheck</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overwrite repository data of the first repository</span>
@@ -2468,6 +2470,10 @@
 <span class="sd">        :param str repo_prio: priority number, package manager specific</span>
 <span class="sd">        :param bool repo_imageinclude: setup repository inside of the image</span>
 <span class="sd">        :param bool repo_package_gpgcheck: enable/disable package gpg checks</span>
+<span class="sd">        :param list repo_signing_keys: list of signing key file names</span>
+<span class="sd">        :param str components: component names for debian repos</span>
+<span class="sd">        :param str distribution: base distribution name for debian repos</span>
+<span class="sd">        :param bool repo_gpgcheck: enable/disable repo gpg checks</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">repository_sections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_repository_sections</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">repository_sections</span><span class="p">:</span>
@@ -2483,13 +2489,24 @@
             <span class="k">if</span> <span class="n">repo_imageinclude</span><span class="p">:</span>
                 <span class="n">repository</span><span class="o">.</span><span class="n">set_imageinclude</span><span class="p">(</span><span class="n">repo_imageinclude</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">repo_package_gpgcheck</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">repository</span><span class="o">.</span><span class="n">set_package_gpgcheck</span><span class="p">(</span><span class="n">repo_package_gpgcheck</span><span class="p">)</span></div>
+                <span class="n">repository</span><span class="o">.</span><span class="n">set_package_gpgcheck</span><span class="p">(</span><span class="n">repo_package_gpgcheck</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">repo_signing_keys</span><span class="p">:</span>
+                <span class="n">repository</span><span class="o">.</span><span class="n">get_source</span><span class="p">()</span><span class="o">.</span><span class="n">set_signing</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">xml_parse</span><span class="o">.</span><span class="n">signing</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">repo_signing_keys</span><span class="p">]</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="n">components</span><span class="p">:</span>
+                <span class="n">repository</span><span class="o">.</span><span class="n">set_components</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">distribution</span><span class="p">:</span>
+                <span class="n">repository</span><span class="o">.</span><span class="n">set_distribution</span><span class="p">(</span><span class="n">distribution</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">repo_gpgcheck</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">repository</span><span class="o">.</span><span class="n">set_repository_gpgcheck</span><span class="p">(</span><span class="n">repo_gpgcheck</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="XMLState.add_repository"><a class="viewcode-back" href="../../api/kiwi.html#kiwi.xml_state.XMLState.add_repository">[docs]</a>    <span class="k">def</span> <span class="nf">add_repository</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">repo_source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">repo_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">repo_alias</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">repo_prio</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">repo_imageinclude</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">repo_package_gpgcheck</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">repo_signing_keys</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">repo_signing_keys</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">components</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">distribution</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">repo_gpgcheck</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a new repository section at the end of the list</span>
@@ -2500,6 +2517,10 @@
 <span class="sd">        :param str repo_prio: priority number, package manager specific</span>
 <span class="sd">        :param bool repo_imageinclude: setup repository inside of the image</span>
 <span class="sd">        :param bool repo_package_gpgcheck: enable/disable package gpg checks</span>
+<span class="sd">        :param list repo_signing_keys: list of signing key file names</span>
+<span class="sd">        :param str components: component names for debian repos</span>
+<span class="sd">        :param str distribution: base distribution name for debian repos</span>
+<span class="sd">        :param bool repo_gpgcheck: enable/disable repo gpg checks</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">priority_number</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">try</span><span class="p">:</span>
@@ -2519,7 +2540,10 @@
                     <span class="p">]</span>
                 <span class="p">),</span>
                 <span class="n">imageinclude</span><span class="o">=</span><span class="n">repo_imageinclude</span><span class="p">,</span>
-                <span class="n">package_gpgcheck</span><span class="o">=</span><span class="n">repo_package_gpgcheck</span>
+                <span class="n">package_gpgcheck</span><span class="o">=</span><span class="n">repo_package_gpgcheck</span><span class="p">,</span>
+                <span class="n">repository_gpgcheck</span><span class="o">=</span><span class="n">repo_gpgcheck</span><span class="p">,</span>
+                <span class="n">components</span><span class="o">=</span><span class="n">components</span><span class="p">,</span>
+                <span class="n">distribution</span><span class="o">=</span><span class="n">distribution</span>
             <span class="p">)</span>
         <span class="p">)</span></div>
 
