@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.package_manager.base &mdash; KIWI NG 9.24.35 documentation</title>
+  <title>kiwi.package_manager.base &mdash; KIWI NG 9.24.36 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -346,6 +346,10 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../working_with_images/use_suse_media.html">Using SUSE Product ISO To Build</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../working_with_images/build_without_debootstrap.html">Circumvent debootstrap</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../working_with_images/build_without_debootstrap.html#how-to-create-a-bootstrap-package">How to Create a bootstrap_package</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a><ul>
@@ -782,7 +786,7 @@
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
 <div class="viewcode-block" id="PackageManagerBase.process_install_requests_bootstrap"><a class="viewcode-back" href="../../../api/kiwi.package_manager.html#kiwi.package_manager.base.PackageManagerBase.process_install_requests_bootstrap">[docs]</a>    <span class="k">def</span> <span class="nf">process_install_requests_bootstrap</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">root_bind</span><span class="p">:</span> <span class="n">RootBind</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">root_bind</span><span class="p">:</span> <span class="n">RootBind</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">bootstrap_package</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">command_call_type</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Process package install requests for bootstrap phase (no chroot)</span>

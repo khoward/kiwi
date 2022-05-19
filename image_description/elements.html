@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Image Description Elements &mdash; KIWI NG 9.24.35 documentation</title>
+  <title>Image Description Elements &mdash; KIWI NG 9.24.36 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
@@ -349,6 +349,10 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../working_with_images/use_suse_media.html">Using SUSE Product ISO To Build</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../working_with_images/build_without_debootstrap.html">Circumvent debootstrap</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../working_with_images/build_without_debootstrap.html#how-to-create-a-bootstrap-package">How to Create a bootstrap_package</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a><ul>
@@ -671,7 +675,7 @@
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This document provides a reference for the elements
-and attributes of the KIWI NG XML document in version 9.24.35</p>
+and attributes of the KIWI NG XML document in version 9.24.36</p>
 </div>
 <section id="image">
 <span id="sec-image"></span><h2>&lt;image&gt;<a class="headerlink" href="#image" title="Permalink to this headline">¶</a></h2>
@@ -1043,6 +1047,14 @@ is set to true, the root filesystem snapshot it will be turned into
 read-only mode, once all data has been placed to it. The option is only
 effective if <code class="xref py py-obj docutils literal notranslate"><span class="pre">btrfs_root_is_snapshot</span></code> is also set to true. By default the
 root filesystem snapshot is writable.</p>
+</dd>
+<dt>bootstrap_package=”package_name”:</dt><dd><p>For use with the <code class="xref py py-obj docutils literal notranslate"><span class="pre">apt</span></code> packagemanager only. Specifies the name
+of a bootstrap package which provides a bootstrap tarball
+in <code class="file docutils literal notranslate"><span class="pre">/var/lib/bootstrap/PACKAGE_NAME.ARCH.tar.xz</span></code>.
+The tarball will be unpacked and used as the bootstrap
+rootfs to begin with. This allows for an alternative bootstrap
+method preventing the use of <code class="xref py py-obj docutils literal notranslate"><span class="pre">debootstrap</span></code>. For further details
+see <a class="reference internal" href="../working_with_images/build_without_debootstrap.html#debootstrap-alternative"><span class="std std-ref">Circumvent debootstrap</span></a>.</p>
 </dd>
 <dt>compressed=”true|false”:</dt><dd><p>Specifies whether the image output file should be
 compressed or not. This option is only used for filesystem only images or

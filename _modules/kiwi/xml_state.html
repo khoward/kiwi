@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.xml_state &mdash; KIWI NG 9.24.35 documentation</title>
+  <title>kiwi.xml_state &mdash; KIWI NG 9.24.36 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
@@ -346,6 +346,10 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../working_with_images/use_suse_media.html">Using SUSE Product ISO To Build</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../working_with_images/build_without_debootstrap.html">Circumvent debootstrap</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../working_with_images/build_without_debootstrap.html#how-to-create-a-bootstrap-package">How to Create a bootstrap_package</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a><ul>
@@ -1243,6 +1247,24 @@
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">package_matches_host_architecture</span><span class="p">(</span><span class="n">package</span><span class="p">):</span>
                     <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">package</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
         <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="XMLState.get_bootstrap_package_name"><a class="viewcode-back" href="../../api/kiwi.html#kiwi.xml_state.XMLState.get_bootstrap_package_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_bootstrap_package_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        bootstrap_package name from type=&quot;bootstrap&quot; packages section</span>
+
+<span class="sd">        :return: bootstrap_package name</span>
+
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">typed_packages_sections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_packages_sections</span><span class="p">(</span>
+            <span class="p">[</span><span class="s1">&#39;bootstrap&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_build_type_name</span><span class="p">()]</span>
+        <span class="p">)</span>
+        <span class="n">bootstrap_package</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">packages</span> <span class="ow">in</span> <span class="n">typed_packages_sections</span><span class="p">:</span>
+            <span class="n">bootstrap_package</span> <span class="o">=</span> <span class="n">packages</span><span class="o">.</span><span class="n">get_bootstrap_package</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">bootstrap_package</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">return</span> <span class="n">bootstrap_package</span></div>
 
 <div class="viewcode-block" id="XMLState.get_collection_type"><a class="viewcode-back" href="../../api/kiwi.html#kiwi.xml_state.XMLState.get_collection_type">[docs]</a>    <span class="k">def</span> <span class="nf">get_collection_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;image&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>

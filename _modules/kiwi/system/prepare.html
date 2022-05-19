@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.system.prepare &mdash; KIWI NG 9.24.35 documentation</title>
+  <title>kiwi.system.prepare &mdash; KIWI NG 9.24.36 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -346,6 +346,10 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../working_with_images/use_suse_media.html">Using SUSE Product ISO To Build</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../working_with_images/build_without_debootstrap.html">Circumvent debootstrap</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../working_with_images/build_without_debootstrap.html#how-to-create-a-bootstrap-package">How to Create a bootstrap_package</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a><ul>
@@ -915,8 +919,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">xml_state</span><span class="o">.</span><span class="n">get_collection_modules</span><span class="p">()</span>
         <span class="p">)</span>
         <span class="n">process</span> <span class="o">=</span> <span class="n">CommandProcess</span><span class="p">(</span>
-            <span class="n">command</span><span class="o">=</span><span class="n">manager</span><span class="o">.</span><span class="n">process_install_requests_bootstrap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_bind</span><span class="p">),</span>
-            <span class="n">log_topic</span><span class="o">=</span><span class="s1">&#39;bootstrap&#39;</span>
+            <span class="n">command</span><span class="o">=</span><span class="n">manager</span><span class="o">.</span><span class="n">process_install_requests_bootstrap</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">root_bind</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_state</span><span class="o">.</span><span class="n">get_bootstrap_package_name</span><span class="p">()</span>
+            <span class="p">),</span> <span class="n">log_topic</span><span class="o">=</span><span class="s1">&#39;bootstrap&#39;</span>
         <span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">process</span><span class="o">.</span><span class="n">poll_show_progress</span><span class="p">(</span>

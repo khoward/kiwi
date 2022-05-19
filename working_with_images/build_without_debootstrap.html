@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Building Images with Profiles &mdash; KIWI NG 9.24.36 documentation</title>
+  <title>Circumvent debootstrap &mdash; KIWI NG 9.24.36 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Building in the Open Build Service" href="build_in_buildservice.html" />
-    <link rel="prev" title="Add or Update the Fstab File" href="custom_fstab_extension.html" /> 
+    <link rel="next" title="Contributing" href="../contributing.html" />
+    <link rel="prev" title="Using SUSE Product ISO To Build" href="use_suse_media.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -332,9 +332,9 @@
 <li class="toctree-l2"><a class="reference internal" href="network_live_iso_boot.html">Booting a Live ISO Image from Network</a></li>
 <li class="toctree-l2"><a class="reference internal" href="setup_yast_on_first_boot.html">Setting Up YaST at First Boot</a></li>
 <li class="toctree-l2"><a class="reference internal" href="custom_fstab_extension.html">Add or Update the Fstab File</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Building Images with Profiles</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#local-builds">Local Builds</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#building-with-the-open-build-service">Building with the Open Build Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_with_profiles.html">Building Images with Profiles</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="build_with_profiles.html#local-builds">Local Builds</a></li>
+<li class="toctree-l3"><a class="reference internal" href="build_with_profiles.html#building-with-the-open-build-service">Building with the Open Build Service</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="build_in_buildservice.html">Building in the Open Build Service</a><ul>
@@ -349,8 +349,8 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="use_suse_media.html">Using SUSE Product ISO To Build</a></li>
-<li class="toctree-l2"><a class="reference internal" href="build_without_debootstrap.html">Circumvent debootstrap</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="build_without_debootstrap.html#how-to-create-a-bootstrap-package">How to Create a bootstrap_package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Circumvent debootstrap</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-create-a-bootstrap-package">How to Create a bootstrap_package</a></li>
 </ul>
 </li>
 </ul>
@@ -660,9 +660,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../working_with_images.html">Working with Images</a> &raquo;</li>
-      <li>Building Images with Profiles</li>
+      <li>Circumvent debootstrap</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/working_with_images/build_with_profiles.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/working_with_images/build_without_debootstrap.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -670,63 +670,108 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="building-images-with-profiles">
-<span id="building-build-with-profiles"></span><h1>Building Images with Profiles<a class="headerlink" href="#building-images-with-profiles" title="Permalink to this headline">¶</a></h1>
-<p>KIWI NG supports so-called <em>profiles</em> inside the XML image description. Profiles
-act as namespaces for additional settings to be applied on top of the
-defaults. For further details, see <a class="reference internal" href="../concept_and_workflow/profiles.html#image-profiles"><span class="std std-ref">Image Profiles</span></a>.</p>
-<section id="local-builds">
-<h2>Local Builds<a class="headerlink" href="#local-builds" title="Permalink to this headline">¶</a></h2>
-<p>To execute local KIWI NG builds with a specific, selected profile, add the
-command line flag <code class="xref py py-obj docutils literal notranslate"><span class="pre">--profile=$PROFILE_NAME</span></code>:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo kiwi-ng --type oem --profile libvirt system build <span class="se">\</span>
-      --description kiwi/build-tests/x86/leap/test-image-vagrant <span class="se">\</span>
-      --set-repo obs://openSUSE:Leap:15.3/standard <span class="se">\</span>
-      --target-dir /tmp/myimage
+  <section id="circumvent-debootstrap">
+<span id="debootstrap-alternative"></span><h1>Circumvent debootstrap<a class="headerlink" href="#circumvent-debootstrap" title="Permalink to this headline">¶</a></h1>
+<aside class="sidebar">
+<p class="sidebar-title">Abstract</p>
+<p>This page provides information how to build Debian based
+images with <code class="xref py py-obj docutils literal notranslate"><span class="pre">apt</span></code> but without using <code class="xref py py-obj docutils literal notranslate"><span class="pre">debootstrap</span></code> to bootstrap
+the image root tree</p>
+</aside>
+<p>When building Debian based images KIWI NG uses two tools to
+create the image root tree. First it calls <code class="xref py py-obj docutils literal notranslate"><span class="pre">debootstrap</span></code> to
+initialize a minimal root tree and next it chroot’s into that
+tree to complete the installation via <code class="xref py py-obj docutils literal notranslate"><span class="pre">apt</span></code>. The reason why it
+is done that way is because <code class="xref py py-obj docutils literal notranslate"><span class="pre">apt</span></code> does not(yet) support to
+install packages into an empty root directory like it is done
+with all other packagemanager interfaces implemented in KIWI NG.</p>
+<p>The use of <code class="xref py py-obj docutils literal notranslate"><span class="pre">debootstrap</span></code> comes along with some prerequisites
+and limitations:</p>
+<ul class="simple">
+<li><p>It can only use one repository to bootstrap from</p></li>
+<li><p>It can only use an official archive repo</p></li>
+<li><p>It has its own dependency resolver different from apt</p></li>
+</ul>
+<p>If one ore more of this properties turns into an issue, KIWI NG
+allows for an alternative process which is based on a prebuilt
+bootstrap-root archive provided as a package.</p>
+<p>To make use of a <code class="xref py py-obj docutils literal notranslate"><span class="pre">bootstrap_package</span></code>, the name of that package
+needs to be referenced in the KIWI NG description as follows:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;packages</span> <span class="na">type=</span><span class="s">&quot;bootstrap&quot;</span> <span class="na">bootstrap_package=</span><span class="s">&quot;bootstrap-root&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;package</span> <span class="na">name=</span><span class="s">&quot;a&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;package</span> <span class="na">name=</span><span class="s">&quot;b&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/packages&gt;</span>
 </pre></div>
 </div>
-<p>Consult the manual page of <code class="file docutils literal notranslate"><span class="pre">kiwi</span></code> for further details:
-<a class="reference internal" href="../commands/kiwi.html#db-commands-kiwi-synopsis"><span class="std std-ref">SYNOPSIS</span></a>.</p>
-</section>
-<section id="building-with-the-open-build-service">
-<h2>Building with the Open Build Service<a class="headerlink" href="#building-with-the-open-build-service" title="Permalink to this headline">¶</a></h2>
-<p>The Open Build Service (OBS) support profiles via the <a class="reference external" href="https://openbuildservice.org/help/manuals/obs-user-guide/cha.obs.multibuild.html">multibuild</a>
-feature.</p>
-<p>To enable and use the profiles, follow these steps:</p>
+<p>The boostrap process now changes in a way that the provided
+bootstrap_package <code class="xref py py-obj docutils literal notranslate"><span class="pre">bootstrap-root</span></code> will be installed on the build
+host machine. Next KIWI NG searches for a tar archive file
+<code class="file docutils literal notranslate"><span class="pre">/var/lib/bootstrap/bootstrap-root.ARCH.tar.xz</span></code>,
+where <code class="xref py py-obj docutils literal notranslate"><span class="pre">ARCH</span></code> is the name of the host architecture e.g <code class="xref py py-obj docutils literal notranslate"><span class="pre">x86_64</span></code>.
+If found the archive gets unpacked and serves as the bootstrap
+root tree to begin with. The optionally provided additional
+bootstrap packages, <code class="xref py py-obj docutils literal notranslate"><span class="pre">a</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">b</span></code> in this example will be installed
+like system packages via <code class="xref py py-obj docutils literal notranslate"><span class="pre">chroot</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">apt</span></code>. Usually no additional
+bootstrap packages are needed as they could all be handled as
+system packages.</p>
+<section id="how-to-create-a-bootstrap-package">
+<h2>How to Create a bootstrap_package<a class="headerlink" href="#how-to-create-a-bootstrap-package" title="Permalink to this headline">¶</a></h2>
+<p>Changing the setup in KIWI NG to use a <code class="xref py py-obj docutils literal notranslate"><span class="pre">bootstrap_package</span></code> rather
+then letting <code class="xref py py-obj docutils literal notranslate"><span class="pre">debootstrap</span></code> do the job comes with the task to create
+that package providing the bootstrap root tree. There are more than
+one way to do this. The following procedure is just one example and
+requires some background knowledge about the Open Build Service
+<a class="reference external" href="https://build.opensuse.org">OBS</a> and its KIWI NG integration.</p>
 <ol class="arabic">
-<li><p>Add the following XML comment to your <code class="file docutils literal notranslate"><span class="pre">config.xml</span></code>:</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cm">&lt;!-- OBS-Profiles: @BUILD_FLAVOR@ --&gt;</span>
+<li><p>Create an OBS project and repository setup that matches your image target</p></li>
+<li><p>Create an image build package</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>osc mkpac bootstrap-root
 </pre></div>
 </div>
-<p>It must be added before the opening <code class="xref py py-obj docutils literal notranslate"><span class="pre">&lt;image&gt;</span></code> element and after the
-<code class="xref py py-obj docutils literal notranslate"><span class="pre">&lt;?xml?&gt;</span></code> element, e.g.:</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
-<span class="cm">&lt;!-- OBS-Profiles: @BUILD_FLAVOR@ --&gt;</span>
-<span class="nt">&lt;image</span> <span class="na">schemaversion=</span><span class="s">&quot;7.4&quot;</span> <span class="na">name=</span><span class="s">&quot;kiwi-test-image-vagrant&quot;</span><span class="nt">&gt;</span>
-  <span class="cm">&lt;!-- snip --&gt;</span>
+</li>
+<li><p>Create the following <code class="file docutils literal notranslate"><span class="pre">appliance.kiwi</span></code> file</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;image</span> <span class="na">schemaversion=</span><span class="s">&quot;7.4&quot;</span> <span class="na">name=</span><span class="s">&quot;bootstrap-root&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;description</span> <span class="na">type=</span><span class="s">&quot;system&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;author&gt;</span>The Author<span class="nt">&lt;/author&gt;</span>
+        <span class="nt">&lt;contact&gt;</span>author@example.com<span class="nt">&lt;/contact&gt;</span>
+        <span class="nt">&lt;specification&gt;</span>prebuilt bootstrap rootfs for ...<span class="nt">&lt;/specification&gt;</span>
+    <span class="nt">&lt;/description&gt;</span>
+
+    <span class="nt">&lt;preferences&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.0.1<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;packagemanager&gt;</span>apt<span class="nt">&lt;/packagemanager&gt;</span>
+        <span class="nt">&lt;type</span> <span class="na">image=</span><span class="s">&quot;tbz&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/preferences&gt;</span>
+
+    <span class="nt">&lt;repository</span> <span class="na">type=</span><span class="s">&quot;rpm-md&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;source</span> <span class="na">path=</span><span class="s">&quot;obsrepositories:/&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/repository&gt;</span>
+
+    <span class="nt">&lt;packages</span> <span class="na">type=</span><span class="s">&quot;image&quot;</span><span class="nt">&gt;</span>
+        <span class="cm">&lt;!-- packages included so OBS adds it as a build dependency, however this is installed by debootstrap --&gt;</span>
+        <span class="nt">&lt;package</span> <span class="na">name=</span><span class="s">&quot;mawk&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/packages&gt;</span>
+
+    <span class="nt">&lt;packages</span> <span class="na">type=</span><span class="s">&quot;bootstrap&quot;</span><span class="nt">&gt;</span>
+        <span class="cm">&lt;!-- bootstrap done via debootstrap --&gt;</span>
+    <span class="nt">&lt;/packages&gt;</span>
 <span class="nt">&lt;/image&gt;</span>
 </pre></div>
 </div>
-</li>
-<li><p>Add a file <code class="file docutils literal notranslate"><span class="pre">_multibuild</span></code> into your package’s repository with the
-following contents:</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;multibuild&gt;</span>
-  <span class="nt">&lt;flavor&gt;</span>profile_1<span class="nt">&lt;/flavor&gt;</span>
-  <span class="nt">&lt;flavor&gt;</span>profile_2<span class="nt">&lt;/flavor&gt;</span>
-<span class="nt">&lt;/multibuild&gt;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>osc add appliance.kiwi
+osc ci
 </pre></div>
 </div>
-<p>Add a line <code class="docutils literal notranslate"><span class="pre">&lt;flavor&gt;$PROFILE&lt;/flavor&gt;</span></code> for each profile that
-you want OBS to build.</p>
+</li>
+<li><p>Package the image build results into a debian package</p>
+<p>In step 3. the bootstrap root tarball was created but not yet
+packaged. A debian package is needed such that it can be
+referenced with the <code class="xref py py-obj docutils literal notranslate"><span class="pre">bootstrap_package</span></code> attribute and the repository
+providing it. The simplest way to package the <code class="xref py py-obj docutils literal notranslate"><span class="pre">bootstrap-root</span></code> tarball
+is to create another package in OBS and use the tarball file as
+its source.</p>
 </li>
 </ol>
-<p>Note, by default, OBS excludes the build <strong>without</strong> any profile
-enabled.</p>
-<p>Running a build of a multibuild enabled repository via <code class="file docutils literal notranslate"><span class="pre">osc</span></code> can be
-achieved via the <code class="xref py py-obj docutils literal notranslate"><span class="pre">-M</span> <span class="pre">$PROFILE</span></code> flag:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>osc build -M <span class="nv">$PROFILE</span>
-</pre></div>
-</div>
 </section>
 </section>
 
@@ -734,8 +779,8 @@ achieved via the <code class="xref py py-obj docutils literal notranslate"><span
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="custom_fstab_extension.html" class="btn btn-neutral float-left" title="Add or Update the Fstab File" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="build_in_buildservice.html" class="btn btn-neutral float-right" title="Building in the Open Build Service" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="use_suse_media.html" class="btn btn-neutral float-left" title="Using SUSE Product ISO To Build" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../contributing.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

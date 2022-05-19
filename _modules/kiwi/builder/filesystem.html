@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.builder.filesystem &mdash; KIWI NG 9.24.35 documentation</title>
+  <title>kiwi.builder.filesystem &mdash; KIWI NG 9.24.36 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -346,6 +346,10 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../working_with_images/use_suse_media.html">Using SUSE Product ISO To Build</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../working_with_images/build_without_debootstrap.html">Circumvent debootstrap</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../working_with_images/build_without_debootstrap.html#how-to-create-a-bootstrap-package">How to Create a bootstrap_package</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a><ul>
@@ -757,6 +761,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">filesystems_no_device_node</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;squashfs&#39;</span>
         <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">luks</span> <span class="o">=</span> <span class="n">xml_state</span><span class="o">.</span><span class="n">get_luks_credentials</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="n">Result</span><span class="p">(</span><span class="n">xml_state</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">runtime_config</span> <span class="o">=</span> <span class="n">RuntimeConfig</span><span class="p">()</span>
 
@@ -794,13 +799,14 @@
         <span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bundle_format</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">add_bundle_format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bundle_format</span><span class="p">)</span>
+        <span class="n">compression</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">runtime_config</span><span class="o">.</span><span class="n">get_bundle_compression</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">luks</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">compression</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
             <span class="n">key</span><span class="o">=</span><span class="s1">&#39;filesystem_image&#39;</span><span class="p">,</span>
             <span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
             <span class="n">use_for_bundle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">compress</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">runtime_config</span><span class="o">.</span><span class="n">get_bundle_compression</span><span class="p">(</span>
-                <span class="n">default</span><span class="o">=</span><span class="kc">True</span>
-            <span class="p">),</span>
+            <span class="n">compress</span><span class="o">=</span><span class="n">compression</span><span class="p">,</span>
             <span class="n">shasum</span><span class="o">=</span><span class="kc">True</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>

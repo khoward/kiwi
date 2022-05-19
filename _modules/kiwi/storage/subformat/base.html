@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.storage.subformat.base &mdash; KIWI NG 9.24.35 documentation</title>
+  <title>kiwi.storage.subformat.base &mdash; KIWI NG 9.24.36 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
@@ -346,6 +346,10 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../working_with_images/use_suse_media.html">Using SUSE Product ISO To Build</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../working_with_images/build_without_debootstrap.html">Circumvent debootstrap</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../working_with_images/build_without_debootstrap.html#how-to-create-a-bootstrap-package">How to Create a bootstrap_package</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a><ul>
@@ -851,15 +855,16 @@
 
 <span class="sd">        :param object result: Instance of Result</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">compression</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">runtime_config</span><span class="o">.</span><span class="n">get_bundle_compression</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_state</span><span class="o">.</span><span class="n">get_luks_credentials</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">compression</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">result</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
             <span class="n">key</span><span class="o">=</span><span class="s1">&#39;disk_format_image&#39;</span><span class="p">,</span>
             <span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_target_file_path_for_format</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">image_format</span>
             <span class="p">),</span>
             <span class="n">use_for_bundle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">compress</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">runtime_config</span><span class="o">.</span><span class="n">get_bundle_compression</span><span class="p">(</span>
-                <span class="n">default</span><span class="o">=</span><span class="kc">True</span>
-            <span class="p">),</span>
+            <span class="n">compress</span><span class="o">=</span><span class="n">compression</span><span class="p">,</span>
             <span class="n">shasum</span><span class="o">=</span><span class="kc">True</span>
         <span class="p">)</span></div>
 
