@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Image Description &mdash; KIWI NG 9.24.38 documentation</title>
+  <title>Image Description &mdash; KIWI NG 9.24.39 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
@@ -15,6 +15,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -670,11 +671,11 @@
            <div itemprop="articleBody">
              
   <section id="image-description">
-<span id="id1"></span><h1>Image Description<a class="headerlink" href="#image-description" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>Image Description<a class="headerlink" href="#image-description" title="Permalink to this heading">¶</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This document explains the toplevel structure of the
-KIWI NG image description document for version 9.24.38</p>
+KIWI NG image description document for version 9.24.39</p>
 </div>
 <div class="toctree-wrapper compound">
 <ul>
@@ -682,7 +683,7 @@ KIWI NG image description document for version 9.24.38</p>
 </ul>
 </div>
 <section id="main-root">
-<h2>Main Root<a class="headerlink" href="#main-root" title="Permalink to this headline">¶</a></h2>
+<h2>Main Root<a class="headerlink" href="#main-root" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;image/&gt;</span>
 </pre></div>
 </div>
@@ -691,7 +692,7 @@ an image description. All other elements must be descendants of this
 element. There can be only one <code class="xref py py-obj docutils literal notranslate"><span class="pre">image</span></code> element.</p>
 </section>
 <section id="image-identity">
-<h2>Image Identity<a class="headerlink" href="#image-identity" title="Permalink to this headline">¶</a></h2>
+<h2>Image Identity<a class="headerlink" href="#image-identity" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;description/&gt;</span>
 </pre></div>
 </div>
@@ -701,7 +702,7 @@ image. All data together forms the identity card of the image.
 There can be only one <code class="xref py py-obj docutils literal notranslate"><span class="pre">description</span></code> element</p>
 </section>
 <section id="image-preferences">
-<h2>Image Preferences<a class="headerlink" href="#image-preferences" title="Permalink to this headline">¶</a></h2>
+<h2>Image Preferences<a class="headerlink" href="#image-preferences" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;preferences/&gt;</span>
 </pre></div>
 </div>
@@ -711,7 +712,7 @@ version, the partition layout and much more is specified here. There can be
 multiple <code class="xref py py-obj docutils literal notranslate"><span class="pre">preferences</span></code> elements</p>
 </section>
 <section id="image-software-sources">
-<h2>Image Software Sources<a class="headerlink" href="#image-software-sources" title="Permalink to this headline">¶</a></h2>
+<h2>Image Software Sources<a class="headerlink" href="#image-software-sources" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;repository/&gt;</span>
 </pre></div>
 </div>
@@ -720,7 +721,7 @@ software packages that are used to build the image. There can be
 multiple <code class="xref py py-obj docutils literal notranslate"><span class="pre">repository</span></code> elements</p>
 </section>
 <section id="image-content-setup">
-<h2>Image Content Setup<a class="headerlink" href="#image-content-setup" title="Permalink to this headline">¶</a></h2>
+<h2>Image Content Setup<a class="headerlink" href="#image-content-setup" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;packages/&gt;</span>
 </pre></div>
 </div>
@@ -731,7 +732,7 @@ collections, archives or products. There can be multiple
 <code class="xref py py-obj docutils literal notranslate"><span class="pre">packages</span></code> elements</p>
 </section>
 <section id="image-users">
-<h2>Image Users<a class="headerlink" href="#image-users" title="Permalink to this headline">¶</a></h2>
+<h2>Image Users<a class="headerlink" href="#image-users" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;users/&gt;</span>
 </pre></div>
 </div>
@@ -740,7 +741,7 @@ to be created inside of the image. There can be multiple <code class="xref py py
 elements</p>
 </section>
 <section id="image-namespace">
-<h2>Image Namespace<a class="headerlink" href="#image-namespace" title="Permalink to this headline">¶</a></h2>
+<h2>Image Namespace<a class="headerlink" href="#image-namespace" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;profiles/&gt;</span>
 </pre></div>
 </div>
@@ -750,7 +751,7 @@ used with any of the above elements and therefore tie them into
 a namespace which can be selected at call time of KIWI NG</p>
 </section>
 <section id="image-includes">
-<h2>Image Includes<a class="headerlink" href="#image-includes" title="Permalink to this headline">¶</a></h2>
+<h2>Image Includes<a class="headerlink" href="#image-includes" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;include</span> <span class="na">from=</span><span class="s">&quot;file://filename.xml&quot;</span><span class="nt">/&gt;</span>
 </pre></div>
 </div>

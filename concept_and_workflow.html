@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Concept and Workflow &mdash; KIWI NG 9.24.38 documentation</title>
+  <title>Concept and Workflow &mdash; KIWI NG 9.24.39 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
@@ -15,6 +15,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -670,12 +671,12 @@
            <div itemprop="articleBody">
              
   <section id="concept-and-workflow">
-<h1>Concept and Workflow<a class="headerlink" href="#concept-and-workflow" title="Permalink to this headline">¶</a></h1>
+<h1>Concept and Workflow<a class="headerlink" href="#concept-and-workflow" title="Permalink to this heading">¶</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><strong>Abstract</strong></p>
 <p>The following sections describe the concept and general workflow
-of building appliances with KIWI NG 9.24.38.</p>
+of building appliances with KIWI NG 9.24.39.</p>
 </div>
 <div class="toctree-wrapper compound">
 <ul>
@@ -690,7 +691,7 @@ of building appliances with KIWI NG 9.24.38.</p>
 </ul>
 </div>
 <section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
 <p>KIWI NG builds so-called <em>system images</em> (a fully installed and optionally
 configured system in a single file) of a Linux distribution in two steps (for
 further details, see <a class="reference internal" href="#working-with-kiwi-image-building-process"><span class="std std-ref">Image Building Process</span></a>):</p>
@@ -740,7 +741,7 @@ CD/DVD without booting from the media.</p>
 </dl>
 </section>
 <section id="image-building-process">
-<span id="working-with-kiwi-image-building-process"></span><h2>Image Building Process<a class="headerlink" href="#image-building-process" title="Permalink to this headline">¶</a></h2>
+<span id="working-with-kiwi-image-building-process"></span><h2>Image Building Process<a class="headerlink" href="#image-building-process" title="Permalink to this heading">¶</a></h2>
 <p>KIWI NG creates images in a two step process: The first step, the <em>prepare</em>
 operation, generates a so-called <em>unpacked image tree</em> (directory) using
 the information provided in the <code class="file docutils literal notranslate"><span class="pre">config.xml</span></code> configuration file
@@ -755,7 +756,7 @@ information provided in the <code class="file docutils literal notranslate"><spa
 </figcaption>
 </figure>
 <section id="the-prepare-step">
-<span id="prepare-step"></span><h3>The Prepare Step<a class="headerlink" href="#the-prepare-step" title="Permalink to this headline">¶</a></h3>
+<span id="prepare-step"></span><h3>The Prepare Step<a class="headerlink" href="#the-prepare-step" title="Permalink to this heading">¶</a></h3>
 <p>As the first step, KIWI NG creates an <em>unpackaged image tree</em>, also called “root tree”. This
 directory will be the installation target for software packages to be
 installed during the image creation process.</p>
@@ -858,7 +859,7 @@ the <code class="docutils literal notranslate"><span class="pre">prepare</span><
 </ol>
 </section>
 <section id="the-create-step">
-<span id="create-step"></span><h3>The Create Step<a class="headerlink" href="#the-create-step" title="Permalink to this headline">¶</a></h3>
+<span id="create-step"></span><h3>The Create Step<a class="headerlink" href="#the-create-step" title="Permalink to this heading">¶</a></h3>
 <p>KIWI NG creates the final image during the <em>create step</em>: it converts the
 unpacked root tree into one or multiple output files appropriate for the
 respective build type.</p>

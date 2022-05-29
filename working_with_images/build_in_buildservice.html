@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Building in the Open Build Service &mdash; KIWI NG 9.24.38 documentation</title>
+  <title>Building in the Open Build Service &mdash; KIWI NG 9.24.39 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
@@ -15,6 +15,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -671,12 +672,12 @@
            <div itemprop="articleBody">
              
   <section id="building-in-the-open-build-service">
-<h1>Building in the Open Build Service<a class="headerlink" href="#building-in-the-open-build-service" title="Permalink to this headline">¶</a></h1>
+<h1>Building in the Open Build Service<a class="headerlink" href="#building-in-the-open-build-service" title="Permalink to this heading">¶</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><strong>Abstract</strong></p>
 <p>This document gives a brief overview how to build images with
-KIWI NG in version 9.24.38 inside of the Open Build Service.
+KIWI NG in version 9.24.39 inside of the Open Build Service.
 A tutorial on the Open Buildservice itself can be found here:
 <a class="reference external" href="https://en.opensuse.org/openSUSE:Build_Service_Tutorial">https://en.opensuse.org/openSUSE:Build_Service_Tutorial</a></p>
 </div>
@@ -687,7 +688,7 @@ image build projects from the base Testing project
 <p><a class="reference external" href="https://build.opensuse.org">https://build.opensuse.org</a></p>
 <p>For example the test images for SUSE on x86 can be found <a class="reference external" href="https://build.opensuse.org/project/show/Virtualization:Appliances:Images:Testing_x86:leap">here</a>.</p>
 <section id="advantages-of-using-the-open-build-service-obs">
-<h2>Advantages of using the Open Build Service (OBS)<a class="headerlink" href="#advantages-of-using-the-open-build-service-obs" title="Permalink to this headline">¶</a></h2>
+<h2>Advantages of using the Open Build Service (OBS)<a class="headerlink" href="#advantages-of-using-the-open-build-service-obs" title="Permalink to this heading">¶</a></h2>
 <p>The Open Build Service offers multiple advantages over running KIWI NG
 locally:</p>
 <ul class="simple">
@@ -703,7 +704,7 @@ preferences).</p></li>
 </ul>
 </section>
 <section id="differences-between-building-locally-and-on-obs">
-<h2>Differences Between Building Locally and on OBS<a class="headerlink" href="#differences-between-building-locally-and-on-obs" title="Permalink to this headline">¶</a></h2>
+<h2>Differences Between Building Locally and on OBS<a class="headerlink" href="#differences-between-building-locally-and-on-obs" title="Permalink to this heading">¶</a></h2>
 <p>Note, there is a number of differences when building images with KIWI NG using
 the Open Build Service. Your image that build locally just fine, might not
 build without modifications.</p>
@@ -794,16 +795,16 @@ to your project.</p></li>
 </ul>
 </section>
 <section id="recommendations">
-<span id="obs-recommended-settings"></span><h2>Recommendations<a class="headerlink" href="#recommendations" title="Permalink to this headline">¶</a></h2>
+<span id="obs-recommended-settings"></span><h2>Recommendations<a class="headerlink" href="#recommendations" title="Permalink to this heading">¶</a></h2>
 <section id="working-with-obs">
-<h3>Working with OBS<a class="headerlink" href="#working-with-obs" title="Permalink to this headline">¶</a></h3>
+<h3>Working with OBS<a class="headerlink" href="#working-with-obs" title="Permalink to this heading">¶</a></h3>
 <p>Although OBS is an online service, it is not necessary to test every change
 by uploading it. OBS will use the same process as <code class="docutils literal notranslate"><span class="pre">osc</span> <span class="pre">build</span></code> does, so if
 your image builds locally via <code class="docutils literal notranslate"><span class="pre">osc</span> <span class="pre">build</span></code> it should also build online on
 OBS.</p>
 </section>
 <section id="repository-configuration">
-<h3>Repository Configuration<a class="headerlink" href="#repository-configuration" title="Permalink to this headline">¶</a></h3>
+<h3>Repository Configuration<a class="headerlink" href="#repository-configuration" title="Permalink to this heading">¶</a></h3>
 <p>When setting up the project, enable the <code class="xref py py-obj docutils literal notranslate"><span class="pre">images</span></code> repository: the <code class="xref py py-obj docutils literal notranslate"><span class="pre">images</span></code>
 repository’s checkbox can be found at the bottom of the selection screen
 that appears when clicking <code class="xref py py-obj docutils literal notranslate"><span class="pre">Add</span> <span class="pre">from</span> <span class="pre">a</span> <span class="pre">Distribution</span></code> in the <code class="xref py py-obj docutils literal notranslate"><span class="pre">Repositories</span></code>
@@ -904,7 +905,7 @@ the project configuration and is thus <strong>not</strong> recommended.</p>
 </div>
 </section>
 <section id="project-configuration">
-<h3>Project Configuration<a class="headerlink" href="#project-configuration" title="Permalink to this headline">¶</a></h3>
+<h3>Project Configuration<a class="headerlink" href="#project-configuration" title="Permalink to this heading">¶</a></h3>
 <p>The Open Build Service will by default create the same output file as KIWI NG
 when run locally, but with a custom filename ending (that is unfortunately
 unpredictable). This has the consequence that the download URL of your

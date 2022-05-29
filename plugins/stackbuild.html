@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Building based on Containers &mdash; KIWI NG 9.24.38 documentation</title>
+  <title>Building based on Containers &mdash; KIWI NG 9.24.39 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
@@ -15,6 +15,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -671,7 +672,7 @@
            <div itemprop="articleBody">
              
   <section id="building-based-on-containers">
-<span id="stackbuild"></span><h1>Building based on Containers<a class="headerlink" href="#building-based-on-containers" title="Permalink to this headline">¶</a></h1>
+<span id="stackbuild"></span><h1>Building based on Containers<a class="headerlink" href="#building-based-on-containers" title="Permalink to this heading">¶</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><strong>Abstract</strong></p>
@@ -687,7 +688,7 @@ requiring the original software repositories.</p></li>
 </ul>
 </div>
 <section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h2>
 <p>Add the KIWI NG repo from the Open Build Service. For details see
 <a class="reference internal" href="../installation.html#installation-from-obs"><span class="std std-ref">Installation from OBS</span></a>. The following KIWI NG plugin needs to be
 installed on the build system:</p>
@@ -696,7 +697,7 @@ installed on the build system:</p>
 </div>
 </section>
 <section id="concept">
-<h2>Concept<a class="headerlink" href="#concept" title="Permalink to this headline">¶</a></h2>
+<h2>Concept<a class="headerlink" href="#concept" title="Permalink to this heading">¶</a></h2>
 <p>The design of the stackbuild plugin is two fold:</p>
 <p>First the plugin comes with a command called <code class="xref py py-obj docutils literal notranslate"><span class="pre">stash</span></code> which allows
 to store a kiwi built root tree as an OCI container. OCI stands for
@@ -719,7 +720,7 @@ of documenting the functionality of the plugin only a part of the
 possibilities are taken into account as follows:</p>
 </section>
 <section id="create-a-stash">
-<span id="stash"></span><h2>Create a stash<a class="headerlink" href="#create-a-stash" title="Permalink to this headline">¶</a></h2>
+<span id="stash"></span><h2>Create a stash<a class="headerlink" href="#create-a-stash" title="Permalink to this heading">¶</a></h2>
 <p>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">stash</span></code> command creates an OCI compliant container from a given
 KIWI Next Generation (KIWI NG) image root tree and registers it in the local
 container registry. From there a user can push it to any registry
@@ -759,7 +760,7 @@ command can be used</p>
 </div>
 </section>
 <section id="rebuild-from-a-stash">
-<h2>Rebuild from a stash<a class="headerlink" href="#rebuild-from-a-stash" title="Permalink to this headline">¶</a></h2>
+<h2>Rebuild from a stash<a class="headerlink" href="#rebuild-from-a-stash" title="Permalink to this heading">¶</a></h2>
 <p>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">stackbuild</span></code> command takes the given container(s) from the local or
 remote registry and uses it/them to either rebuild an image from that
 data or build a new image on top of that data. If multiple containers
@@ -792,7 +793,7 @@ inside of the stash. As all rootfs data is already in the stash, the
 command will not need external resources to rebuild the image.</p>
 </section>
 <section id="turn-a-container-into-a-vm-image">
-<h2>Turn a container into a VM image<a class="headerlink" href="#turn-a-container-into-a-vm-image" title="Permalink to this headline">¶</a></h2>
+<h2>Turn a container into a VM image<a class="headerlink" href="#turn-a-container-into-a-vm-image" title="Permalink to this heading">¶</a></h2>
 <p>Another use case for the <code class="xref py py-obj docutils literal notranslate"><span class="pre">stackbuild</span></code> plugin is the transformation
 of container images into another image type that is supported by KIWI NG.
 The following example demonstrates how an existing container image

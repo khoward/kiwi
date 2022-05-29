@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Build an Expandable Disk Image &mdash; KIWI NG 9.24.38 documentation</title>
+  <title>Build an Expandable Disk Image &mdash; KIWI NG 9.24.39 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
@@ -15,6 +15,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -671,7 +672,7 @@
            <div itemprop="articleBody">
              
   <section id="build-an-expandable-disk-image">
-<span id="expandable-disk"></span><h1>Build an Expandable Disk Image<a class="headerlink" href="#build-an-expandable-disk-image" title="Permalink to this headline">¶</a></h1>
+<span id="expandable-disk"></span><h1>Build an Expandable Disk Image<a class="headerlink" href="#build-an-expandable-disk-image" title="Permalink to this heading">¶</a></h1>
 <aside class="sidebar">
 <p class="sidebar-title">Abstract</p>
 <p>This page explains how to build an expandable disk image.
@@ -710,7 +711,7 @@ capable to install this image on any target disk.</p></li>
 </li>
 </ol>
 <section id="deployment-methods">
-<span id="id1"></span><h2>Deployment Methods<a class="headerlink" href="#deployment-methods" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2>Deployment Methods<a class="headerlink" href="#deployment-methods" title="Permalink to this heading">¶</a></h2>
 <p>The basic idea behind an expandable disk image is to provide the virtual
 disk data for OEM vendors to support easy deployment of the system to
 physical storage media.</p>
@@ -730,7 +731,7 @@ deploy the disk image from the network onto the target disk.</p>
 </ol>
 </section>
 <section id="manual-deployment">
-<span id="deploy-manually"></span><h2>Manual Deployment<a class="headerlink" href="#manual-deployment" title="Permalink to this headline">¶</a></h2>
+<span id="deploy-manually"></span><h2>Manual Deployment<a class="headerlink" href="#manual-deployment" title="Permalink to this heading">¶</a></h2>
 <p>The manual deployment method can be tested using virtualization software
 such as QEMU, and an additional virtual target disk of a larger size.
 The following steps shows how to do it:</p>
@@ -764,7 +765,7 @@ and filesystem is resized to the maximum free space available.</p>
 </ol>
 </section>
 <section id="cd-dvd-deployment">
-<span id="deploy-from-iso"></span><h2>CD/DVD Deployment<a class="headerlink" href="#cd-dvd-deployment" title="Permalink to this headline">¶</a></h2>
+<span id="deploy-from-iso"></span><h2>CD/DVD Deployment<a class="headerlink" href="#cd-dvd-deployment" title="Permalink to this heading">¶</a></h2>
 <p>The deployment from CD/DVD via the installation image can
 also be tested using virtualization software such as QEMU.
 The following steps shows how to do it:</p>
@@ -791,7 +792,7 @@ serve as installation stick image like it is explained in
 </ol>
 </section>
 <section id="network-deployment">
-<span id="deploy-from-network"></span><h2>Network Deployment<a class="headerlink" href="#network-deployment" title="Permalink to this headline">¶</a></h2>
+<span id="deploy-from-network"></span><h2>Network Deployment<a class="headerlink" href="#network-deployment" title="Permalink to this heading">¶</a></h2>
 <p>The deployment from the network downloads the disk image from a
 PXE boot server. This requires a PXE network boot server to be setup
 as explained in <a class="reference internal" href="../working_with_images/setup_network_bootserver.html#network-boot-server"><span class="std std-ref">Setting Up a Network Boot Server</span></a></p>
@@ -921,7 +922,7 @@ to it via a custom /etc/qemu-ifup. For details see
 </ol>
 </section>
 <section id="oem-customization">
-<span id="oem-customize"></span><h2>OEM Customization<a class="headerlink" href="#oem-customization" title="Permalink to this headline">¶</a></h2>
+<span id="oem-customize"></span><h2>OEM Customization<a class="headerlink" href="#oem-customization" title="Permalink to this heading">¶</a></h2>
 <p>The deployment process of an oem image can be customized through
 the <code class="xref py py-obj docutils literal notranslate"><span class="pre">oemconfig</span></code> element which is a child section of the <code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span></code>
 element like the following example shows:</p>
@@ -1024,7 +1025,7 @@ the image and machine power the computation can take some time.</p>
 </dl>
 </section>
 <section id="installation-media-customization">
-<span id="installmedia-customize"></span><h2>Installation Media Customization<a class="headerlink" href="#installation-media-customization" title="Permalink to this headline">¶</a></h2>
+<span id="installmedia-customize"></span><h2>Installation Media Customization<a class="headerlink" href="#installation-media-customization" title="Permalink to this heading">¶</a></h2>
 <p>The installation media created for OEM network or CD/DVD deployments can
 be customized with the <code class="xref py py-obj docutils literal notranslate"><span class="pre">installmedia</span></code> section which is a child section of the <code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span></code>
 element as it appears in the following example:</p>

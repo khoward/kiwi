@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Build a Virtual Disk Image &mdash; KIWI NG 9.24.38 documentation</title>
+  <title>Build a Virtual Disk Image &mdash; KIWI NG 9.24.39 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
@@ -15,6 +15,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -671,7 +672,7 @@
            <div itemprop="articleBody">
              
   <section id="build-a-virtual-disk-image">
-<span id="simple-disk"></span><h1>Build a Virtual Disk Image<a class="headerlink" href="#build-a-virtual-disk-image" title="Permalink to this headline">¶</a></h1>
+<span id="simple-disk"></span><h1>Build a Virtual Disk Image<a class="headerlink" href="#build-a-virtual-disk-image" title="Permalink to this heading">¶</a></h1>
 <aside class="sidebar">
 <p class="sidebar-title">Abstract</p>
 <p>This page explains how to build a simple disk image.
@@ -754,7 +755,7 @@ framework see:</p>
 </ul>
 <p>For information how to setup a Vagrant box, see: <a class="reference internal" href="../working_with_images/disk_setup_for_vagrant.html#setup-vagrant"><span class="std std-ref">Image Description for Vagrant</span></a>.</p>
 <section id="setting-up-the-bootloader-of-the-image">
-<span id="disk-bootloader"></span><h2>Setting up the Bootloader of the Image<a class="headerlink" href="#setting-up-the-bootloader-of-the-image" title="Permalink to this headline">¶</a></h2>
+<span id="disk-bootloader"></span><h2>Setting up the Bootloader of the Image<a class="headerlink" href="#setting-up-the-bootloader-of-the-image" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;preferences&gt;</span>
   <span class="nt">&lt;type&gt;</span>
      <span class="nt">&lt;bootloader</span> <span class="na">name=</span><span class="s">&quot;grub2&quot;</span><span class="nt">/&gt;</span>
@@ -767,7 +768,7 @@ image and offers several options for customizing its configuration.</p>
 <p>For details, see: <a class="reference internal" href="../image_description/elements.html#preferences-type-bootloader"><span class="std std-ref">&lt;preferences&gt;&lt;type&gt;&lt;bootloader&gt;</span></a></p>
 </section>
 <section id="modifying-the-size-of-the-image">
-<span id="disk-the-size-element"></span><h2>Modifying the Size of the Image<a class="headerlink" href="#modifying-the-size-of-the-image" title="Permalink to this headline">¶</a></h2>
+<span id="disk-the-size-element"></span><h2>Modifying the Size of the Image<a class="headerlink" href="#modifying-the-size-of-the-image" title="Permalink to this heading">¶</a></h2>
 <p>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">size</span></code> child element of <code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span></code> specifies the size of the resulting
 disk image. The following example shows a image description where 20 GB are
 added to the virtual machine image of which 5 GB are left unpartitioned:</p>
@@ -796,7 +797,7 @@ partitioned. This value uses the same unit as defined in the attribute
 </ul>
 </section>
 <section id="customizing-the-virtual-machine">
-<span id="disk-the-machine-element"></span><h2>Customizing the Virtual Machine<a class="headerlink" href="#customizing-the-virtual-machine" title="Permalink to this headline">¶</a></h2>
+<span id="disk-the-machine-element"></span><h2>Customizing the Virtual Machine<a class="headerlink" href="#customizing-the-virtual-machine" title="Permalink to this heading">¶</a></h2>
 <p>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">machine</span></code> child element of <code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span></code> can be used to customize the virtual
 machine configuration which is used when the image is run, like the number
 of CPUs or the connected network interfaces.</p>
@@ -832,7 +833,7 @@ formats).</p></li>
 <p>Additionally, <code class="xref py py-obj docutils literal notranslate"><span class="pre">machine</span></code> supports additional child elements that are covered
 in the following subsections.</p>
 <section id="modifying-the-vm-configuration-directly">
-<h3>Modifying the VM Configuration Directly<a class="headerlink" href="#modifying-the-vm-configuration-directly" title="Permalink to this headline">¶</a></h3>
+<h3>Modifying the VM Configuration Directly<a class="headerlink" href="#modifying-the-vm-configuration-directly" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">vmconfig-entry</span></code> element is used to add entries directly into the
 virtual machine’s configuration file. This is currently only supported for
 the <code class="xref py py-obj docutils literal notranslate"><span class="pre">vmdk</span></code> format where the provided strings are directly pasted into the
@@ -855,7 +856,7 @@ forwards them.</p>
 </div>
 </section>
 <section id="adding-network-interfaces-to-the-vm">
-<h3>Adding Network Interfaces to the VM<a class="headerlink" href="#adding-network-interfaces-to-the-vm" title="Permalink to this headline">¶</a></h3>
+<h3>Adding Network Interfaces to the VM<a class="headerlink" href="#adding-network-interfaces-to-the-vm" title="Permalink to this heading">¶</a></h3>
 <p>Network interfaces can be explicitly specified for the VM when required via
 the <code class="xref py py-obj docutils literal notranslate"><span class="pre">vmnic</span></code> element. This can be used to add another bridged interface or
 to specify the driver which is being used.</p>
@@ -883,7 +884,7 @@ attributes, it will only paste them into the appropriate configuration
 files.</p>
 </section>
 <section id="specifying-disks-and-disk-controllers">
-<h3>Specifying Disks and Disk Controllers<a class="headerlink" href="#specifying-disks-and-disk-controllers" title="Permalink to this headline">¶</a></h3>
+<h3>Specifying Disks and Disk Controllers<a class="headerlink" href="#specifying-disks-and-disk-controllers" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">vmdisk</span></code> element can be used to customize the disks and disk
 controllers for the virtual machine. This element can be specified multiple
 times, each time for each disk or disk controller present.</p>
@@ -915,7 +916,7 @@ only). Supported values are: <code class="xref py py-obj docutils literal notran
 </ul>
 </section>
 <section id="adding-cd-dvd-drives">
-<h3>Adding CD/DVD Drives<a class="headerlink" href="#adding-cd-dvd-drives" title="Permalink to this headline">¶</a></h3>
+<h3>Adding CD/DVD Drives<a class="headerlink" href="#adding-cd-dvd-drives" title="Permalink to this heading">¶</a></h3>
 <p>KIWI NG supports the addition of IDE and SCSCI CD/DVD drives to the virtual
 machine using the <code class="xref py py-obj docutils literal notranslate"><span class="pre">vmdvd</span></code> element for the <code class="xref py py-obj docutils literal notranslate"><span class="pre">vmdk</span></code> image format. In the
 following example we add two drives: one with a SCSCI and another with a

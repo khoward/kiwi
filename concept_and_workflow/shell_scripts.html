@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>User Defined Scripts &mdash; KIWI NG 9.24.38 documentation</title>
+  <title>User Defined Scripts &mdash; KIWI NG 9.24.39 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
@@ -15,6 +15,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -671,7 +672,7 @@
            <div itemprop="articleBody">
              
   <section id="user-defined-scripts">
-<span id="working-with-kiwi-user-defined-scripts"></span><h1>User Defined Scripts<a class="headerlink" href="#user-defined-scripts" title="Permalink to this headline">¶</a></h1>
+<span id="working-with-kiwi-user-defined-scripts"></span><h1>User Defined Scripts<a class="headerlink" href="#user-defined-scripts" title="Permalink to this heading">¶</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><strong>Abstract</strong></p>
@@ -728,7 +729,7 @@ bit is set (in that case a shebang is mandatory) otherwise they will be
 invoked via the BASH. If a script exits with a non-zero exit code
 then KIWI NG will report the failure and abort the image creation.</p>
 <section id="developing-debugging-scripts">
-<h2>Developing/Debugging Scripts<a class="headerlink" href="#developing-debugging-scripts" title="Permalink to this headline">¶</a></h2>
+<h2>Developing/Debugging Scripts<a class="headerlink" href="#developing-debugging-scripts" title="Permalink to this heading">¶</a></h2>
 <p>When creating a custom script it usually takes some iterations of
 try and testing until a final stable state is reached. To support
 developers with this task KIWI NG calls scripts associated with a
@@ -768,7 +769,7 @@ native way and should not require a terminal to operate
 correctly !</p>
 </div>
 <section id="script-template-for-config-sh-images-sh">
-<h3>Script Template for config.sh / images.sh<a class="headerlink" href="#script-template-for-config-sh-images-sh" title="Permalink to this headline">¶</a></h3>
+<h3>Script Template for config.sh / images.sh<a class="headerlink" href="#script-template-for-config-sh-images-sh" title="Permalink to this heading">¶</a></h3>
 <p>KIWI NG provides a collection of methods and variables that supports users
 with custom operations. For details see <a class="reference internal" href="#image-customization-methods"><span class="std std-ref">Functions and Variables Provided by KIWI NG</span></a>.
 The following template shows how to import this information in your
@@ -791,7 +792,7 @@ and will not be automatically restored!</p>
 </div>
 </section>
 <section id="functions-and-variables-provided-by-kiwi-ng">
-<span id="image-customization-methods"></span><h3>Functions and Variables Provided by KIWI NG<a class="headerlink" href="#functions-and-variables-provided-by-kiwi-ng" title="Permalink to this headline">¶</a></h3>
+<span id="image-customization-methods"></span><h3>Functions and Variables Provided by KIWI NG<a class="headerlink" href="#functions-and-variables-provided-by-kiwi-ng" title="Permalink to this heading">¶</a></h3>
 <p>KIWI NG creates the <code class="file docutils literal notranslate"><span class="pre">.kconfig</span></code> and <code class="file docutils literal notranslate"><span class="pre">.profile</span></code> files to be sourced
 by the shell scripts <code class="file docutils literal notranslate"><span class="pre">config.sh</span></code> and <code class="file docutils literal notranslate"><span class="pre">images.sh</span></code>.
 <code class="file docutils literal notranslate"><span class="pre">.kconfig</span></code> contains various helper functions which can be used to
@@ -799,7 +800,7 @@ simplify the image configuration and <code class="file docutils literal notransl
 variables which get populated from the settings provided in the image
 description.</p>
 <section id="functions">
-<h4>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h4>
+<h4>Functions<a class="headerlink" href="#functions" title="Permalink to this heading">¶</a></h4>
 <p>The <code class="file docutils literal notranslate"><span class="pre">.kconfig</span></code> file provides a common set of functions.  Functions
 specific to SUSE Linux Enterprise and openSUSE begin with the name
 <code class="docutils literal notranslate"><span class="pre">suse</span></code>, functions applicable to all Linux distributions start with the
@@ -876,7 +877,7 @@ set to 1 (it is off by default).</p>
 </dl>
 </section>
 <section id="profile-environment-variables">
-<h4>Profile Environment Variables<a class="headerlink" href="#profile-environment-variables" title="Permalink to this headline">¶</a></h4>
+<h4>Profile Environment Variables<a class="headerlink" href="#profile-environment-variables" title="Permalink to this heading">¶</a></h4>
 <p>The <code class="file docutils literal notranslate"><span class="pre">.profile</span></code> environment file is created by KIWI NG and contains a
 specific set of variables which are listed below.</p>
 <dl class="simple">
@@ -908,7 +909,7 @@ with <code class="xref py py-obj docutils literal notranslate"><span class="pre"
 </section>
 </section>
 <section id="configuration-tips">
-<h3>Configuration Tips<a class="headerlink" href="#configuration-tips" title="Permalink to this headline">¶</a></h3>
+<h3>Configuration Tips<a class="headerlink" href="#configuration-tips" title="Permalink to this heading">¶</a></h3>
 <ol class="arabic">
 <li><p><strong>Locale configuration:</strong></p>
 <p>KIWI in order to set the locale relies on <strong class="command">systemd-firstboot</strong>,

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Adding and Removing Packages &mdash; KIWI NG 9.24.38 documentation</title>
+  <title>Adding and Removing Packages &mdash; KIWI NG 9.24.39 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
@@ -15,6 +15,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -671,7 +672,7 @@
            <div itemprop="articleBody">
              
   <section id="adding-and-removing-packages">
-<span id="packages"></span><h1>Adding and Removing Packages<a class="headerlink" href="#adding-and-removing-packages" title="Permalink to this headline">¶</a></h1>
+<span id="packages"></span><h1>Adding and Removing Packages<a class="headerlink" href="#adding-and-removing-packages" title="Permalink to this heading">¶</a></h1>
 <p>On top of the <a class="reference internal" href="repository_setup.html#repositories"><span class="std std-ref">Setting up Repositories</span></a> setup the package setup is
 required. KIWI NG allows the end user to completely customize the selection
 of packages via the <code class="xref py py-obj docutils literal notranslate"><span class="pre">packages</span></code> element.</p>
@@ -714,7 +715,7 @@ specific build type is currently processed by KIWI NG.</p>
 <p>The following sections describes the different child elements of
 a <code class="xref py py-obj docutils literal notranslate"><span class="pre">packages</span></code> group.</p>
 <section id="the-package-element">
-<span id="package-element"></span><h2>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">package</span></code> element<a class="headerlink" href="#the-package-element" title="Permalink to this headline">¶</a></h2>
+<span id="package-element"></span><h2>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">package</span></code> element<a class="headerlink" href="#the-package-element" title="Permalink to this heading">¶</a></h2>
 <p>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">package</span></code> element represents a single package to be installed (or
 removed), whose name is specified via the mandatory <code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code> attribute:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;image</span> <span class="na">schemaversion=</span><span class="s">&quot;7.4&quot;</span> <span class="na">name=</span><span class="s">&quot;{exc_image_base_name}&quot;</span><span class="nt">&gt;</span>
@@ -763,7 +764,7 @@ build host is a 64bit x86 machine, but <code class="xref py py-obj docutils lite
 of the architecture.</p>
 </section>
 <section id="the-archive-element">
-<span id="archive-element"></span><h2>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">archive</span></code> element<a class="headerlink" href="#the-archive-element" title="Permalink to this headline">¶</a></h2>
+<span id="archive-element"></span><h2>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">archive</span></code> element<a class="headerlink" href="#the-archive-element" title="Permalink to this heading">¶</a></h2>
 <p>It is sometimes necessary to include additional packages into the image
 which are not available in the package manager’s native format. KIWI NG
 supports the inclusion of ordinary tar archives via the <code class="xref py py-obj docutils literal notranslate"><span class="pre">archive</span></code> element,
@@ -783,7 +784,7 @@ already present in the image, then the file from the archive will overwrite
 it (same as with the image overlay).</p>
 </section>
 <section id="uninstall-system-packages">
-<span id="id1"></span><h2>Uninstall System Packages<a class="headerlink" href="#uninstall-system-packages" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2>Uninstall System Packages<a class="headerlink" href="#uninstall-system-packages" title="Permalink to this heading">¶</a></h2>
 <p>KIWI NG supports two different methods how packages can be removed from the
 appliance:</p>
 <ol class="arabic simple">
@@ -860,7 +861,7 @@ safely uninstalled in images for embedded devices without a network
 connection.</p>
 </section>
 <section id="the-product-and-namedcollection-element">
-<span id="product-and-namedcollection-element"></span><h2>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">product</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">namedCollection</span></code> element<a class="headerlink" href="#the-product-and-namedcollection-element" title="Permalink to this headline">¶</a></h2>
+<span id="product-and-namedcollection-element"></span><h2>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">product</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">namedCollection</span></code> element<a class="headerlink" href="#the-product-and-namedcollection-element" title="Permalink to this heading">¶</a></h2>
 <p>KIWI NG supports the inclusion of openSUSE products or of namedCollections
 (<em>patterns</em> in SUSE based distributions or <em>groups</em> for RedHat based
 distributions). These can be added via the <code class="xref py py-obj docutils literal notranslate"><span class="pre">product</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">namedCollection</span></code>
@@ -884,7 +885,7 @@ and recommended by the specified patterns and packages.</p></li>
 </ul>
 </section>
 <section id="the-ignore-element">
-<h2>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">ignore</span></code> element<a class="headerlink" href="#the-ignore-element" title="Permalink to this headline">¶</a></h2>
+<h2>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">ignore</span></code> element<a class="headerlink" href="#the-ignore-element" title="Permalink to this heading">¶</a></h2>
 <p>Packages can be explicitly marked to be ignored for installation inside a
 <code class="xref py py-obj docutils literal notranslate"><span class="pre">packages</span></code> collection. This useful to exclude certain packages from being
 installed when using patterns with <code class="xref py py-obj docutils literal notranslate"><span class="pre">patternType=&quot;plusRecommended&quot;</span></code> as shown

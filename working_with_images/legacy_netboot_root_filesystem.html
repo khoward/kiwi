@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Build PXE Root File System Image for the legacy netboot infrastructure &mdash; KIWI NG 9.24.38 documentation</title>
+  <title>Build PXE Root File System Image for the legacy netboot infrastructure &mdash; KIWI NG 9.24.39 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
@@ -15,6 +15,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -671,7 +672,7 @@
            <div itemprop="articleBody">
              
   <section id="build-pxe-root-file-system-image-for-the-legacy-netboot-infrastructure">
-<span id="build-legacy-pxe"></span><h1>Build PXE Root File System Image for the legacy netboot infrastructure<a class="headerlink" href="#build-pxe-root-file-system-image-for-the-legacy-netboot-infrastructure" title="Permalink to this headline">¶</a></h1>
+<span id="build-legacy-pxe"></span><h1>Build PXE Root File System Image for the legacy netboot infrastructure<a class="headerlink" href="#build-pxe-root-file-system-image-for-the-legacy-netboot-infrastructure" title="Permalink to this heading">¶</a></h1>
 <aside class="sidebar">
 <p class="sidebar-title">Abstract</p>
 <p>This page explains how to build a file system image for use with
@@ -792,7 +793,7 @@ in a virtualized environment using QEMU as follows:</p>
 </li>
 </ol>
 <section id="pxe-client-setup-configuration">
-<span id="pxe-legacy-client-config"></span><h2>PXE Client Setup Configuration<a class="headerlink" href="#pxe-client-setup-configuration" title="Permalink to this headline">¶</a></h2>
+<span id="pxe-legacy-client-config"></span><h2>PXE Client Setup Configuration<a class="headerlink" href="#pxe-client-setup-configuration" title="Permalink to this heading">¶</a></h2>
 <p>All PXE boot based deployment methods are controlled by configuration files
 located in <code class="file docutils literal notranslate"><span class="pre">/srv/tftpboot/KIWI</span></code> on the PXE server. Such a configuration
 file can either be client-specific (config.MAC_ADDRESS, for example
@@ -838,7 +839,7 @@ setup of the client which configuration values are required. The
 following is a collection of client setup examples which covers all
 supported PXE client configurations.</p>
 <section id="setup-client-with-remote-root">
-<h3>Setup Client with Remote Root<a class="headerlink" href="#setup-client-with-remote-root" title="Permalink to this headline">¶</a></h3>
+<h3>Setup Client with Remote Root<a class="headerlink" href="#setup-client-with-remote-root" title="Permalink to this heading">¶</a></h3>
 <p>To serve the image from a remote location and redirect all
 write operations on a tmpfs, the following setup is required:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># When using AoE, see vblade toolchain for image export</span>
@@ -864,7 +865,7 @@ to be local to the client. In any case a setup of either AoE, NBD or
 NFS on the image server is required beforehand.</p>
 </section>
 <section id="setup-client-with-system-on-local-disk">
-<h3>Setup Client with System on Local Disk<a class="headerlink" href="#setup-client-with-system-on-local-disk" title="Permalink to this headline">¶</a></h3>
+<h3>Setup Client with System on Local Disk<a class="headerlink" href="#setup-client-with-system-on-local-disk" title="Permalink to this heading">¶</a></h3>
 <p>To deploy the image on a local disk the following setup
 is required:</p>
 <div class="admonition note">
@@ -887,7 +888,7 @@ partition with <code class="file docutils literal notranslate"><span class="pre"
 a place holder to indicate the default behaviour.</p>
 </section>
 <section id="setup-client-with-system-on-local-md-raid-disk">
-<h3>Setup Client with System on Local MD RAID Disk<a class="headerlink" href="#setup-client-with-system-on-local-md-raid-disk" title="Permalink to this headline">¶</a></h3>
+<h3>Setup Client with System on Local MD RAID Disk<a class="headerlink" href="#setup-client-with-system-on-local-md-raid-disk" title="Permalink to this heading">¶</a></h3>
 <p>To deploy the image on a local disk with prior software RAID
 configuration, the following setup is required:</p>
 <div class="admonition note">
@@ -914,7 +915,7 @@ specify the correct RAID partition in the <code class="docutils literal notransl
 is reserved for the system.</p>
 </section>
 <section id="setup-loading-of-custom-configuration-file-s">
-<h3>Setup Loading of Custom Configuration File(s)<a class="headerlink" href="#setup-loading-of-custom-configuration-file-s" title="Permalink to this headline">¶</a></h3>
+<h3>Setup Loading of Custom Configuration File(s)<a class="headerlink" href="#setup-loading-of-custom-configuration-file-s" title="Permalink to this heading">¶</a></h3>
 <p>In order to load for example a custom <code class="file docutils literal notranslate"><span class="pre">/etc/hosts</span></code> file on the client,
 the following setup is required:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">CONF</span><span class="o">=</span><span class="s2">&quot;hosts;/etc/hosts;192.168.1.2;4096;ffffffff&quot;</span>
@@ -927,7 +928,7 @@ but can be changed via the <code class="docutils literal notranslate"><span clas
 For details, see <a class="reference internal" href="#custom-download-server"><span class="std std-ref">Setup a Different Download Protocol and Server</span></a></p>
 </section>
 <section id="setup-client-to-force-reload-image">
-<h3>Setup Client to Force Reload Image<a class="headerlink" href="#setup-client-to-force-reload-image" title="Permalink to this headline">¶</a></h3>
+<h3>Setup Client to Force Reload Image<a class="headerlink" href="#setup-client-to-force-reload-image" title="Permalink to this heading">¶</a></h3>
 <p>To force the reload of the system image even if the image on
 the disk is up-to-date, the following setup is required:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">RELOAD_IMAGE</span><span class="o">=</span><span class="m">1</span>
@@ -936,7 +937,7 @@ the disk is up-to-date, the following setup is required:</p>
 <p>The option only applies to configurations with a DISK/PART setup</p>
 </section>
 <section id="setup-client-to-force-reload-configuration-files">
-<h3>Setup Client to Force Reload Configuration Files<a class="headerlink" href="#setup-client-to-force-reload-configuration-files" title="Permalink to this headline">¶</a></h3>
+<h3>Setup Client to Force Reload Configuration Files<a class="headerlink" href="#setup-client-to-force-reload-configuration-files" title="Permalink to this heading">¶</a></h3>
 <p>To force the reload of all configuration files specified in
 CONF, the following setup is required:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">RELOAD_CONFIG</span><span class="o">=</span><span class="m">1</span>
@@ -948,7 +949,7 @@ will be reloaded from the PXE server. The option only applies to
 configurations with a DISK/PART setup</p>
 </section>
 <section id="setup-client-for-reboot-after-deployment">
-<h3>Setup Client for Reboot After Deployment<a class="headerlink" href="#setup-client-for-reboot-after-deployment" title="Permalink to this headline">¶</a></h3>
+<h3>Setup Client for Reboot After Deployment<a class="headerlink" href="#setup-client-for-reboot-after-deployment" title="Permalink to this heading">¶</a></h3>
 <p>To reboot the system after the initial deployment process is
 done the following setup is required:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">REBOOT_IMAGE</span><span class="o">=</span><span class="m">1</span>
@@ -956,7 +957,7 @@ done the following setup is required:</p>
 </div>
 </section>
 <section id="setup-custom-kernel-boot-options">
-<h3>Setup custom kernel boot options<a class="headerlink" href="#setup-custom-kernel-boot-options" title="Permalink to this headline">¶</a></h3>
+<h3>Setup custom kernel boot options<a class="headerlink" href="#setup-custom-kernel-boot-options" title="Permalink to this heading">¶</a></h3>
 <p>To deactivate the kernel mode setting on local
 boot of the client the following setup is required:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">KIWI_KERNEL_OPTIONS</span><span class="o">=</span><span class="s2">&quot;nomodeset&quot;</span>
@@ -970,7 +971,7 @@ configuration on the PXE server needs to be changed</p>
 </div>
 </section>
 <section id="setup-a-custom-boot-timeout">
-<h3>Setup a Custom Boot Timeout<a class="headerlink" href="#setup-a-custom-boot-timeout" title="Permalink to this headline">¶</a></h3>
+<h3>Setup a Custom Boot Timeout<a class="headerlink" href="#setup-a-custom-boot-timeout" title="Permalink to this heading">¶</a></h3>
 <p>To setup a 10sec custom timeout for the local boot of the client
 the following setup is required.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">KIWI_BOOT_TIMEOUT</span><span class="o">=</span><span class="s2">&quot;10&quot;</span>
@@ -983,7 +984,7 @@ from the network.</p>
 </div>
 </section>
 <section id="setup-a-different-download-protocol-and-server">
-<span id="custom-download-server"></span><h3>Setup a Different Download Protocol and Server<a class="headerlink" href="#setup-a-different-download-protocol-and-server" title="Permalink to this headline">¶</a></h3>
+<span id="custom-download-server"></span><h3>Setup a Different Download Protocol and Server<a class="headerlink" href="#setup-a-different-download-protocol-and-server" title="Permalink to this heading">¶</a></h3>
 <p>By default all downloads controlled by the KIWI NG linuxrc code are
 performed by an atftp call using the TFTP protocol. With PXE the download
 protocol is fixed and thus you cannot change the way how the kernel and

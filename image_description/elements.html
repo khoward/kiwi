@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Image Description Elements &mdash; KIWI NG 9.24.38 documentation</title>
+  <title>Image Description Elements &mdash; KIWI NG 9.24.39 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
@@ -15,6 +15,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -671,14 +672,14 @@
            <div itemprop="articleBody">
              
   <section id="image-description-elements">
-<span id="id1"></span><h1>Image Description Elements<a class="headerlink" href="#image-description-elements" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>Image Description Elements<a class="headerlink" href="#image-description-elements" title="Permalink to this heading">¶</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This document provides a reference for the elements
-and attributes of the KIWI NG XML document in version 9.24.38</p>
+and attributes of the KIWI NG XML document in version 9.24.39</p>
 </div>
 <section id="image">
-<span id="sec-image"></span><h2>&lt;image&gt;<a class="headerlink" href="#image" title="Permalink to this headline">¶</a></h2>
+<span id="sec-image"></span><h2>&lt;image&gt;<a class="headerlink" href="#image" title="Permalink to this heading">¶</a></h2>
 <p>The toplevel of any KIWI NG image description</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;image</span> <span class="na">schemaversion=</span><span class="s">&quot;7.4&quot;</span> <span class="na">name=</span><span class="s">&quot;{exc_image_base_name}&quot;</span><span class="nt">&gt;</span>
     <span class="cm">&lt;!-- descendants --&gt;</span>
@@ -705,7 +706,7 @@ within the image.</p>
 </dl>
 </section>
 <section id="include">
-<span id="sec-include"></span><h2>&lt;include&gt;<a class="headerlink" href="#include" title="Permalink to this headline">¶</a></h2>
+<span id="sec-include"></span><h2>&lt;include&gt;<a class="headerlink" href="#include" title="Permalink to this heading">¶</a></h2>
 <p>Optional include of XML file content from file</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;image</span> <span class="na">schemaversion=</span><span class="s">&quot;7.4&quot;</span> <span class="na">name=</span><span class="s">&quot;{exc_image_base_name}&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;include</span> <span class="na">from=</span><span class="s">&quot;file://description.xml&quot;</span><span class="nt">/&gt;</span>
@@ -752,7 +753,7 @@ as include reference.</p>
 </div>
 </section>
 <section id="description">
-<span id="sec-description"></span><h2>&lt;description&gt;<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<span id="sec-description"></span><h2>&lt;description&gt;<a class="headerlink" href="#description" title="Permalink to this heading">¶</a></h2>
 <p>Provide an image identity.</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;description</span> <span class="na">type=</span><span class="s">&quot;system&quot;</span><span class="nt">&gt;</span>
   <span class="nt">&lt;author&gt;</span>name<span class="nt">&lt;/author&gt;</span>
@@ -772,7 +773,7 @@ value <code class="xref py py-obj docutils literal notranslate"><span class="pre
 </dl>
 </section>
 <section id="preferences">
-<span id="sec-preferences"></span><h2>&lt;preferences&gt;<a class="headerlink" href="#preferences" title="Permalink to this headline">¶</a></h2>
+<span id="sec-preferences"></span><h2>&lt;preferences&gt;<a class="headerlink" href="#preferences" title="Permalink to this heading">¶</a></h2>
 <p>Setup image type and layout.</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;preferences</span> <span class="na">arch=</span><span class="s">&quot;arch&quot;</span><span class="nt">&gt;</span>
   <span class="nt">&lt;version&gt;</span>1.2.3<span class="nt">&lt;/version&gt;</span>
@@ -788,7 +789,7 @@ be configured to apply only for a certain architecture. In this
 case specify the <code class="xref py py-obj docutils literal notranslate"><span class="pre">arch</span></code> attribute with a value as it is reported
 by <strong class="command">uname -m</strong></p>
 <section id="preferences-version">
-<h3>&lt;preferences&gt;&lt;version&gt;<a class="headerlink" href="#preferences-version" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;preferences&gt;&lt;version&gt;<a class="headerlink" href="#preferences-version" title="Permalink to this heading">¶</a></h3>
 <p>The mandatory image version must be a three-part version number of the
 format: <strong>Major</strong>.<strong>Minor</strong>.<strong>Release</strong>. In case of changes to
 the image description the following rules should apply:</p>
@@ -803,7 +804,7 @@ image file the major number is incremented.</p></li>
 </ul>
 </section>
 <section id="preferences-packagemanager">
-<h3>&lt;preferences&gt;&lt;packagemanager&gt;<a class="headerlink" href="#preferences-packagemanager" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;preferences&gt;&lt;packagemanager&gt;<a class="headerlink" href="#preferences-packagemanager" title="Permalink to this heading">¶</a></h3>
 <p>The mandatory packagemanager element specifies which package manager
 should be used to handle software packages. The packagemanager setup
 is connected to the distribution used to build the image. The following
@@ -840,7 +841,7 @@ distinguish between the sections via the profiles attribute.</p>
 following optional elements:</p>
 </section>
 <section id="preferences-rpm-locale-filtering">
-<h3>&lt;preferences&gt;&lt;rpm-locale-filtering&gt;<a class="headerlink" href="#preferences-rpm-locale-filtering" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;preferences&gt;&lt;rpm-locale-filtering&gt;<a class="headerlink" href="#preferences-rpm-locale-filtering" title="Permalink to this heading">¶</a></h3>
 <p>locale-filtering can be set to “true” or “false”. If set to “true” it
 sets the install_lang macro for RPM based installations to the RPM
 configured locale list. This results in language specific files to
@@ -857,7 +858,7 @@ macro contents apply to the package or not.</p>
 </div>
 </section>
 <section id="preferences-rpm-check-signatures">
-<h3>&lt;preferences&gt;&lt;rpm-check-signatures&gt;<a class="headerlink" href="#preferences-rpm-check-signatures" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;preferences&gt;&lt;rpm-check-signatures&gt;<a class="headerlink" href="#preferences-rpm-check-signatures" title="Permalink to this heading">¶</a></h3>
 <p>Specifies whether package signatures should be checked or not</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;preferences&gt;</span>
   <span class="nt">&lt;rpm-check-signatures&gt;</span>true<span class="nt">&lt;/rpm-check-signatures&gt;</span>
@@ -866,7 +867,7 @@ macro contents apply to the package or not.</p>
 </div>
 </section>
 <section id="preferences-rpm-excludedocs">
-<h3>&lt;preferences&gt;&lt;rpm-excludedocs&gt;<a class="headerlink" href="#preferences-rpm-excludedocs" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;preferences&gt;&lt;rpm-excludedocs&gt;<a class="headerlink" href="#preferences-rpm-excludedocs" title="Permalink to this heading">¶</a></h3>
 <p>Specifies whether files marked as documentation should be skipped
 during installation</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;preferences&gt;</span>
@@ -876,7 +877,7 @@ during installation</p>
 </div>
 </section>
 <section id="preferences-keytable">
-<h3>&lt;preferences&gt;&lt;keytable&gt;<a class="headerlink" href="#preferences-keytable" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;preferences&gt;&lt;keytable&gt;<a class="headerlink" href="#preferences-keytable" title="Permalink to this heading">¶</a></h3>
 <p>Specifies the name of the console keymap to use. The value
 corresponds to a map file in <code class="docutils literal notranslate"><span class="pre">/usr/share/kbd/keymaps/xkb</span></code>.</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;preferences&gt;</span>
@@ -886,7 +887,7 @@ corresponds to a map file in <code class="docutils literal notranslate"><span cl
 </div>
 </section>
 <section id="preferences-timezone">
-<h3>&lt;preferences&gt;&lt;timezone&gt;<a class="headerlink" href="#preferences-timezone" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;preferences&gt;&lt;timezone&gt;<a class="headerlink" href="#preferences-timezone" title="Permalink to this heading">¶</a></h3>
 <p>Specifies the time zone. Available time zones are located in the
 <code class="docutils literal notranslate"><span class="pre">/usr/share/zoneinfo</span></code> directory. Specify the attribute value
 relative to <code class="docutils literal notranslate"><span class="pre">/usr/share/zoneinfo</span></code>. For example, specify
@@ -898,7 +899,7 @@ Europe/Berlin for <code class="docutils literal notranslate"><span class="pre">/
 </div>
 </section>
 <section id="preferences-locale">
-<h3>&lt;preferences&gt;&lt;locale&gt;<a class="headerlink" href="#preferences-locale" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;preferences&gt;&lt;locale&gt;<a class="headerlink" href="#preferences-locale" title="Permalink to this heading">¶</a></h3>
 <p>Specifies the name of the UTF-8 locale to use, which defines the
 contents of the RC_LANG system environment variable used in the
 image and to run the custom scripts specified as part of the
@@ -914,7 +915,7 @@ en_US,de_DE</p>
 </div>
 </section>
 <section id="preferences-bootsplash-theme">
-<h3>&lt;preferences&gt;&lt;bootsplash-theme&gt;<a class="headerlink" href="#preferences-bootsplash-theme" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;preferences&gt;&lt;bootsplash-theme&gt;<a class="headerlink" href="#preferences-bootsplash-theme" title="Permalink to this heading">¶</a></h3>
 <p>Specifies the name of the plymouth bootsplash theme to use</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;preferences&gt;</span>
   <span class="nt">&lt;bootsplash-theme&gt;</span>bgrt<span class="nt">&lt;/bootsplash-theme&gt;</span>
@@ -923,7 +924,7 @@ en_US,de_DE</p>
 </div>
 </section>
 <section id="preferences-bootloader-theme">
-<h3>&lt;preferences&gt;&lt;bootloader-theme&gt;<a class="headerlink" href="#preferences-bootloader-theme" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;preferences&gt;&lt;bootloader-theme&gt;<a class="headerlink" href="#preferences-bootloader-theme" title="Permalink to this heading">¶</a></h3>
 <p>Specifies the name of the bootloader theme to use if that used
 bootloader has theme support.</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;preferences&gt;</span>
@@ -935,7 +936,7 @@ bootloader has theme support.</p>
 element must be specified to indicate which image type should be build.</p>
 </section>
 <section id="preferences-release-version">
-<h3>&lt;preferences&gt;&lt;release-version&gt;<a class="headerlink" href="#preferences-release-version" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;preferences&gt;&lt;release-version&gt;<a class="headerlink" href="#preferences-release-version" title="Permalink to this heading">¶</a></h3>
 <p>Specifies the distribution global release version as consumed
 by package managers. Currently the release version is not set or
 set to <code class="xref py py-obj docutils literal notranslate"><span class="pre">0</span></code> for package managers which requires a value to operate.
@@ -951,7 +952,7 @@ backends as well. This will happen on demand though.</p>
 </div>
 </section>
 <section id="preferences-type">
-<h3>&lt;preferences&gt;&lt;type&gt;<a class="headerlink" href="#preferences-type" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;preferences&gt;&lt;type&gt;<a class="headerlink" href="#preferences-type" title="Permalink to this heading">¶</a></h3>
 <p>At least one type element must be configured. It is possible to
 specify multiple type elements in a preferences block. To set a given
 type description as the default image use the boolean attribute primary
@@ -1455,7 +1456,7 @@ Default is true.</p>
 element including references to their usage in a detailed type setup:</p>
 </section>
 <section id="preferences-type-luksformat">
-<span id="id2"></span><h3>&lt;preferences&gt;&lt;type&gt;&lt;luksformat&gt;<a class="headerlink" href="#preferences-type-luksformat" title="Permalink to this headline">¶</a></h3>
+<span id="id2"></span><h3>&lt;preferences&gt;&lt;type&gt;&lt;luksformat&gt;<a class="headerlink" href="#preferences-type-luksformat" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">luksformat</span></code> element is used to specify additional luks options
 passed on to the <code class="xref py py-obj docutils literal notranslate"><span class="pre">cryptsetup</span> <span class="pre">luksFormat</span></code> call. The element requires
 the attribute <code class="xref py py-obj docutils literal notranslate"><span class="pre">luks</span></code> to be set in the <code class="xref py py-obj docutils literal notranslate"><span class="pre">&lt;type&gt;</span></code> section referring to
@@ -1470,7 +1471,7 @@ the <code class="xref py py-obj docutils literal notranslate"><span class="pre">
 </div>
 </section>
 <section id="preferences-type-bootloader">
-<span id="id3"></span><h3>&lt;preferences&gt;&lt;type&gt;&lt;bootloader&gt;<a class="headerlink" href="#preferences-type-bootloader" title="Permalink to this headline">¶</a></h3>
+<span id="id3"></span><h3>&lt;preferences&gt;&lt;type&gt;&lt;bootloader&gt;<a class="headerlink" href="#preferences-type-bootloader" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">bootloader</span></code> element is used to select the bootloader. At the moment,
 <code class="xref py py-obj docutils literal notranslate"><span class="pre">grub2</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">isolinux</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">zipl</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">grub2_s390x_emu</span></code> (a combination of zipl
 and a userspace GRUB2) are supported. The special <code class="xref py py-obj docutils literal notranslate"><span class="pre">custom</span></code> entry allows
@@ -1588,18 +1589,18 @@ zipl loader only.</p>
 </dl>
 </section>
 <section id="preferences-type-containerconfig">
-<h3>&lt;preferences&gt;&lt;type&gt;&lt;containerconfig&gt;<a class="headerlink" href="#preferences-type-containerconfig" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;preferences&gt;&lt;type&gt;&lt;containerconfig&gt;<a class="headerlink" href="#preferences-type-containerconfig" title="Permalink to this heading">¶</a></h3>
 <p>Used to describe the container configuration metadata in docker or wsl
 image types. For details see: <a class="reference internal" href="../building_images/build_container_image.html#building-container-build"><span class="std std-ref">Build a Container Image</span></a> and:
 <a class="reference internal" href="../building_images/build_wsl_container.html#building-wsl-build"><span class="std std-ref">Build a WSL Container Image</span></a></p>
 </section>
 <section id="preferences-type-vagrantconfig">
-<h3>&lt;preferences&gt;&lt;type&gt;&lt;vagrantconfig&gt;<a class="headerlink" href="#preferences-type-vagrantconfig" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;preferences&gt;&lt;type&gt;&lt;vagrantconfig&gt;<a class="headerlink" href="#preferences-type-vagrantconfig" title="Permalink to this heading">¶</a></h3>
 <p>Used to describe vagrant configuration metadata in a disk image
 that is being used as a vagrant box. For details see: <a class="reference internal" href="../working_with_images/disk_setup_for_vagrant.html#setup-vagrant"><span class="std std-ref">Image Description for Vagrant</span></a></p>
 </section>
 <section id="preferences-type-systemdisk">
-<h3>&lt;preferences&gt;&lt;type&gt;&lt;systemdisk&gt;<a class="headerlink" href="#preferences-type-systemdisk" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;preferences&gt;&lt;type&gt;&lt;systemdisk&gt;<a class="headerlink" href="#preferences-type-systemdisk" title="Permalink to this heading">¶</a></h3>
 <p>Used to describe the volumes of the disk area which
 contains the root filesystem. Volumes are either a feature
 of the used filesystem or LVM is used for this purpose.
@@ -1615,35 +1616,35 @@ cannot be expressed in the same way in <code class="xref py py-obj docutils lite
 </div>
 </section>
 <section id="preferences-type-partitions">
-<h3>&lt;preferences&gt;&lt;type&gt;&lt;partitions&gt;<a class="headerlink" href="#preferences-type-partitions" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;preferences&gt;&lt;type&gt;&lt;partitions&gt;<a class="headerlink" href="#preferences-type-partitions" title="Permalink to this heading">¶</a></h3>
 <p>Used to describe the geometry of the disk on the level of the
 partition table. For details see: <a class="reference internal" href="../working_with_images/custom_partitions.html#custom-partitions"><span class="std std-ref">Custom Disk Partitions</span></a></p>
 </section>
 <section id="preferences-type-oemconfig">
-<h3>&lt;preferences&gt;&lt;type&gt;&lt;oemconfig&gt;<a class="headerlink" href="#preferences-type-oemconfig" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;preferences&gt;&lt;type&gt;&lt;oemconfig&gt;<a class="headerlink" href="#preferences-type-oemconfig" title="Permalink to this heading">¶</a></h3>
 <p>Used to customize the deployment process in an oem disk image.
 For details see: <a class="reference internal" href="../building_images/build_expandable_disk.html#oem-customize"><span class="std std-ref">OEM Customization</span></a></p>
 </section>
 <section id="preferences-type-size">
-<h3>&lt;preferences&gt;&lt;type&gt;&lt;size&gt;<a class="headerlink" href="#preferences-type-size" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;preferences&gt;&lt;type&gt;&lt;size&gt;<a class="headerlink" href="#preferences-type-size" title="Permalink to this heading">¶</a></h3>
 <p>Used to customize the size of the resulting disk image in an
 oem image. For details see: <a class="reference internal" href="../building_images/build_simple_disk.html#disk-the-size-element"><span class="std std-ref">Modifying the Size of the Image</span></a></p>
 </section>
 <section id="preferences-type-machine">
-<h3>&lt;preferences&gt;&lt;type&gt;&lt;machine&gt;<a class="headerlink" href="#preferences-type-machine" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;preferences&gt;&lt;type&gt;&lt;machine&gt;<a class="headerlink" href="#preferences-type-machine" title="Permalink to this heading">¶</a></h3>
 <p>Used to customize the virtual machine configuration which describes
 the components of an emulated hardware.
 For details see: <a class="reference internal" href="../building_images/build_simple_disk.html#disk-the-machine-element"><span class="std std-ref">Customizing the Virtual Machine</span></a></p>
 </section>
 <section id="preferences-type-installmedia">
-<h3>&lt;preferences&gt;&lt;type&gt;&lt;installmedia&gt;<a class="headerlink" href="#preferences-type-installmedia" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;preferences&gt;&lt;type&gt;&lt;installmedia&gt;<a class="headerlink" href="#preferences-type-installmedia" title="Permalink to this heading">¶</a></h3>
 <p>Used to customize the installation media images created for oem images
 deployment.
 For details see: <a class="reference internal" href="../building_images/build_expandable_disk.html#installmedia-customize"><span class="std std-ref">Installation Media Customization</span></a></p>
 </section>
 </section>
 <section id="repository">
-<span id="sec-repository"></span><h2>&lt;repository&gt;<a class="headerlink" href="#repository" title="Permalink to this headline">¶</a></h2>
+<span id="sec-repository"></span><h2>&lt;repository&gt;<a class="headerlink" href="#repository" title="Permalink to this heading">¶</a></h2>
 <p>Setup software sources for the image.</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;repository&gt;</span>
   <span class="nt">&lt;source</span> <span class="na">path=</span><span class="s">&quot;uri&quot;</span><span class="nt">/&gt;</span>
@@ -1744,7 +1745,7 @@ the last one in the description XML is used.</p>
 </dd>
 </dl>
 <section id="repository-source">
-<h3>&lt;repository&gt;&lt;source&gt;<a class="headerlink" href="#repository-source" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;repository&gt;&lt;source&gt;<a class="headerlink" href="#repository-source" title="Permalink to this heading">¶</a></h3>
 <p>The location of a repository is specified by the path attribute of the
 mandatory source child element:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;repository</span> <span class="na">alias=</span><span class="s">&quot;kiwi&quot;</span><span class="nt">&gt;</span>
@@ -1806,7 +1807,7 @@ manager.</p>
 </section>
 </section>
 <section id="packages">
-<span id="sec-packages"></span><h2>&lt;packages&gt;<a class="headerlink" href="#packages" title="Permalink to this headline">¶</a></h2>
+<span id="sec-packages"></span><h2>&lt;packages&gt;<a class="headerlink" href="#packages" title="Permalink to this heading">¶</a></h2>
 <p>Setup software components to be installed in the image.</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;packages</span> <span class="na">type=</span><span class="s">&quot;type&quot;</span><span class="nt">/&gt;</span>
 </pre></div>
@@ -1836,7 +1837,7 @@ installed if the iso image type is build.</p>
 following list to provide specific configuration information for the
 specified packages group:</p>
 <section id="packages-package">
-<h3>&lt;packages&gt;&lt;package&gt;<a class="headerlink" href="#packages-package" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;packages&gt;&lt;package&gt;<a class="headerlink" href="#packages-package" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;packages</span> <span class="na">type=</span><span class="s">&quot;image&quot;</span><span class="nt">/&gt;</span>
   <span class="nt">&lt;package</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">arch=</span><span class="s">&quot;arch&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/packages&gt;</span>
@@ -1848,7 +1849,7 @@ to the host architecture from which KIWI NG is called. The <code class="xref py 
 attribute is also available in all of the following elements.</p>
 </section>
 <section id="packages-namedcollection">
-<h3>&lt;packages&gt;&lt;namedCollection&gt;<a class="headerlink" href="#packages-namedcollection" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;packages&gt;&lt;namedCollection&gt;<a class="headerlink" href="#packages-namedcollection" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;packages</span> <span class="na">type=</span><span class="s">&quot;image&quot;</span> <span class="na">patternType=</span><span class="s">&quot;onlyRequired&quot;</span><span class="nt">&gt;</span>
   <span class="nt">&lt;namedCollection</span> <span class="na">name=</span><span class="s">&quot;base&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/packages&gt;</span>
@@ -1886,7 +1887,7 @@ to contain whitespace characters.</p>
 </div>
 </section>
 <section id="packages-collectionmodule">
-<h3>&lt;packages&gt;&lt;collectionModule&gt;<a class="headerlink" href="#packages-collectionmodule" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;packages&gt;&lt;collectionModule&gt;<a class="headerlink" href="#packages-collectionmodule" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;packages</span> <span class="na">type=</span><span class="s">&quot;bootstrap&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;collectionModule</span> <span class="na">name=</span><span class="s">&quot;module&quot;</span> <span class="na">stream=</span><span class="s">&quot;stream&quot;</span> <span class="na">enable=</span><span class="s">&quot;true|false&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/packages&gt;</span>
@@ -1914,7 +1915,7 @@ setting if a module is effectively used or not.</p></li>
 </ul>
 </section>
 <section id="packages-archive">
-<h3>&lt;packages&gt;&lt;archive&gt;<a class="headerlink" href="#packages-archive" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;packages&gt;&lt;archive&gt;<a class="headerlink" href="#packages-archive" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;packages</span> <span class="na">type=</span><span class="s">&quot;image&quot;</span><span class="nt">/&gt;</span>
   <span class="nt">&lt;archive</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">target_dir=</span><span class="s">&quot;some/path&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/packages&gt;</span>
@@ -1930,7 +1931,7 @@ attribute can be used to specify a target directory to unpack the
 archive.</p>
 </section>
 <section id="packages-ignore">
-<h3>&lt;packages&gt;&lt;ignore&gt;<a class="headerlink" href="#packages-ignore" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;packages&gt;&lt;ignore&gt;<a class="headerlink" href="#packages-ignore" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;packages</span> <span class="na">type=</span><span class="s">&quot;image&quot;</span><span class="nt">/&gt;</span>
   <span class="nt">&lt;ignore</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/packages&gt;</span>
@@ -1944,7 +1945,7 @@ cannot be ignored and the package manager will simply ignore the
 request.</p>
 </section>
 <section id="packages-product">
-<h3>&lt;packages&gt;&lt;product&gt;<a class="headerlink" href="#packages-product" title="Permalink to this headline">¶</a></h3>
+<h3>&lt;packages&gt;&lt;product&gt;<a class="headerlink" href="#packages-product" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;packages</span> <span class="na">type=</span><span class="s">&quot;image&quot;</span><span class="nt">&gt;</span>
   <span class="nt">&lt;product</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/packages&gt;</span>
@@ -1957,7 +1958,7 @@ currently only works on SUSE based distributions</p>
 </section>
 </section>
 <section id="users">
-<span id="sec-users"></span><h2>&lt;users&gt;<a class="headerlink" href="#users" title="Permalink to this headline">¶</a></h2>
+<span id="sec-users"></span><h2>&lt;users&gt;<a class="headerlink" href="#users" title="Permalink to this heading">¶</a></h2>
 <p>Setup image users.</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;users&gt;</span>
   <span class="nt">&lt;user</span>
@@ -2034,7 +2035,7 @@ specified is <code class="xref py py-obj docutils literal notranslate"><span cla
 </dl>
 </section>
 <section id="profiles">
-<span id="sec-profiles"></span><h2>&lt;profiles&gt;<a class="headerlink" href="#profiles" title="Permalink to this headline">¶</a></h2>
+<span id="sec-profiles"></span><h2>&lt;profiles&gt;<a class="headerlink" href="#profiles" title="Permalink to this heading">¶</a></h2>
 <p>Manage image namespace(s).</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;profiles&gt;</span>
   <span class="nt">&lt;profile</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">description=</span><span class="s">&quot;text&quot;</span><span class="nt">/&gt;</span>

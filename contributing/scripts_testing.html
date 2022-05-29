@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Write Integration Tests for the Scripts &mdash; KIWI NG 9.24.38 documentation</title>
+  <title>Write Integration Tests for the Scripts &mdash; KIWI NG 9.24.39 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
@@ -15,6 +15,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -671,7 +672,7 @@
            <div itemprop="articleBody">
              
   <section id="write-integration-tests-for-the-scripts">
-<h1>Write Integration Tests for the Scripts<a class="headerlink" href="#write-integration-tests-for-the-scripts" title="Permalink to this headline">¶</a></h1>
+<h1>Write Integration Tests for the Scripts<a class="headerlink" href="#write-integration-tests-for-the-scripts" title="Permalink to this heading">¶</a></h1>
 <p>Kiwi ships a set of helper functions that can be used in <code class="file docutils literal notranslate"><span class="pre">config.sh</span></code> (see
 also: <a class="reference internal" href="../concept_and_workflow/shell_scripts.html#working-with-kiwi-user-defined-scripts"><span class="std std-ref">User Defined Scripts</span></a>). These utilize containers
 to run the individual functions and verify that they resulted in the desired
@@ -690,7 +691,7 @@ leverage the utility functions and fixtures of that plugin, e.g. the
 <code class="docutils literal notranslate"><span class="pre">auto_container</span></code> and <code class="docutils literal notranslate"><span class="pre">auto_container_per_test</span></code> fixtures in conjunction with
 <a class="reference external" href="https://testinfra.readthedocs.io/">testinfra</a>.</p>
 <section id="test-setup">
-<h2>Test Setup<a class="headerlink" href="#test-setup" title="Permalink to this headline">¶</a></h2>
+<h2>Test Setup<a class="headerlink" href="#test-setup" title="Permalink to this heading">¶</a></h2>
 <p>The script tests can be run inside different containers, which are setup in
 <code class="file docutils literal notranslate"><span class="pre">test/scripts/conftest.py</span></code>. This file contains the <code class="docutils literal notranslate"><span class="pre">CONTAINERS</span></code> list
 with all currently present images. These images get pulled and build when needed

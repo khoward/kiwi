@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Customizing the Boot Process &mdash; KIWI NG 9.24.38 documentation</title>
+  <title>Customizing the Boot Process &mdash; KIWI NG 9.24.39 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
@@ -15,6 +15,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -671,7 +672,7 @@
            <div itemprop="articleBody">
              
   <section id="customizing-the-boot-process">
-<span id="working-with-kiwi-customizing-the-boot-process"></span><h1>Customizing the Boot Process<a class="headerlink" href="#customizing-the-boot-process" title="Permalink to this headline">¶</a></h1>
+<span id="working-with-kiwi-customizing-the-boot-process"></span><h1>Customizing the Boot Process<a class="headerlink" href="#customizing-the-boot-process" title="Permalink to this heading">¶</a></h1>
 <p>Most Linux systems use a special boot image to control the system boot process
 after the system firmware, BIOS or UEFI, hands control of the hardware to the
 operating system. This boot image is called the <code class="file docutils literal notranslate"><span class="pre">initrd</span></code>. The Linux kernel
@@ -736,7 +737,7 @@ is mostly used in PXE environments which are usually highly customized
 and requires a specific boot and deployment workflow.</p>
 </div>
 <section id="boot-image-hook-scripts">
-<h2>Boot Image Hook-Scripts<a class="headerlink" href="#boot-image-hook-scripts" title="Permalink to this headline">¶</a></h2>
+<h2>Boot Image Hook-Scripts<a class="headerlink" href="#boot-image-hook-scripts" title="Permalink to this heading">¶</a></h2>
 <p>The dracut initrd system uses <code class="docutils literal notranslate"><span class="pre">systemd</span></code> to implement a predefined workflow
 of services which are documented in the bootup man page at:</p>
 <p><a class="reference external" href="http://man7.org/linux/man-pages/man7/dracut.bootup.7.html">http://man7.org/linux/man-pages/man7/dracut.bootup.7.html</a></p>
@@ -802,7 +803,7 @@ initrd than shown in the example above. For more information, visit
 the <a class="reference external" href="https://dracut.wiki.kernel.org/index.php/Main_Page">dracut project page</a>.</p>
 </section>
 <section id="boot-image-parameters">
-<h2>Boot Image Parameters<a class="headerlink" href="#boot-image-parameters" title="Permalink to this headline">¶</a></h2>
+<h2>Boot Image Parameters<a class="headerlink" href="#boot-image-parameters" title="Permalink to this heading">¶</a></h2>
 <p>A dracut generated initrd in a KIWI NG image build process includes one or
 more of the KIWI NG provided dracut modules. The following list documents
 the available kernel boot parameters for this modules:</p>
@@ -864,7 +865,7 @@ image file which holds the OS root. Defaults to <code class="xref py py-obj docu
 </dd>
 </dl>
 <section id="boot-debugging">
-<h3>Boot Debugging<a class="headerlink" href="#boot-debugging" title="Permalink to this headline">¶</a></h3>
+<h3>Boot Debugging<a class="headerlink" href="#boot-debugging" title="Permalink to this heading">¶</a></h3>
 <p>If the boot process encounters a fatal error, the default behavior is to
 stop the boot process without any possibility to interact with the system.
 Prevent this behavior by activating dracut’s builtin debug mode in combination
