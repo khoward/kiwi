@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Image Description Elements &mdash; KIWI NG 9.24.36 documentation</title>
+  <title>Image Description Elements &mdash; KIWI NG 9.24.37 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
@@ -675,7 +675,7 @@
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This document provides a reference for the elements
-and attributes of the KIWI NG XML document in version 9.24.36</p>
+and attributes of the KIWI NG XML document in version 9.24.37</p>
 </div>
 <section id="image">
 <span id="sec-image"></span><h2>&lt;image&gt;<a class="headerlink" href="#image" title="Permalink to this headline">¶</a></h2>
@@ -2005,13 +2005,26 @@ as the login group.</p>
 </dd>
 </dl>
 <p>Additionally, the following optional attributes can be specified:</p>
-<dl class="simple">
+<dl>
 <dt>home=”path”:</dt><dd><p>The path to the user’s home directory</p>
 </dd>
-<dt>groups=”group_a,group_b”:</dt><dd><p>A comma separated list of UNIX groups. The first element of the
+<dt>groups=”group_a,group_b,group_c:id”:</dt><dd><p>A comma separated list of UNIX groups. The first element of the
 list is used as the user’s primary group. The remaining elements are
 appended to the user’s supplementary groups. When no groups are assigned
-then the system’s default primary group will be used.</p>
+then the system’s default primary group will be used. If a group should
+be of a specific group id, it can be appended to the name separated by
+a colon.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Group ID’s can only be set for groups that does not yet exist at
+the time when KIWI NG creates them. A check is made if the desired
+group is already present and if it exists the user will become a
+member of that group but any given group ID from the KIWI NG
+configuration will <strong>not</strong> be taken into account. Usually all
+standard system groups are affected by this behavior because they
+are provided by the OS itself. Thus it’s by intention not possible
+to overwrite the group ID of an existing group.</p>
+</div>
 </dd>
 <dt>id=”number”:</dt><dd><p>The numeric user id of this account.</p>
 </dd>

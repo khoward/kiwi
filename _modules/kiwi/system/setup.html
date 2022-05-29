@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.system.setup &mdash; KIWI NG 9.24.36 documentation</title>
+  <title>kiwi.system.setup &mdash; KIWI NG 9.24.37 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -691,7 +691,9 @@
 <span class="kn">import</span> <span class="nn">pathlib</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Any</span><span class="p">,</span> <span class="n">List</span>
+<span class="p">)</span>
 
 <span class="c1"># project</span>
 <span class="kn">import</span> <span class="nn">kiwi.defaults</span> <span class="k">as</span> <span class="nn">defaults</span>
@@ -1050,10 +1052,14 @@
         <span class="n">system_users</span> <span class="o">=</span> <span class="n">Users</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_state</span><span class="o">.</span><span class="n">get_users</span><span class="p">():</span>
-            <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_state</span><span class="o">.</span><span class="n">get_user_groups</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">get_name</span><span class="p">()):</span>
+            <span class="n">group_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_group_names_and_ids_for_user</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
+            <span class="k">for</span> <span class="n">group</span><span class="p">,</span> <span class="n">group_id</span> <span class="ow">in</span> <span class="n">group_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">system_users</span><span class="o">.</span><span class="n">group_exists</span><span class="p">(</span><span class="n">group</span><span class="p">):</span>
                     <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Adding group </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">group</span><span class="p">))</span>
-                    <span class="n">system_users</span><span class="o">.</span><span class="n">group_add</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="p">[])</span></div>
+                    <span class="n">options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_user_options</span><span class="p">(</span>
+                        <span class="n">group_id</span><span class="o">=</span><span class="n">group_id</span>
+                    <span class="p">)</span>
+                    <span class="n">system_users</span><span class="o">.</span><span class="n">group_add</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SystemSetup.setup_users"><a class="viewcode-back" href="../../../api/kiwi.system.html#kiwi.system.setup.SystemSetup.setup_users">[docs]</a>    <span class="k">def</span> <span class="nf">setup_users</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1070,13 +1076,21 @@
             <span class="n">user_id</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span>
             <span class="n">user_realname</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">get_realname</span><span class="p">()</span>
             <span class="n">user_shell</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">get_shell</span><span class="p">()</span>
-            <span class="n">user_groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_state</span><span class="o">.</span><span class="n">get_user_groups</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
+            <span class="n">user_groups</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_get_group_names_and_ids_for_user</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+            <span class="p">)</span>
 
             <span class="n">user_exists</span> <span class="o">=</span> <span class="n">system_users</span><span class="o">.</span><span class="n">user_exists</span><span class="p">(</span><span class="n">user_name</span><span class="p">)</span>
 
             <span class="n">options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_user_options</span><span class="p">(</span>
-                <span class="n">password_format</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">user_shell</span><span class="p">,</span> <span class="n">user_groups</span><span class="p">,</span>
-                <span class="n">user_id</span><span class="p">,</span> <span class="n">user_realname</span><span class="p">,</span> <span class="n">user_exists</span><span class="p">,</span> <span class="n">home_path</span>
+                <span class="n">password_format</span><span class="o">=</span><span class="n">password_format</span><span class="p">,</span>
+                <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span>
+                <span class="n">user_shell</span><span class="o">=</span><span class="n">user_shell</span><span class="p">,</span>
+                <span class="n">user_groups</span><span class="o">=</span><span class="n">user_groups</span><span class="p">,</span>
+                <span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span>
+                <span class="n">user_realname</span><span class="o">=</span><span class="n">user_realname</span><span class="p">,</span>
+                <span class="n">user_exists</span><span class="o">=</span><span class="n">user_exists</span><span class="p">,</span>
+                <span class="n">home_path</span><span class="o">=</span><span class="n">home_path</span>
             <span class="p">)</span>
 
             <span class="n">group_msg</span> <span class="o">=</span> <span class="s1">&#39;--&gt; Primary group for user </span><span class="si">{0}</span><span class="s1">: </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
@@ -1497,8 +1511,16 @@
             <span class="n">Path</span><span class="o">.</span><span class="n">wipe</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;archive_name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.gz&#39;</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_process_user_options</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">password_format</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">user_shell</span><span class="p">,</span> <span class="n">user_groups</span><span class="p">,</span>
-        <span class="n">user_id</span><span class="p">,</span> <span class="n">user_realname</span><span class="p">,</span> <span class="n">user_exists</span><span class="p">,</span> <span class="n">home_path</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">password_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">password</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">user_shell</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">user_groups</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span>
+        <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">group_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">user_realname</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">user_exists</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">home_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="p">):</span>
         <span class="n">options</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="n">password_format</span> <span class="o">==</span> <span class="s1">&#39;plain&#39;</span><span class="p">:</span>
@@ -1518,6 +1540,9 @@
         <span class="k">if</span> <span class="n">user_id</span><span class="p">:</span>
             <span class="n">options</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-u&#39;</span><span class="p">)</span>
             <span class="n">options</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user_id</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">group_id</span><span class="p">:</span>
+            <span class="n">options</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-g&#39;</span><span class="p">)</span>
+            <span class="n">options</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">group_id</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">user_realname</span><span class="p">:</span>
             <span class="n">options</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-c&#39;</span><span class="p">)</span>
             <span class="n">options</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">user_realname</span><span class="p">)</span>
@@ -1944,7 +1969,19 @@
         <span class="n">script_path</span> <span class="o">=</span> <span class="n">xml_repo</span><span class="o">.</span><span class="n">get_customize</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">script_path</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">script_path</span><span class="p">):</span>
             <span class="n">script_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">description_dir</span><span class="p">,</span> <span class="n">script_path</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">script_path</span></div>
+        <span class="k">return</span> <span class="n">script_path</span>
+
+    <span class="k">def</span> <span class="nf">_get_group_names_and_ids_for_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OrderedDict</span><span class="p">:</span>
+        <span class="n">group</span><span class="p">:</span> <span class="n">OrderedDict</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">group_match</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_state</span><span class="o">.</span><span class="n">get_user_groups</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
+            <span class="n">group_and_id</span> <span class="o">=</span> <span class="n">group_match</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+            <span class="n">group</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                <span class="p">[(</span>
+                    <span class="n">group_and_id</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="n">group_and_id</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">group_and_id</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
+                <span class="p">)]</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">group</span></div>
 </pre></div>
 
            </div>

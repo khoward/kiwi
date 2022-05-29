@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.solver.sat &mdash; KIWI NG 9.24.36 documentation</title>
+  <title>kiwi.solver.sat &mdash; KIWI NG 9.24.37 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -734,6 +734,10 @@
             <span class="s1">&#39;deb-x86_64&#39;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="s1">&#39;pool_dist&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">solv</span><span class="o">.</span><span class="n">Pool</span><span class="o">.</span><span class="n">DISTTYPE_DEB</span><span class="p">,</span>
                 <span class="s1">&#39;arch&#39;</span><span class="p">:</span> <span class="s1">&#39;amd64&#39;</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;deb-aarch64&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;pool_dist&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">solv</span><span class="o">.</span><span class="n">Pool</span><span class="o">.</span><span class="n">DISTTYPE_DEB</span><span class="p">,</span>
+                <span class="s1">&#39;arch&#39;</span><span class="p">:</span> <span class="s1">&#39;arm64&#39;</span>
             <span class="p">}</span>
         <span class="p">}</span>
         <span class="n">dist_type</span> <span class="o">=</span> <span class="n">dist_types</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">dist</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">arch</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>

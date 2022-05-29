@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.xml_state &mdash; KIWI NG 9.24.36 documentation</title>
+  <title>kiwi.xml_state &mdash; KIWI NG 9.24.37 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
@@ -1953,13 +1953,14 @@
 
         <span class="k">return</span> <span class="n">users_list</span></div>
 
-<div class="viewcode-block" id="XMLState.get_user_groups"><a class="viewcode-back" href="../../api/kiwi.html#kiwi.xml_state.XMLState.get_user_groups">[docs]</a>    <span class="k">def</span> <span class="nf">get_user_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_name</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">:</span>
+<div class="viewcode-block" id="XMLState.get_user_groups"><a class="viewcode-back" href="../../api/kiwi.html#kiwi.xml_state.XMLState.get_user_groups">[docs]</a>    <span class="k">def</span> <span class="nf">get_user_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_name</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        List of group names matching specified user</span>
 
-<span class="sd">        Each entry in the list is the name of a group that the specified</span>
-<span class="sd">        user belongs to. The first item in the list is the login or primary</span>
-<span class="sd">        group. The list will be empty if no groups are specified in the</span>
+<span class="sd">        Each entry in the list is the name of a group and optionally its</span>
+<span class="sd">        group ID separated by a colon, that the specified user belongs to.</span>
+<span class="sd">        The first item in the list is the login or primary group. The</span>
+<span class="sd">        list will be empty if no groups are specified in the</span>
 <span class="sd">        description file.</span>
 
 <span class="sd">        :return: groups data for the given user</span>
