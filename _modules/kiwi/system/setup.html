@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.system.setup &mdash; KIWI NG 9.24.39 documentation</title>
+  <title>kiwi.system.setup &mdash; KIWI NG 9.24.41 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -1167,6 +1167,14 @@
                 <span class="s1">&#39;setfiles&#39;</span><span class="p">,</span> <span class="n">security_context_file</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;-v&#39;</span><span class="p">,</span> <span class="s1">&#39;-F&#39;</span>
             <span class="p">]</span>
         <span class="p">)</span></div>
+
+<div class="viewcode-block" id="SystemSetup.setup_selinux_file_contexts"><a class="viewcode-back" href="../../../api/kiwi.system.html#kiwi.system.setup.SystemSetup.setup_selinux_file_contexts">[docs]</a>    <span class="k">def</span> <span class="nf">setup_selinux_file_contexts</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set SELinux file security contexts if the default context file is found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">security_context</span> <span class="o">=</span> <span class="s1">&#39;/etc/selinux/targeted/contexts/files/file_contexts&#39;</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span> <span class="o">+</span> <span class="n">security_context</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_selinux_file_contexts</span><span class="p">(</span><span class="n">security_context</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SystemSetup.export_modprobe_setup"><a class="viewcode-back" href="../../../api/kiwi.system.html#kiwi.system.setup.SystemSetup.export_modprobe_setup">[docs]</a>    <span class="k">def</span> <span class="nf">export_modprobe_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_root_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>

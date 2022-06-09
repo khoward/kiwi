@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.boot.image.base &mdash; KIWI NG 9.24.39 documentation</title>
+  <title>kiwi.boot.image.base &mdash; KIWI NG 9.24.41 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
@@ -1132,11 +1132,15 @@
             <span class="s1">&#39;dracut&#39;</span><span class="p">,</span> <span class="n">root_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">boot_root_directory</span><span class="p">,</span> <span class="n">access_mode</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">X_OK</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">dracut_tool</span><span class="p">:</span>
-            <span class="n">outfile_expression</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;outfile=&quot;/boot/(init.*\$kernel.*)&quot;&#39;</span>
+            <span class="n">outfile_expression</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;outfile=&quot;.*/boot/(init.*kernel.*)&quot;&#39;</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dracut_tool</span><span class="p">)</span> <span class="k">as</span> <span class="n">dracut</span><span class="p">:</span>
                 <span class="n">matches</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">outfile_expression</span><span class="p">,</span> <span class="n">dracut</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
                 <span class="k">if</span> <span class="n">matches</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="n">matches</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;$kernel&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{kernel_version}</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">matches</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+                        <span class="s1">&#39;$kernel&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{kernel_version}</span><span class="s1">&#39;</span>
+                    <span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+                        <span class="s1">&#39;$</span><span class="si">{kernel}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{kernel_version}</span><span class="s1">&#39;</span>
+                    <span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">_get_boot_image_output_file_format_from_existing_file</span><span class="p">(</span>

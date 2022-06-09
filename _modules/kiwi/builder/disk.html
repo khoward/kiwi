@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.builder.disk &mdash; KIWI NG 9.24.39 documentation</title>
+  <title>kiwi.builder.disk &mdash; KIWI NG 9.24.41 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -1184,9 +1184,6 @@
             <span class="n">disk</span><span class="o">.</span><span class="n">storage_provider</span>
         <span class="p">)</span>
 
-        <span class="c1"># set SELinux file security contexts if context exists</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_setup_selinux_file_contexts</span><span class="p">()</span>
-
         <span class="c1"># run pre sync script hook</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">system_setup</span><span class="o">.</span><span class="n">script_exists</span><span class="p">(</span>
             <span class="n">defaults</span><span class="o">.</span><span class="n">PRE_DISK_SYNC_SCRIPT</span>
@@ -1363,13 +1360,6 @@
                 <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">result_instance</span></div>
-
-    <span class="k">def</span> <span class="nf">_setup_selinux_file_contexts</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">security_context</span> <span class="o">=</span> <span class="s1">&#39;/etc/selinux/targeted/contexts/files/file_contexts&#39;</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span> <span class="o">+</span> <span class="n">security_context</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">system_setup</span><span class="o">.</span><span class="n">set_selinux_file_contexts</span><span class="p">(</span>
-                <span class="n">security_context</span>
-            <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_install_image_requested</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span>
