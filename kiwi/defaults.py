@@ -72,6 +72,7 @@ INTEGRITY_KEY_ALGORITHM = 'hmac-sha256'
 UNIT = unit_type(byte='b', kb='k', mb='m', gb='g')
 POST_DISK_SYNC_SCRIPT = 'disk.sh'
 PRE_DISK_SYNC_SCRIPT = 'pre_disk_sync.sh'
+POST_DISK_BUILD_SCRIPT = 'post_disk_build.sh'
 POST_BOOTSTRAP_SCRIPT = 'post_bootstrap.sh'
 POST_PREPARE_SCRIPT = 'config.sh'
 PRE_CREATE_SCRIPT = 'images.sh'

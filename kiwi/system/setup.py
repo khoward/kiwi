@@ -636,6 +636,20 @@ class SystemSetup:
             defaults.PRE_DISK_SYNC_SCRIPT
         )
 
+    def call_post_disk_build_script(
+        self, disk_image_raw_file: str, working_directory: str = None
+    ) -> None:
+        """
+        Call post_disk_build.sh script from host environment
+
+        :param str disk_image_raw_file: disk image file name
+        """
+        self._call_script_no_chroot(
+            name=defaults.POST_DISK_BUILD_SCRIPT,
+            option_list=[disk_image_raw_file],
+            working_directory=working_directory
+        )
+
     def call_post_bootstrap_script(self) -> None:
         """
         Call post_bootstrap.sh script chrooted
@@ -990,6 +1004,10 @@ class SystemSetup:
             ),
             defaults.PRE_DISK_SYNC_SCRIPT: script_type(
                 filepath=defaults.PRE_DISK_SYNC_SCRIPT,
+                raise_if_not_exists=False
+            ),
+            defaults.POST_DISK_BUILD_SCRIPT: script_type(
+                filepath=defaults.POST_DISK_BUILD_SCRIPT,
                 raise_if_not_exists=False
             ),
             defaults.POST_DISK_SYNC_SCRIPT: script_type(

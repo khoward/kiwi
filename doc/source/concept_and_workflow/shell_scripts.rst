@@ -6,10 +6,10 @@ User Defined Scripts
 .. note:: **Abstract**
 
    This chapter describes the purpose of the user defined scripts
-   :file:`config.sh`, :file:`image.sh`, :file:`pre_disk_sync.sh`
-   and :file:`disk.sh`, which can be used to further customize an
-   image in ways that are not possible via the image description
-   alone.
+   :file:`post_bootstrap.sh`, :file:`config.sh`, :file:`image.sh`,
+   :file:`pre_disk_sync.sh`, :file:`disk.sh` and :file:`post_disk_build.sh`
+   which can be used to further customize an image in ways that are
+   not possible via the image description alone.
 
 {kiwi} supports the following optional scripts that it runs in a
 root environment (chroot) containing your new appliance:
@@ -56,6 +56,14 @@ disk.sh
   the system that are not an element of the file based root tree such as
   the partition table, the contents of the final initrd, the bootloader,
   filesystem attributes and more.
+
+post_disk_build.sh
+  is executed for the disk image type `oem` only and runs after the
+  image build process has been completed. The root environment for the
+  script is the host environment from which {kiwi} was called. The
+  main use case for this script hook is to post process the result
+  raw disk image file. At call time it receives the file name of the
+  `.raw` file as parameter.
 
 {kiwi} executes scripts via the operating system if their executable
 bit is set (in that case a shebang is mandatory) otherwise they will be

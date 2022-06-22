@@ -551,6 +551,11 @@ class DiskBuilder:
         # set root filesystem properties
         self._setup_property_root_is_readonly_snapshot(system)
 
+        # post process disk image file
+        self.system_setup.call_post_disk_build_script(
+            self.diskname
+        )
+
         Result.verify_image_size(
             self.runtime_config.get_max_size_constraint(),
             self.diskname

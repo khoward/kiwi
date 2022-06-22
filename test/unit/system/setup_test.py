@@ -109,6 +109,7 @@ class TestSystemSetup:
         mock_iglob.assert_called_once_with(
             '{0}/config-cdroot.tar*'.format(self.description_dir)
         )
+        print(mock_command.call_args_list)
         assert mock_command.call_args_list == [
             call(
                 [
@@ -149,6 +150,12 @@ class TestSystemSetup:
             ),
             call(
                 [
+                    'cp', '{0}/post_disk_build.sh'.format(self.description_dir),
+                    'root_dir/image/post_disk_build.sh'
+                ]
+            ),
+            call(
+                [
                     'cp', '{0}/pre_disk_sync.sh'.format(self.description_dir),
                     'root_dir/image/pre_disk_sync.sh'
                 ]
@@ -182,7 +189,7 @@ class TestSystemSetup:
         self, mock_path, mock_command, mock_create
     ):
         path_return_values = [
-            True, False, True, True, True, True, True, True, True, True
+            True, False, True, True, True, True, True, True, True, True, True
         ]
 
         def side_effect(arg):
@@ -233,6 +240,12 @@ class TestSystemSetup:
             ),
             call(
                 [
+                    'cp', '{0}/post_disk_build.sh'.format(self.description_dir),
+                    'root_dir/image/post_disk_build.sh'
+                ]
+            ),
+            call(
+                [
                     'cp', '{0}/pre_disk_sync.sh'.format(self.description_dir),
                     'root_dir/image/pre_disk_sync.sh'
                 ]
@@ -274,7 +287,7 @@ class TestSystemSetup:
         self, mock_path, mock_command, mock_create
     ):
         path_return_values = [
-            False, False, True, True, True, True, True, True
+            False, False, True, True, True, True, True, True, True
         ]
 
         def side_effect(arg):
@@ -836,6 +849,32 @@ class TestSystemSetup:
         mock_copy_deepcopy.assert_called_once_with(os.environ)
         mock_command.assert_called_once_with(
             ['chroot', 'root_dir', 'bash', 'image/images.sh'], {}
+        )
+
+    @patch('kiwi.command.Command.call')
+    @patch('kiwi.command_process.CommandProcess.poll_and_watch')
+    @patch('os.path.exists')
+    @patch('os.path.abspath')
+    def test_call_post_disk_build_script(
+        self, mock_abspath, mock_exists, mock_watch, mock_command
+    ):
+        result_type = namedtuple(
+            'result_type', ['stderr', 'returncode']
+        )
+        mock_result = result_type(stderr='stderr', returncode=0)
+        mock_exists.return_value = True
+        mock_abspath.return_value = '/root_dir/image/post_disk_build.sh'
+        mock_watch.return_value = mock_result
+        self.setup.call_post_disk_build_script('some-image.raw')
+        mock_abspath.assert_called_once_with(
+            'root_dir/image/post_disk_build.sh'
+        )
+        mock_command.assert_called_once_with(
+            [
+                'bash', '-c',
+                'cd root_dir && bash --norc /root_dir/image/post_disk_build.sh '
+                'some-image.raw'
+            ]
         )
 
     @patch('kiwi.command.Command.call')
