@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.repository.dnf &mdash; KIWI NG 9.24.43 documentation</title>
+  <title>kiwi.repository.dnf &mdash; KIWI NG 9.24.44 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -775,7 +775,7 @@
 
         <span class="c1"># config file parameters for dnf tool</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_create_runtime_config_parser</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_create_runtime_plugin_config_parser</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_create_runtime_plugin_config_parsers</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_write_runtime_config</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="RepositoryDnf.setup_package_database_configuration"><a class="viewcode-back" href="../../../api/kiwi.repository.html#kiwi.repository.dnf.RepositoryDnf.setup_package_database_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">setup_package_database_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -841,7 +841,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">shared_dnf_dir</span><span class="p">[</span><span class="s1">&#39;vars-dir&#39;</span><span class="p">]</span> <span class="o">=</span> \
             <span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span> <span class="o">+</span> <span class="s1">&#39;/etc/dnf/vars&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_create_runtime_config_parser</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_create_runtime_plugin_config_parser</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_create_runtime_plugin_config_parsers</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_write_runtime_config</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="RepositoryDnf.runtime_config"><a class="viewcode-back" href="../../../api/kiwi.repository.html#kiwi.repository.dnf.RepositoryDnf.runtime_config">[docs]</a>    <span class="k">def</span> <span class="nf">runtime_config</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
@@ -989,66 +989,41 @@
 
     <span class="k">def</span> <span class="nf">_create_runtime_config_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_config</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s1">&#39;main&#39;</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-            <span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="s1">&#39;cachedir&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">shared_dnf_dir</span><span class="p">[</span><span class="s1">&#39;cache-dir&#39;</span><span class="p">]</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-            <span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="s1">&#39;reposdir&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">shared_dnf_dir</span><span class="p">[</span><span class="s1">&#39;reposd-dir&#39;</span><span class="p">]</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-            <span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="s1">&#39;varsdir&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">shared_dnf_dir</span><span class="p">[</span><span class="s1">&#39;vars-dir&#39;</span><span class="p">]</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-            <span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="s1">&#39;pluginconfpath&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">shared_dnf_dir</span><span class="p">[</span><span class="s1">&#39;pluginconf-dir&#39;</span><span class="p">]</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-            <span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="s1">&#39;keepcache&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-            <span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="s1">&#39;debuglevel&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-            <span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-            <span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="s1">&#39;obsoletes&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-            <span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="s1">&#39;plugins&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-            <span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="s1">&#39;gpgcheck&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gpg_check</span>
-        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_config</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;cachedir&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">shared_dnf_dir</span><span class="p">[</span><span class="s1">&#39;cache-dir&#39;</span><span class="p">],</span>
+            <span class="s2">&quot;reposdir&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">shared_dnf_dir</span><span class="p">[</span><span class="s1">&#39;reposd-dir&#39;</span><span class="p">],</span>
+            <span class="s2">&quot;varsdir&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">shared_dnf_dir</span><span class="p">[</span><span class="s1">&#39;vars-dir&#39;</span><span class="p">],</span>
+            <span class="s2">&quot;pluginconfpath&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">shared_dnf_dir</span><span class="p">[</span><span class="s1">&#39;pluginconf-dir&#39;</span><span class="p">],</span>
+            <span class="s2">&quot;keepcache&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;debuglevel&quot;</span><span class="p">:</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;best&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;obsoletes&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;plugins&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;gpgcheck&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">gpg_check</span><span class="p">,</span>
+        <span class="p">}</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">exclude_docs</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-                <span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="s1">&#39;tsflags&#39;</span><span class="p">,</span> <span class="s1">&#39;nodocs&#39;</span>
-            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_config</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">][</span><span class="s2">&quot;tsflags&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;nodocs&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_arch</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-                <span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="s1">&#39;arch&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_arch</span>
-            <span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-                <span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="s1">&#39;ignorearch&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span>
-            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_config</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                <span class="s2">&quot;arch&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_arch</span><span class="p">,</span>
+                <span class="s2">&quot;ignorearch&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+            <span class="p">})</span>
 
-    <span class="k">def</span> <span class="nf">_create_runtime_plugin_config_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_plugin_config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_plugin_config</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s1">&#39;main&#39;</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_plugin_config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-            <span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="s1">&#39;enabled&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span>
-        <span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_create_runtime_plugin_config_parsers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_plugin_configs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">plugin</span><span class="p">:</span> <span class="n">ConfigParser</span><span class="p">()</span> <span class="k">for</span> <span class="n">plugin</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;priorities&quot;</span><span class="p">,</span> <span class="s2">&quot;versionlock&quot;</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_plugin_configs</span><span class="p">[</span><span class="s2">&quot;priorities&quot;</span><span class="p">][</span><span class="s2">&quot;main&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_plugin_configs</span><span class="p">[</span><span class="s2">&quot;versionlock&quot;</span><span class="p">][</span><span class="s2">&quot;main&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">_write_runtime_config</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_config_file</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">config</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shared_dnf_dir</span><span class="p">[</span><span class="s1">&#39;pluginconf-dir&#39;</span><span class="p">]):</span>
-            <span class="n">dnf_plugin_config_file</span> <span class="o">=</span> \
-                <span class="bp">self</span><span class="o">.</span><span class="n">shared_dnf_dir</span><span class="p">[</span><span class="s1">&#39;pluginconf-dir&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;/priorities.conf&#39;</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dnf_plugin_config_file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">pluginconfig</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_plugin_config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pluginconfig</span><span class="p">)</span></div>
+            <span class="k">for</span> <span class="n">plugin_name</span><span class="p">,</span> <span class="n">plugin_config</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">runtime_dnf_plugin_configs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">shared_dnf_dir</span><span class="p">[</span><span class="s1">&#39;pluginconf-dir&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">plugin_name</span><span class="si">}</span><span class="s2">.conf&quot;</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">plugin_config_fobj</span><span class="p">:</span>
+                    <span class="n">plugin_config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">plugin_config_fobj</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

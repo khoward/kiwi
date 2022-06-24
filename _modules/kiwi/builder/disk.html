@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.builder.disk &mdash; KIWI NG 9.24.43 documentation</title>
+  <title>kiwi.builder.disk &mdash; KIWI NG 9.24.44 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -1416,9 +1416,33 @@
                             <span class="n">device_map</span><span class="p">[</span><span class="n">map_name</span><span class="p">],</span>
                             <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span><span class="si">}{</span><span class="n">ptable_entry</span><span class="o">.</span><span class="n">mountpoint</span><span class="si">}</span><span class="s1">/&#39;</span>
                         <span class="p">)</span>
-                        <span class="n">filesystem</span><span class="o">.</span><span class="n">create_on_device</span><span class="p">(</span>
-                            <span class="n">label</span><span class="o">=</span><span class="n">map_name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
-                        <span class="p">)</span>
+                        <span class="k">if</span> <span class="n">ptable_entry</span><span class="o">.</span><span class="n">filesystem</span> <span class="o">==</span> <span class="s1">&#39;squashfs&#39;</span><span class="p">:</span>
+                            <span class="n">squashed_root_file</span> <span class="o">=</span> <span class="n">Temporary</span><span class="p">()</span><span class="o">.</span><span class="n">new_file</span><span class="p">()</span>
+                            <span class="n">filesystem</span><span class="o">.</span><span class="n">create_on_file</span><span class="p">(</span>
+                                <span class="n">filename</span><span class="o">=</span><span class="n">squashed_root_file</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                <span class="n">exclude</span><span class="o">=</span><span class="p">[</span><span class="n">Defaults</span><span class="o">.</span><span class="n">get_shared_cache_location</span><span class="p">()]</span>
+                            <span class="p">)</span>
+                            <span class="n">readonly_target</span> <span class="o">=</span> <span class="n">device_map</span><span class="p">[</span><span class="n">map_name</span><span class="p">]</span><span class="o">.</span><span class="n">get_device</span><span class="p">()</span>
+                            <span class="n">readonly_target_bytesize</span> <span class="o">=</span> <span class="n">device_map</span><span class="p">[</span><span class="n">map_name</span><span class="p">]</span><span class="o">.</span><span class="n">get_byte_size</span><span class="p">(</span>
+                                <span class="n">readonly_target</span>
+                            <span class="p">)</span>
+                            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                                <span class="s1">&#39;--&gt; Dumping </span><span class="si">{0!r}</span><span class="s1"> file(</span><span class="si">{1}</span><span class="s1"> bytes) -&gt; </span><span class="si">{2}</span><span class="s1">(</span><span class="si">{3}</span><span class="s1"> bytes)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                    <span class="n">map_name</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">squashed_root_file</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
+                                    <span class="n">readonly_target</span><span class="p">,</span> <span class="n">readonly_target_bytesize</span>
+                                <span class="p">)</span>
+                            <span class="p">)</span>
+                            <span class="n">Command</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                                <span class="p">[</span>
+                                    <span class="s1">&#39;dd&#39;</span><span class="p">,</span>
+                                    <span class="s1">&#39;if=</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">squashed_root_file</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                    <span class="s1">&#39;of=</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">readonly_target</span>
+                                <span class="p">]</span>
+                            <span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">filesystem</span><span class="o">.</span><span class="n">create_on_device</span><span class="p">(</span>
+                                <span class="n">label</span><span class="o">=</span><span class="n">map_name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+                            <span class="p">)</span>
                         <span class="n">filesystem_dict</span><span class="p">[</span><span class="n">map_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">filesystem</span>
         <span class="k">return</span> <span class="n">filesystem_dict</span>
 
@@ -1784,16 +1808,20 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">options</span><span class="p">:</span>
             <span class="n">options</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;defaults&#39;</span><span class="p">]</span>
         <span class="n">block_operation</span> <span class="o">=</span> <span class="n">BlockID</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">filesystem</span> <span class="o">=</span> <span class="n">block_operation</span><span class="o">.</span><span class="n">get_filesystem</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume_manager_name</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume_manager_name</span> <span class="o">==</span> <span class="s1">&#39;lvm&#39;</span> \
            <span class="ow">and</span> <span class="p">(</span><span class="n">mount_point</span> <span class="o">==</span> <span class="s1">&#39;/&#39;</span> <span class="ow">or</span> <span class="n">mount_point</span> <span class="o">==</span> <span class="s1">&#39;swap&#39;</span><span class="p">):</span>
             <span class="n">fstab_entry</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
                 <span class="p">[</span>
                     <span class="n">device</span><span class="p">,</span> <span class="n">mount_point</span><span class="p">,</span>
-                    <span class="n">block_operation</span><span class="o">.</span><span class="n">get_filesystem</span><span class="p">(),</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">options</span><span class="p">),</span> <span class="n">check</span>
+                    <span class="n">filesystem</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">options</span><span class="p">),</span> <span class="n">check</span>
                 <span class="p">]</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">persistency_type</span> <span class="o">==</span> <span class="s1">&#39;by-label&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">filesystem</span> <span class="o">==</span> <span class="s1">&#39;squashfs&#39;</span><span class="p">:</span>
+                <span class="c1"># squashfs does not provide a label or uuid</span>
+                <span class="n">blkid_type</span> <span class="o">=</span> <span class="s1">&#39;PARTUUID&#39;</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">persistency_type</span> <span class="o">==</span> <span class="s1">&#39;by-label&#39;</span><span class="p">:</span>
                 <span class="n">blkid_type</span> <span class="o">=</span> <span class="s1">&#39;LABEL&#39;</span>
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">persistency_type</span> <span class="o">==</span> <span class="s1">&#39;by-partuuid&#39;</span><span class="p">:</span>
                 <span class="n">blkid_type</span> <span class="o">=</span> <span class="s1">&#39;PARTUUID&#39;</span>
@@ -1803,7 +1831,7 @@
             <span class="n">fstab_entry</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
                 <span class="p">[</span>
                     <span class="n">blkid_type</span> <span class="o">+</span> <span class="s1">&#39;=&#39;</span> <span class="o">+</span> <span class="n">device_id</span><span class="p">,</span> <span class="n">mount_point</span><span class="p">,</span>
-                    <span class="n">block_operation</span><span class="o">.</span><span class="n">get_filesystem</span><span class="p">(),</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">options</span><span class="p">),</span> <span class="n">check</span>
+                    <span class="n">filesystem</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">options</span><span class="p">),</span> <span class="n">check</span>
                 <span class="p">]</span>
             <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fstab</span><span class="o">.</span><span class="n">add_entry</span><span class="p">(</span><span class="n">fstab_entry</span><span class="p">)</span>
@@ -1914,10 +1942,11 @@
         <span class="k">for</span> <span class="n">map_name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">system_custom_parts</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
             <span class="n">system_custom_part</span> <span class="o">=</span> <span class="n">system_custom_parts</span><span class="p">[</span><span class="n">map_name</span><span class="p">]</span>
             <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;--&gt; Syncing custom partition(s) data&#39;</span><span class="p">)</span>
-            <span class="n">system_custom_part</span><span class="o">.</span><span class="n">sync_data</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">system_custom_part</span><span class="o">.</span><span class="n">filename</span><span class="p">:</span>
+                <span class="n">system_custom_part</span><span class="o">.</span><span class="n">sync_data</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">device_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">map_name</span><span class="si">}</span><span class="s1">clone1&#39;</span><span class="p">):</span>
                 <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s1">&#39;--&gt; Dumping </span><span class="si">{</span><span class="n">map_name</span><span class="si">}</span><span class="s1"> clone data at extra partition&#39;</span>
+                    <span class="sa">f</span><span class="s1">&#39;--&gt; Dumping </span><span class="si">{</span><span class="n">map_name</span><span class="si">!r}</span><span class="s1"> clone data at extra partition&#39;</span>
                 <span class="p">)</span>
                 <span class="n">system_custom_part_clone</span> <span class="o">=</span> <span class="n">CloneDevice</span><span class="p">(</span>
                     <span class="n">system_custom_part</span><span class="o">.</span><span class="n">device_provider</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span>

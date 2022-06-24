@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.storage.setup &mdash; KIWI NG 9.24.43 documentation</title>
+  <title>kiwi.storage.setup &mdash; KIWI NG 9.24.44 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -980,11 +980,17 @@
         <span class="n">data_partition_mbytes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_partition_mbytes</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">map_name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_partitions</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
             <span class="n">partition_mount_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom_partitions</span><span class="p">[</span><span class="n">map_name</span><span class="p">]</span><span class="o">.</span><span class="n">mountpoint</span>
+            <span class="n">partition_filesystem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom_partitions</span><span class="p">[</span><span class="n">map_name</span><span class="p">]</span><span class="o">.</span><span class="n">filesystem</span>
             <span class="n">partition_clone</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom_partitions</span><span class="p">[</span><span class="n">map_name</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span>
             <span class="k">if</span> <span class="n">partition_mount_path</span><span class="p">:</span>
                 <span class="n">partition_mbsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom_partitions</span><span class="p">[</span><span class="n">map_name</span><span class="p">]</span><span class="o">.</span><span class="n">mbsize</span>
-                <span class="n">disk_add_mbytes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">partition_mbsize</span><span class="p">)</span> <span class="o">-</span> \
-                    <span class="n">data_partition_mbytes</span><span class="o">.</span><span class="n">partition</span><span class="p">[</span><span class="n">partition_mount_path</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">partition_filesystem</span> <span class="o">==</span> <span class="s1">&#39;squashfs&#39;</span><span class="p">:</span>
+                    <span class="c1"># cannot predict compressed size prior compressing</span>
+                    <span class="c1"># use size as configured</span>
+                    <span class="n">disk_add_mbytes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">partition_mbsize</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">disk_add_mbytes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">partition_mbsize</span><span class="p">)</span> <span class="o">-</span> \
+                        <span class="n">data_partition_mbytes</span><span class="o">.</span><span class="n">partition</span><span class="p">[</span><span class="n">partition_mount_path</span><span class="p">]</span>
                 <span class="k">if</span> <span class="n">disk_add_mbytes</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">partition_clone</span><span class="p">:</span>
                         <span class="n">partition_clone</span> <span class="o">+=</span> <span class="mi">1</span>

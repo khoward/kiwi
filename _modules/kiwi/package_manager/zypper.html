@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.package_manager.zypper &mdash; KIWI NG 9.24.43 documentation</title>
+  <title>kiwi.package_manager.zypper &mdash; KIWI NG 9.24.44 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -968,6 +968,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">rpmdb</span> <span class="o">=</span> <span class="n">RpmDataBase</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">rpmdb</span><span class="o">.</span><span class="n">has_rpm</span><span class="p">():</span>
+            <span class="n">rpmdb</span><span class="o">.</span><span class="n">rebuild_database</span><span class="p">()</span>
             <span class="n">rpmdb</span><span class="o">.</span><span class="n">set_database_to_image_path</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="PackageManagerZypper.has_failed"><a class="viewcode-back" href="../../../api/kiwi.package_manager.html#kiwi.package_manager.zypper.PackageManagerZypper.has_failed">[docs]</a>    <span class="nd">@staticmethod</span>

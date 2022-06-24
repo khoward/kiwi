@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.system.setup &mdash; KIWI NG 9.24.43 documentation</title>
+  <title>kiwi.system.setup &mdash; KIWI NG 9.24.44 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -1166,16 +1166,44 @@
         <span class="k">for</span> <span class="n">devname</span> <span class="ow">in</span> <span class="n">Defaults</span><span class="o">.</span><span class="n">get_exclude_list_for_non_physical_devices</span><span class="p">():</span>
             <span class="n">exclude</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-e&#39;</span><span class="p">)</span>
             <span class="n">exclude</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="n">devname</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="n">Command</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-            <span class="p">[</span>
-                <span class="s1">&#39;chroot&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span><span class="p">,</span> <span class="s1">&#39;setfiles&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;-F&#39;</span><span class="p">,</span> <span class="s1">&#39;-p&#39;</span><span class="p">,</span> <span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_selinux_policy_file</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">xml_state</span><span class="o">.</span><span class="n">build_type</span><span class="o">.</span><span class="n">get_selinux_policy</span><span class="p">()</span> <span class="ow">or</span> <span class="s1">&#39;targeted&#39;</span>
-                <span class="p">)</span>
-            <span class="p">]</span> <span class="o">+</span> <span class="n">exclude</span> <span class="o">+</span> <span class="p">[</span>
-                <span class="n">security_context_file</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span>
-            <span class="p">]</span>
-        <span class="p">)</span></div>
+        <span class="c1"># setfiles doesn&#39;t come with a stable command API and older versions</span>
+        <span class="c1"># needs a different invocation syntax. On older versions the usage</span>
+        <span class="c1"># information explicitly lists &quot;setfiles -c policyfile&quot; which is not</span>
+        <span class="c1"># present in newer versions. As setfiles doesn&#39;t come with a simple</span>
+        <span class="c1"># --version option, checking for this extra element in the usage</span>
+        <span class="c1"># was the only pointer I could come up with to differentiate the</span>
+        <span class="c1"># call options.</span>
+        <span class="k">if</span> <span class="n">CommandCapabilities</span><span class="o">.</span><span class="n">has_option_in_help</span><span class="p">(</span>
+            <span class="s1">&#39;setfiles&#39;</span><span class="p">,</span> <span class="s1">&#39;setfiles -c policyfile&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;--help&#39;</span><span class="p">],</span>
+            <span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span><span class="p">,</span> <span class="n">raise_on_error</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">):</span>
+            <span class="n">Command</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="s1">&#39;chroot&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span><span class="p">,</span> <span class="s1">&#39;setfiles&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_selinux_policy_file</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">xml_state</span><span class="o">.</span><span class="n">build_type</span><span class="o">.</span><span class="n">get_selinux_policy</span><span class="p">()</span> <span class="ow">or</span> <span class="s1">&#39;targeted&#39;</span>
+                    <span class="p">),</span> <span class="n">security_context_file</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">Command</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="s1">&#39;chroot&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span><span class="p">,</span> <span class="s1">&#39;setfiles&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;-F&#39;</span><span class="p">,</span> <span class="s1">&#39;-p&#39;</span>
+                <span class="p">]</span> <span class="o">+</span> <span class="n">exclude</span> <span class="o">+</span> <span class="p">[</span>
+                    <span class="n">security_context_file</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Command</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="s1">&#39;chroot&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span><span class="p">,</span> <span class="s1">&#39;setfiles&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;-F&#39;</span><span class="p">,</span> <span class="s1">&#39;-p&#39;</span><span class="p">,</span> <span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_selinux_policy_file</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">xml_state</span><span class="o">.</span><span class="n">build_type</span><span class="o">.</span><span class="n">get_selinux_policy</span><span class="p">()</span> <span class="ow">or</span> <span class="s1">&#39;targeted&#39;</span>
+                    <span class="p">)</span>
+                <span class="p">]</span> <span class="o">+</span> <span class="n">exclude</span> <span class="o">+</span> <span class="p">[</span>
+                    <span class="n">security_context_file</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span>
+                <span class="p">]</span>
+            <span class="p">)</span></div>
 
 <div class="viewcode-block" id="SystemSetup.setup_selinux_file_contexts"><a class="viewcode-back" href="../../../api/kiwi.system.html#kiwi.system.setup.SystemSetup.setup_selinux_file_contexts">[docs]</a>    <span class="k">def</span> <span class="nf">setup_selinux_file_contexts</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
