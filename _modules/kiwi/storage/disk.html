@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.storage.disk &mdash; KIWI NG 9.24.44 documentation</title>
+  <title>kiwi.storage.disk &mdash; KIWI NG 9.24.45 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -1017,6 +1017,14 @@
 <span class="sd">        Note: only GPT tables supports this</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">partitioner</span><span class="o">.</span><span class="n">set_mbr</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Disk.set_start_sector"><a class="viewcode-back" href="../../../api/kiwi.storage.html#kiwi.storage.disk.Disk.set_start_sector">[docs]</a>    <span class="k">def</span> <span class="nf">set_start_sector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_sector</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set start sector</span>
+
+<span class="sd">        Note: only effective on DOS tables</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">partitioner</span><span class="o">.</span><span class="n">set_start_sector</span><span class="p">(</span><span class="n">start_sector</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Disk.wipe"><a class="viewcode-back" href="../../../api/kiwi.storage.html#kiwi.storage.disk.Disk.wipe">[docs]</a>    <span class="k">def</span> <span class="nf">wipe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

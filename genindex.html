@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; KIWI NG 9.24.44 documentation</title>
+  <title>Index &mdash; KIWI NG 9.24.45 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
@@ -1873,6 +1873,8 @@
       <li><a href="api/kiwi.html#kiwi.xml_state.XMLState.get_package_sections">get_package_sections() (kiwi.xml_state.XMLState method)</a>
 </li>
       <li><a href="api/kiwi.html#kiwi.xml_state.XMLState.get_packages_sections">get_packages_sections() (kiwi.xml_state.XMLState method)</a>
+</li>
+      <li><a href="api/kiwi.utils.html#kiwi.utils.block.BlockID.get_partition_count">get_partition_count() (kiwi.utils.block.BlockID method)</a>
 </li>
       <li><a href="api/kiwi.html#kiwi.firmware.FirmWare.get_partition_table_type">get_partition_table_type() (kiwi.firmware.FirmWare method)</a>
 </li>
@@ -3906,8 +3908,12 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/kiwi.html#kiwi.mount_manager.MountManager.mount">mount() (kiwi.mount_manager.MountManager method)</a>
+      <li><a href="api/kiwi.filesystem.html#kiwi.filesystem.base.FileSystemBase.mount">mount() (kiwi.filesystem.base.FileSystemBase method)</a>
+
+      <ul>
+        <li><a href="api/kiwi.html#kiwi.mount_manager.MountManager.mount">(kiwi.mount_manager.MountManager method)</a>
 </li>
+      </ul></li>
       <li><a href="api/kiwi.system.html#kiwi.system.root_bind.RootBind.mount_kernel_file_systems">mount_kernel_file_systems() (kiwi.system.root_bind.RootBind method)</a>
 </li>
       <li><a href="api/kiwi.system.html#kiwi.system.root_bind.RootBind.mount_shared_directory">mount_shared_directory() (kiwi.system.root_bind.RootBind method)</a>
@@ -4416,6 +4422,14 @@
 </li>
       <li><a href="api/kiwi.html#kiwi.defaults.Defaults.set_shared_cache_location">set_shared_cache_location() (kiwi.defaults.Defaults static method)</a>
 </li>
+      <li><a href="api/kiwi.partitioner.html#kiwi.partitioner.base.PartitionerBase.set_start_sector">set_start_sector() (kiwi.partitioner.base.PartitionerBase method)</a>
+
+      <ul>
+        <li><a href="api/kiwi.partitioner.html#kiwi.partitioner.msdos.PartitionerMsDos.set_start_sector">(kiwi.partitioner.msdos.PartitionerMsDos method)</a>
+</li>
+        <li><a href="api/kiwi.storage.html#kiwi.storage.disk.Disk.set_start_sector">(kiwi.storage.disk.Disk method)</a>
+</li>
+      </ul></li>
       <li><a href="api/kiwi.boot.image.html#kiwi.boot.image.base.BootImageBase.set_static_modules">set_static_modules() (kiwi.boot.image.base.BootImageBase method)</a>
 
       <ul>
@@ -4494,6 +4508,8 @@
 </li>
       <li><a href="api/kiwi.system.html#kiwi.system.setup.SystemSetup.setup_keyboard_map">setup_keyboard_map() (kiwi.system.setup.SystemSetup method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/kiwi.bootloader.config.html#kiwi.bootloader.config.base.BootLoaderConfigBase.setup_live_boot_images">setup_live_boot_images() (kiwi.bootloader.config.base.BootLoaderConfigBase method)</a>
 
       <ul>
@@ -4502,8 +4518,6 @@
         <li><a href="api/kiwi.bootloader.config.html#kiwi.bootloader.config.isolinux.BootLoaderConfigIsoLinux.setup_live_boot_images">(kiwi.bootloader.config.isolinux.BootLoaderConfigIsoLinux method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/kiwi.bootloader.config.html#kiwi.bootloader.config.base.BootLoaderConfigBase.setup_live_image_config">setup_live_image_config() (kiwi.bootloader.config.base.BootLoaderConfigBase method)</a>
 
       <ul>

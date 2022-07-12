@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.builder.disk &mdash; KIWI NG 9.24.44 documentation</title>
+  <title>kiwi.builder.disk &mdash; KIWI NG 9.24.45 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -817,6 +817,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">disk_resize_requested</span> <span class="o">=</span> \
             <span class="n">xml_state</span><span class="o">.</span><span class="n">get_oemconfig_oem_resize</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">swap_mbytes</span> <span class="o">=</span> <span class="n">xml_state</span><span class="o">.</span><span class="n">get_oemconfig_swap_mbytes</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">disk_start_sector</span> <span class="o">=</span> <span class="n">xml_state</span><span class="o">.</span><span class="n">get_disk_start_sector</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">disk_setup</span> <span class="o">=</span> <span class="n">DiskSetup</span><span class="p">(</span>
             <span class="n">xml_state</span><span class="p">,</span> <span class="n">root_dir</span>
         <span class="p">)</span>
@@ -947,7 +948,7 @@
 
         <span class="n">disk</span> <span class="o">=</span> <span class="n">Disk</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">firmware</span><span class="o">.</span><span class="n">get_partition_table_type</span><span class="p">(),</span> <span class="n">loop_provider</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">xml_state</span><span class="o">.</span><span class="n">get_disk_start_sector</span><span class="p">(),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">disk_start_sector</span><span class="p">,</span>
             <span class="n">extended_layout</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dosparttable_extended_layout</span><span class="p">)</span>
         <span class="p">)</span>
 
@@ -1658,6 +1659,10 @@
             <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;--&gt; setting active flag to primary PReP partition&#39;</span><span class="p">)</span>
             <span class="n">disk</span><span class="o">.</span><span class="n">activate_boot_partition</span><span class="p">()</span>
 
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">firmware</span><span class="o">.</span><span class="n">efi_mode</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">disk_start_sector</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;--&gt; setting start sector to: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">disk_start_sector</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">disk</span><span class="o">.</span><span class="n">set_start_sector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">disk_start_sector</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">firmware</span><span class="o">.</span><span class="n">efi_mode</span><span class="p">():</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">force_mbr</span><span class="p">:</span>
                 <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;--&gt; converting partition table to MBR&#39;</span><span class="p">)</span>
@@ -1948,12 +1953,14 @@
                 <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s1">&#39;--&gt; Dumping </span><span class="si">{</span><span class="n">map_name</span><span class="si">!r}</span><span class="s1"> clone data at extra partition&#39;</span>
                 <span class="p">)</span>
+                <span class="n">system_custom_part</span><span class="o">.</span><span class="n">umount</span><span class="p">()</span>
                 <span class="n">system_custom_part_clone</span> <span class="o">=</span> <span class="n">CloneDevice</span><span class="p">(</span>
                     <span class="n">system_custom_part</span><span class="o">.</span><span class="n">device_provider</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span>
                 <span class="p">)</span>
                 <span class="n">system_custom_part_clone</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_get_clone_devices</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">map_name</span><span class="si">}</span><span class="s1">clone&#39;</span><span class="p">,</span> <span class="n">device_map</span><span class="p">)</span>
                 <span class="p">)</span>
+                <span class="n">system_custom_part</span><span class="o">.</span><span class="n">mount</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="n">system_efi</span><span class="p">:</span>
             <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;--&gt; Syncing EFI boot data to EFI partition&#39;</span><span class="p">)</span>
@@ -1968,9 +1975,11 @@
                 <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
                     <span class="s1">&#39;--&gt; Dumping boot clone data at extra partition&#39;</span>
                 <span class="p">)</span>
+                <span class="n">system_boot</span><span class="o">.</span><span class="n">umount</span><span class="p">()</span>
                 <span class="n">CloneDevice</span><span class="p">(</span><span class="n">system_boot</span><span class="o">.</span><span class="n">device_provider</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span><span class="p">)</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_get_clone_devices</span><span class="p">(</span><span class="s1">&#39;bootclone&#39;</span><span class="p">,</span> <span class="n">device_map</span><span class="p">)</span>
                 <span class="p">)</span>
+                <span class="n">system_boot</span><span class="o">.</span><span class="n">mount</span><span class="p">()</span>
 
         <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;--&gt; Syncing root filesystem data&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_filesystem_is_overlay</span><span class="p">:</span>
@@ -2101,9 +2110,17 @@
                 <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
                     <span class="s1">&#39;--&gt; Dumping root clone data at extra partition&#39;</span>
                 <span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume_manager_name</span><span class="p">:</span>
+                    <span class="n">system</span><span class="o">.</span><span class="n">umount_volumes</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">system</span><span class="o">.</span><span class="n">umount</span><span class="p">()</span>
                 <span class="n">CloneDevice</span><span class="p">(</span><span class="n">device_map</span><span class="p">[</span><span class="s1">&#39;origin_root&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span><span class="p">)</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_get_clone_devices</span><span class="p">(</span><span class="s1">&#39;rootclone&#39;</span><span class="p">,</span> <span class="n">device_map</span><span class="p">)</span>
                 <span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume_manager_name</span><span class="p">:</span>
+                    <span class="n">system</span><span class="o">.</span><span class="n">mount_volumes</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">system</span><span class="o">.</span><span class="n">mount</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">integrity_root</span> <span class="ow">and</span> \
            <span class="bp">self</span><span class="o">.</span><span class="n">root_filesystem_embed_integrity_metadata</span><span class="p">:</span>

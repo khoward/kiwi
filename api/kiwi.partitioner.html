@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.partitioner Package &mdash; KIWI NG 9.24.44 documentation</title>
+  <title>kiwi.partitioner Package &mdash; KIWI NG 9.24.45 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
@@ -762,6 +762,18 @@
 <p>Implementation in specialized partitioner class</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="kiwi.partitioner.base.PartitionerBase.set_start_sector">
+<span class="sig-name descname"><span class="pre">set_start_sector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_sector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kiwi/partitioner/base.html#PartitionerBase.set_start_sector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kiwi.partitioner.base.PartitionerBase.set_start_sector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set start sector of first partition as configured</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>start_sector</strong> (<em>int</em>) – unused</p>
+</dd>
+</dl>
+<p>Does nothing by default</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -932,6 +944,20 @@
 <li><p><strong>partition_id</strong> (<em>int</em>) – partition number</p></li>
 <li><p><strong>flag_name</strong> (<em>string</em>) – name from flag map</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kiwi.partitioner.msdos.PartitionerMsDos.set_start_sector">
+<span class="sig-name descname"><span class="pre">set_start_sector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_sector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kiwi/partitioner/msdos.html#PartitionerMsDos.set_start_sector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kiwi.partitioner.msdos.PartitionerMsDos.set_start_sector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set start sector of first partition as configured.
+fdisk and friends are not able to work correctly if
+the start sector of the first partition is any different
+from 2048.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>start_sector</strong> (<em>int</em>) – sector size</p>
 </dd>
 </dl>
 </dd></dl>

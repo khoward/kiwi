@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.utils.block &mdash; KIWI NG 9.24.44 documentation</title>
+  <title>kiwi.utils.block &mdash; KIWI NG 9.24.45 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -740,6 +740,23 @@
 <span class="sd">        :rtype: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_blkid</span><span class="p">(</span><span class="s1">&#39;TYPE&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BlockID.get_partition_count"><a class="viewcode-back" href="../../../api/kiwi.utils.html#kiwi.utils.block.BlockID.get_partition_count">[docs]</a>    <span class="k">def</span> <span class="nf">get_partition_count</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve number of partitions from block device</span>
+
+<span class="sd">        :return: A number</span>
+
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">partition_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">lsblk_result</span> <span class="o">=</span> <span class="n">Command</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+            <span class="p">[</span><span class="s1">&#39;lsblk&#39;</span><span class="p">,</span> <span class="s1">&#39;-r&#39;</span><span class="p">,</span> <span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="s1">&#39;NAME,TYPE&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lsblk_result</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">linesep</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;part&#39;</span><span class="p">):</span>
+                <span class="n">partition_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">partition_count</span></div>
 
 <div class="viewcode-block" id="BlockID.get_blkid"><a class="viewcode-back" href="../../../api/kiwi.utils.html#kiwi.utils.block.BlockID.get_blkid">[docs]</a>    <span class="k">def</span> <span class="nf">get_blkid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_type</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

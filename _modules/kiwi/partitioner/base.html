@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiwi.partitioner.base &mdash; KIWI NG 9.24.44 documentation</title>
+  <title>kiwi.partitioner.base &mdash; KIWI NG 9.24.45 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -784,6 +784,16 @@
 <span class="sd">        Implementation in specialized partitioner class</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="PartitionerBase.set_start_sector"><a class="viewcode-back" href="../../../api/kiwi.partitioner.html#kiwi.partitioner.base.PartitionerBase.set_start_sector">[docs]</a>    <span class="k">def</span> <span class="nf">set_start_sector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_sector</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set start sector of first partition as configured</span>
+
+<span class="sd">        :param int start_sector: unused</span>
+
+<span class="sd">        Does nothing by default</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
 
 <div class="viewcode-block" id="PartitionerBase.resize_table"><a class="viewcode-back" href="../../../api/kiwi.partitioner.html#kiwi.partitioner.base.PartitionerBase.resize_table">[docs]</a>    <span class="k">def</span> <span class="nf">resize_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
