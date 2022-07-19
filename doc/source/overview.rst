@@ -19,7 +19,7 @@ Conceptual Overview
 -------------------
 
 A system image (usually called "image"), is a *complete installation* of a Linux
-system within a file. The image represents an operation system and,
+system within a file. The image represents an operating system and,
 optionally, contains the "final" configuration.
 
 {kiwi} creates images in a two step process:
